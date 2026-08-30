@@ -105,7 +105,15 @@ export const useSleepStore = defineStore('sleep', () => {
     const dietStore = useDietStore()
     const profile = userStore.profile
 
-    const yesterdayRecord = records.value[records.value.length - 1]
+    // 优先取昨日记录（"昨晚睡眠评分"），找不到则回退到最近一条非今日记录，最后回退到最新记录
+    const todayKey = getTodayKey()
+    const yesterdayDate = new Date()
+    yesterdayDate.setDate(yesterdayDate.getDate() - 1)
+    const yesterdayKey = `${yesterdayDate.getFullYear()}-${String(yesterdayDate.getMonth() + 1).padStart(2, '0')}-${String(yesterdayDate.getDate()).padStart(2, '0')}`
+    const yesterdayRecord =
+      records.value.find((r) => r.date === yesterdayKey) ||
+      records.value.find((r) => r.date !== todayKey) ||
+      records.value[records.value.length - 1]
     const todayDiet = dietStore.getRecordsByDate(getTodayKey())
     const todayFat = todayDiet.reduce((sum, r) => sum + r.totalFat, 0)
     const todayCalories = todayDiet.reduce((sum, r) => sum + r.totalCalories, 0)

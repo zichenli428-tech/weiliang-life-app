@@ -1,7 +1,7 @@
 {
   "name": "weiliang-life",
   "private": true,
-  "version": "1.0.0-dev",
+  "version": "1.2.0",
   "type": "module",
   "description": "微量生活 - 基于 AI 的私人健康管家 (Trae AI 创作力大赛参赛作品)",
   "scripts": {
@@ -12,7 +12,8 @@
     "demo:build": "vue-tsc -b && vite build && node server.js",
     "type-check": "vue-tsc --noEmit",
     "cap:sync": "vite build && npx cap copy android",
-    "cap:open": "npx cap open android"
+    "cap:open": "npx cap open android",
+    "apk:release": "node scripts/build-apk.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.4.1",

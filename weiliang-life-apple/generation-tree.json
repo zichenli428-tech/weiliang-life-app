@@ -1,0 +1,104 @@
+{
+  "root": {
+    "id": "root",
+    "type": "root",
+    "children": [
+      {
+        "id": "partial-dock",
+        "type": "partial",
+        "name": "底部导航 Dock",
+        "outputFile": "partials/dock.html",
+        "status": "pending",
+        "children": []
+      },
+      {
+        "id": "page-home",
+        "type": "page",
+        "name": "健康看板",
+        "outputFile": "pages/home.html",
+        "status": "pending",
+        "inheritedFragments": ["partials/dock.html"],
+        "mutableSlots": ["main-content"],
+        "privateRegions": ["hero", "ai-message", "nutrition-grid", "radar-chart", "quick-checkin", "quick-entry"],
+        "children": []
+      },
+      {
+        "id": "page-advisor",
+        "type": "page",
+        "name": "AI 健康顾问",
+        "outputFile": "pages/advisor.html",
+        "status": "pending",
+        "inheritedFragments": ["partials/dock.html"],
+        "mutableSlots": ["main-content"],
+        "privateRegions": ["chat-header", "welcome-card", "message-list", "quick-questions", "input-area"],
+        "children": []
+      },
+      {
+        "id": "page-mind",
+        "type": "page",
+        "name": "心理疏导",
+        "outputFile": "pages/mind.html",
+        "status": "pending",
+        "inheritedFragments": ["partials/dock.html"],
+        "mutableSlots": ["main-content"],
+        "privateRegions": ["chat-header", "disclaimer-bar", "welcome-card", "emotion-express", "message-list", "emotion-diary"],
+        "children": []
+      },
+      {
+        "id": "page-sleep",
+        "type": "page",
+        "name": "睡眠辅助",
+        "outputFile": "pages/sleep.html",
+        "status": "pending",
+        "inheritedFragments": ["partials/dock.html"],
+        "mutableSlots": ["main-content"],
+        "privateRegions": ["sleep-hero", "section-tabs", "ai-tips", "white-noise", "breathing-guide", "sleep-record"],
+        "children": []
+      },
+      {
+        "id": "page-record",
+        "type": "page",
+        "name": "健康记录",
+        "outputFile": "pages/record.html",
+        "status": "pending",
+        "inheritedFragments": ["partials/dock.html"],
+        "mutableSlots": ["main-content"],
+        "privateRegions": ["record-hero", "quick-add", "ai-entry", "record-list", "add-popup", "ai-recognize-popup"],
+        "children": []
+      },
+      {
+        "id": "page-profile",
+        "type": "page",
+        "name": "我的",
+        "outputFile": "pages/profile.html",
+        "status": "pending",
+        "inheritedFragments": ["partials/dock.html"],
+        "mutableSlots": ["main-content"],
+        "privateRegions": ["profile-hero", "bmi-card", "body-archive", "goal-settings", "settings-list", "edit-popup"],
+        "children": []
+      },
+      {
+        "id": "page-onboarding",
+        "type": "page",
+        "name": "建档",
+        "outputFile": "pages/onboarding.html",
+        "status": "pending",
+        "inheritedFragments": [],
+        "mutableSlots": ["main-content"],
+        "privateRegions": ["progress-bar", "step-1", "step-2", "step-3", "navigation-buttons"],
+        "children": []
+      },
+      {
+        "id": "page-onboarding-tour",
+        "type": "page",
+        "name": "新手引导",
+        "outputFile": "pages/onboarding-tour.html",
+        "status": "pending",
+        "inheritedFragments": [],
+        "mutableSlots": ["main-content"],
+        "privateRegions": ["slide-1", "slide-2", "slide-3", "slide-4", "slide-5", "welcome-animation"],
+        "children": []
+      }
+    ]
+  }
+}

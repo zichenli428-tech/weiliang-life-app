@@ -50,7 +50,25 @@ const userStore = useUserStore()
 Promise.race([
   localforage.ready(),
   new Promise(resolve => setTimeout(resolve, 3000))
-]).finally(() => {
+]).finally(async () => {
+  // 开发环境 Mock 数据管理
+  if (import.meta.env.DEV) {
+    const params = new URLSearchParams(window.location.search)
+    // ?seed=clear 始终可用：清除之前注入的 mock 数据（即使 VITE_MOCK_SEED=false）
+    if (params.get('seed') === 'clear') {
+      const { clearMockData } = await import('@/utils/mockSeed')
+      await clearMockData()
+    } else if (import.meta.env.VITE_MOCK_SEED === 'true') {
+      // VITE_MOCK_SEED=true 时自动注入，?seed=reset 强制重置
+      const { seedMockData, clearMockData } = await import('@/utils/mockSeed')
+      if (params.get('seed') === 'reset') {
+        await clearMockData()
+        await seedMockData(true)
+      } else {
+        await seedMockData()
+      }
+    }
+  }
   userStore.loadFromStorage().finally(() => {
     app.use(router)
     app.mount('#app')

@@ -1,11 +1,11 @@
 /**
  * AI 大模型服务层
  * PRD 3.2/3.4：AI 健康顾问流式对话、System Prompt 注入用户档案
- * PRD 5.2：大模型 API 封装（原指定豆包，用户明确要求改用商汤 SenseNova）
+ * PRD 5.2：大模型 API 封装（OpenAI 兼容，当前接入 OpenCode Zen mimo-v2.5-free）
  * PRD 4.3：API Key 仅开发环境使用，存于 .env
- * PRD 7.2：弱网超时降级（60 秒首字超时阈值，适配 SenseNova 推理阶段）
+ * PRD 7.2：弱网超时降级（60 秒首字超时阈值）
  *
- * SenseNova API 兼容 OpenAI 格式：
+ * OpenCode Zen API 兼容 OpenAI 格式：
  * POST {baseURL}/chat/completions
  * Authorization: Bearer {apiKey}
  * stream: true 时返回 SSE 格式 data: {json}\n\n
@@ -47,7 +47,7 @@ export interface StreamChatOptions {
   temperature?: number
   /** 最大 token 数 */
   maxTokens?: number
-  /** 首字超时阈值（毫秒），默认 60000（商汤 SenseNova 推理阶段较长，PRD 7.2 降级策略） */
+  /** 首字超时阈值（毫秒），默认 60000（高峰时段推理可能较慢，PRD 7.2 降级策略） */
   firstByteTimeout?: number
 }
 
@@ -63,21 +63,25 @@ export interface ChatOptions {
 // ==================== 配置读取 ====================
 
 const API_KEY = import.meta.env.VITE_AI_API_KEY as string | undefined
-const MODEL = (import.meta.env.VITE_AI_MODEL as string | undefined) || 'sensenova-6.7-flash-lite'
+const MODEL = (import.meta.env.VITE_AI_MODEL as string | undefined) || 'mimo-v2.5-free'
 
 // 原生平台（APK）通过 CapacitorHttp 绕过 CORS 直连 API
 // Web 环境统一走 /ai-proxy 代理（开发由 Vite dev server 转发，生产 demo 由 server.js 转发）
 const isNative = Capacitor.isNativePlatform()
 const BASE_URL = isNative
-  ? 'https://token.sensenova.cn/v1'
+  ? 'https://opencode.ai/zen/v1'
   : (import.meta.env.VITE_AI_BASE_URL as string | undefined) || '/ai-proxy/v1'
 
 /**
  * 检查 API 是否已配置
- * - APK 端：必须本地持有密钥（直连商汤 API）
+ * - APK 端：必须本地持有密钥（直连 OpenCode Zen API）
  * - Web 端：密钥由 server.js 代理注入，前端不持有，总是可用
+ * - Mock 模式：VITE_MOCK_AI=true 时返回 false，触发各 store 内置 mock 兜底（离线即时响应）
  */
 export function isAIConfigured(): boolean {
+  if (import.meta.env.VITE_MOCK_AI === 'true') {
+    return false
+  }
   if (isNative) {
     return !!API_KEY && API_KEY.length > 0
   }
@@ -140,7 +144,7 @@ function createCombinedController(
 /**
  * 流式对话（SSE）
  * PRD 3.4：大模型流式对话，打字机效果
- * PRD 7.2：首字超时降级（商汤 sensenova 有推理阶段，默认 15 秒）
+ * PRD 7.2：首字超时降级（高峰时段可能较慢，默认 60 秒）
  */
 export async function streamChat(
   messages: ApiMessage[],
@@ -204,8 +208,7 @@ export async function streamChat(
         messages,
         stream: true,
         temperature
-        // 注意：sensenova-6.7-flash-lite 的 supported_sampling_parameters 仅支持 temperature/stop
-        // 传 max_tokens 会触发 400 "invalid arguments"，模型内置 max_output_length=65536
+        // 不传 max_tokens：保持与各 OpenAI 兼容端点的最大兼容性，使用模型默认输出长度上限
       }),
       signal: combined.signal
     })
@@ -323,7 +326,7 @@ export async function chat(
         messages,
         stream: false,
         temperature
-        // 注意：sensenova-6.7-flash-lite 不支持 max_tokens 参数
+        // 不传 max_tokens：保持与各 OpenAI 兼容端点的最大兼容性
       }),
       signal: combined.signal
     })

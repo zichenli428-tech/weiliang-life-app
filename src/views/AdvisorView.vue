@@ -3,10 +3,10 @@
  * AI 健康顾问（Tab 2）
  * PRD 3.4：聊天界面、预设快捷问题 | 大模型流式对话、System Prompt 注入用户档案
  * P2 阶段：完整聊天 UI + mock 流式回复；P3 阶段接入大模型流式接口
- * 重设计：科技蓝暗色玻璃风格，强化 AI 科技感
+ * 重设计：Apple 风格，模块主色 --chart-2（蓝）
  */
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
-import { showConfirmDialog } from 'vant'
+import { showConfirmDialog, showToast } from 'vant'
 import { useChatStore } from '@/store/modules/chat'
 import { showAITip } from '@/utils/aiToast'
 import { useUserStore } from '@/store/modules/user'
@@ -14,6 +14,7 @@ import { quickQuestions, categoryLabels } from '@/constants/quickQuestions'
 import type { QuickQuestionCategory } from '@/types/chat'
 import GlassCard from '@/components/GlassCard.vue'
 import AuroraButton from '@/components/AuroraButton.vue'
+import AppleIcon from '@/components/AppleIcon.vue'
 
 const chatStore = useChatStore()
 const userStore = useUserStore()
@@ -29,17 +30,49 @@ const filteredQuestions = computed(() => {
 })
 
 const categoryList = computed(() => [
-  { key: 'all' as const, label: '全部', icon: '📋' },
+  { key: 'all' as const, label: '全部' },
   ...(Object.keys(categoryLabels) as QuickQuestionCategory[]).map((k) => ({
     key: k,
-    label: categoryLabels[k].label,
-    icon: categoryLabels[k].icon
+    label: categoryLabels[k].label
   }))
 ])
 
 const messages = computed(() => chatStore.activeMessages)
 const hasMessages = computed(() => messages.value.length > 0)
 const isResponding = computed(() => chatStore.isResponding)
+
+// 复制回复
+const copiedId = ref<string | null>(null)
+const copyMessage = async (id: string, text: string) => {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text)
+    } else {
+      const textarea = document.createElement('textarea')
+      textarea.value = text
+      textarea.style.position = 'fixed'
+      textarea.style.opacity = '0'
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+    }
+    copiedId.value = id
+    setTimeout(() => { if (copiedId.value === id) copiedId.value = null }, 2000)
+  } catch {
+    showToast('复制失败，请长按文字手动复制')
+  }
+}
+
+// 重设计：分类 → AppleIcon 名称映射（替换静态 emoji 为线框图标）
+const categoryIconMap: Record<QuickQuestionCategory | 'all', string> = {
+  all: 'clipboard-list',
+  diet: 'utensils',
+  exercise: 'dumbbell',
+  sleep: 'moon',
+  mental: 'heart',
+  general: 'lightbulb'
+}
 
 const handleSend = async (text?: string) => {
   const content = (text ?? inputValue.value).trim()
@@ -52,7 +85,7 @@ const handleSend = async (text?: string) => {
   await nextTick()
   scrollToBottom()
 
-  // P3 阶段：调用真实大模型流式接口（SenseNova），降级时自动回退 mock
+  // P3 阶段：调用真实大模型流式接口（OpenCode Zen），降级时自动回退 mock
   showAITip()
   await chatStore.assistantReply(content)
   await nextTick()
@@ -97,7 +130,7 @@ const handleClearSession = () => {
   showConfirmDialog({
     title: '清空当前对话',
     message: '将清空当前对话的所有消息，确定吗？',
-    confirmButtonColor: '#0ea5e9'
+    confirmButtonColor: '#007AFF'
   })
     .then(async () => {
       const session = chatStore.activeSession
@@ -131,36 +164,49 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="advisor-page">
-    <!-- 顶部导航 -->
-    <div class="advisor-header safe-area-top">
-      <div class="flex items-center justify-between">
-        <div class="header-avatar glow-advisor">AI</div>
-        <div class="flex-1 ml-3">
-          <div class="text-base font-semibold text-white">AI 健康顾问</div>
-          <div class="text-xs text-white/80 mt-1">
-            <span v-if="isResponding" class="status-dot pulsing"></span>
-            <span v-else class="status-dot"></span>
-            {{ isResponding ? '正在思考…' : '随时为你服务' }}
-          </div>
-        </div>
-        <div class="header-action press-effect" @click="handleNewSession">
-          <van-icon name="plus" size="18" />
-        </div>
-        <div class="header-action ml-2 press-effect" @click="handleClearSession">
-          <van-icon name="delete-o" size="18" />
+  <div class="page-container advisor-page">
+    <!-- 顶部 Header -->
+    <header class="advisor-header">
+      <div class="header-avatar">
+        <AppleIcon name="sparkles" :size="20" />
+      </div>
+      <div class="header-info">
+        <div class="header-title">AI 健康顾问</div>
+        <div class="header-subtitle">
+          <span class="status-dot" :class="{ pulsing: isResponding }"></span>
+          <span>{{ isResponding ? '正在思考…' : '随时为你服务' }}</span>
         </div>
       </div>
-    </div>
+      <div class="header-actions">
+        <button
+          class="header-btn"
+          type="button"
+          aria-label="新建会话"
+          @click="handleNewSession"
+        >
+          <AppleIcon name="plus" :size="18" />
+        </button>
+        <button
+          class="header-btn"
+          type="button"
+          aria-label="清空会话"
+          @click="handleClearSession"
+        >
+          <AppleIcon name="trash-2" :size="18" />
+        </button>
+      </div>
+    </header>
 
     <!-- 消息列表区 -->
     <div ref="messagesEl" class="messages-area">
       <!-- 欢迎卡片 -->
       <div v-if="!hasMessages" class="welcome-section">
-        <GlassCard padding="lg" gradient-border class="welcome-card">
-          <div class="welcome-avatar glow-advisor">AI</div>
+        <GlassCard padding="lg" radius="lg" class="welcome-card">
+          <div class="welcome-avatar">
+            <AppleIcon name="sparkles" :size="24" />
+          </div>
           <div class="welcome-title">
-            你好，{{ userStore.profile.nickname || '健康用户' }} 👋
+            你好，{{ userStore.profile.nickname || '健康用户' }}
           </div>
           <div class="welcome-desc">
             我是你的 AI 健康顾问，可以为你提供饮食建议、运动方案、睡眠指导、心理疏导等全方位健康陪伴。
@@ -176,11 +222,19 @@ onUnmounted(() => {
         class="message-row"
         :class="msg.role === 'user' ? 'is-user' : 'is-assistant'"
       >
-        <div v-if="msg.role === 'assistant'" class="msg-avatar glow-advisor">AI</div>
+        <div v-if="msg.role === 'assistant'" class="msg-avatar assistant-avatar">
+          <AppleIcon name="sparkles" :size="18" />
+        </div>
         <div class="msg-bubble">
-          <div class="msg-content">
-            {{ msg.content }}<span v-if="msg.streaming" class="cursor">|</span>
-          </div>
+          <div class="msg-content">{{ msg.content }}<span v-if="msg.streaming" class="cursor">|</span></div>
+          <button
+            v-if="msg.role === 'assistant' && msg.content && !msg.streaming"
+            class="copy-btn"
+            @click="copyMessage(msg.id, msg.content)"
+          >
+            <AppleIcon :name="copiedId === msg.id ? 'check' : 'copy'" :size="12" />
+            {{ copiedId === msg.id ? '已复制' : '复制' }}
+          </button>
         </div>
         <div v-if="msg.role === 'user'" class="msg-avatar user-avatar">
           {{ userStore.profile.nickname?.charAt(0) || '我' }}
@@ -190,11 +244,13 @@ onUnmounted(() => {
       <!-- 加载指示 -->
       <div
         v-if="isResponding && messages.length > 0 && !messages[messages.length - 1].content"
-        class="loading-row"
+        class="message-row is-assistant loading-row"
       >
-        <div class="msg-avatar glow-advisor">AI</div>
-        <div class="loading-dots">
-          <span></span><span></span><span></span>
+        <div class="msg-avatar assistant-avatar">
+          <AppleIcon name="sparkles" :size="18" />
+        </div>
+        <div class="msg-bubble">
+          <div class="loading-dots"><span></span><span></span><span></span></div>
         </div>
       </div>
     </div>
@@ -202,32 +258,37 @@ onUnmounted(() => {
     <!-- 快捷问题区（无消息时展开） -->
     <div v-if="!hasMessages" class="quick-panel">
       <div class="quick-categories">
-        <div
+        <button
           v-for="cat in categoryList"
           :key="cat.key"
+          type="button"
           class="category-chip"
           :class="{ active: activeCategory === cat.key }"
           @click="activeCategory = cat.key"
         >
-          <span class="mr-1">{{ cat.icon }}</span>{{ cat.label }}
-        </div>
+          <AppleIcon :name="categoryIconMap[cat.key]" :size="14" />
+          <span>{{ cat.label }}</span>
+        </button>
       </div>
       <div class="quick-list">
-        <div
+        <button
           v-for="q in filteredQuestions"
           :key="q.text"
-          class="quick-item press-effect"
+          type="button"
+          class="quick-item"
           @click="handleQuickQuestion(q)"
         >
-          <span class="quick-icon">{{ q.icon }}</span>
+          <span class="quick-icon">
+            <AppleIcon :name="categoryIconMap[q.category]" :size="16" />
+          </span>
           <span class="quick-text">{{ q.text }}</span>
-          <van-icon name="arrow" size="12" class="text-content-tertiary" />
-        </div>
+          <AppleIcon name="chevron-right" :size="16" class="quick-arrow" />
+        </button>
       </div>
     </div>
 
     <!-- 输入区 -->
-    <div class="input-area safe-area-bottom">
+    <div class="input-area">
       <div class="input-row">
         <van-field
           v-model="inputValue"
@@ -239,10 +300,11 @@ onUnmounted(() => {
         />
         <AuroraButton
           class="send-btn"
+          type="primary"
           :disabled="!inputValue.trim() || isResponding"
           @click="handleSend()"
         >
-          <van-icon name="arrow" size="18" />
+          <AppleIcon name="send-horizontal" :size="20" />
         </AuroraButton>
       </div>
     </div>
@@ -250,78 +312,75 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* ==================== 页面容器 ==================== */
 .advisor-page {
+  /* 覆盖 page-container 的 min-height: 100vh，适配聊天满高布局 */
+  min-height: 0;
+  height: calc(100vh - 56px - env(safe-area-inset-bottom));
+  height: calc(100dvh - 56px - env(safe-area-inset-bottom));
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--background);
   display: flex;
   flex-direction: column;
-  /* 减去玻璃 Dock 高度（72px）+ 底部安全区 */
-  height: calc(100vh - 72px - env(safe-area-inset-bottom));
-  height: calc(100dvh - 72px - env(safe-area-inset-bottom));
-  background:
-    radial-gradient(ellipse at top right, rgba(14, 165, 233, 0.12) 0%, transparent 45%),
-    radial-gradient(ellipse at bottom left, rgba(37, 99, 235, 0.06) 0%, transparent 45%),
-    linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
 }
 
+/* ==================== 顶部 Header ==================== */
 .advisor-header {
-  position: relative;
-  padding: 16px 16px 14px;
-  background:
-    radial-gradient(ellipse at top right, rgba(14, 165, 233, 0.25) 0%, transparent 55%),
-    linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
-  overflow: hidden;
-}
-
-.advisor-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
-  pointer-events: none;
+  flex-shrink: 0;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
 }
 
 .header-avatar {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 700;
+  background: var(--chart-2);
+  color: var(--primary-foreground);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
-.header-action {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+.header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.header-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+  line-height: 1.3;
+}
+
+.header-subtitle {
+  font-size: 12px;
+  color: var(--muted-foreground);
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.header-action:active {
-  background: rgba(255, 255, 255, 0.24);
-  transform: scale(0.94);
+  gap: 5px;
+  line-height: 1.3;
+  margin-top: 2px;
 }
 
 .status-dot {
-  display: inline-block;
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #34d399;
-  margin-right: 6px;
-  vertical-align: middle;
+  background: var(--chart-1);
+  flex-shrink: 0;
 }
 
 .status-dot.pulsing {
-  background: #fbbf24;
+  background: var(--chart-3);
   animation: pulse 1s ease-in-out infinite;
 }
 
@@ -330,58 +389,92 @@ onUnmounted(() => {
   50% { opacity: 0.4; }
 }
 
+.header-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.header-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: var(--muted);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--foreground);
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.header-btn:active {
+  background: var(--accent);
+  transform: scale(0.94);
+}
+
+/* ==================== 消息列表区 ==================== */
 .messages-area {
   flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
+/* ==================== 欢迎卡片 ==================== */
 .welcome-section {
-  margin-bottom: 16px;
+  margin-bottom: 4px;
 }
 
 .welcome-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  gap: 10px;
 }
 
 .welcome-avatar {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #0ea5e9, #2563eb);
-  color: #fff;
-  font-size: 22px;
-  font-weight: 700;
+  background: var(--chart-2);
+  color: var(--primary-foreground);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 14px;
+  margin-bottom: 4px;
 }
 
 .welcome-title {
   font-size: 17px;
   font-weight: 600;
-  color: #f8fafc;
+  color: var(--foreground);
 }
 
 .welcome-desc {
   font-size: 13px;
-  color: #94a3b8;
+  color: var(--muted-foreground);
   line-height: 1.7;
-  margin-top: 10px;
 }
 
 .welcome-tip {
   font-size: 12px;
-  color: #64748b;
-  margin-top: 14px;
+  color: var(--muted-foreground);
+  margin-top: 4px;
 }
 
+/* ==================== 消息气泡 ==================== */
 .message-row {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 16px;
   gap: 8px;
 }
 
@@ -393,55 +486,74 @@ onUnmounted(() => {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #0ea5e9, #2563eb);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-foreground);
+}
+
+.assistant-avatar {
+  background: var(--chart-2);
 }
 
 .user-avatar {
-  background: linear-gradient(135deg, #34d399, #22d3ee);
-  font-size: 13px;
-  font-weight: 600;
+  background: var(--chart-1);
 }
 
 .msg-bubble {
   max-width: 75%;
   padding: 10px 14px;
-  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.6;
   word-break: break-word;
 }
 
 .is-assistant .msg-bubble {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-top-left-radius: 4px;
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border-radius: 16px;
+  border-top-left-radius: 6px;
 }
 
 .is-user .msg-bubble {
-  background: linear-gradient(135deg, #34d399 0%, #22d3ee 50%, #a78bfa 100%);
-  color: #0b1220;
-  border-top-right-radius: 4px;
+  background: var(--chart-2);
+  color: var(--primary-foreground);
+  border-radius: 16px;
+  border-top-right-radius: 6px;
+  font-weight: 500;
 }
 
 .msg-content {
-  font-size: 14px;
-  line-height: 1.6;
   white-space: pre-wrap;
 }
 
-.is-user .msg-content {
-  font-weight: 500;
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 6px;
+  padding: 3px 8px;
+  font-size: 11px;
+  color: var(--muted-foreground);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 24px;
+}
+.copy-btn:active {
+  transform: scale(0.95);
+  background: var(--secondary);
 }
 
 .cursor {
   display: inline-block;
   margin-left: 1px;
-  color: #0ea5e9;
+  color: var(--chart-2);
   animation: blink 1s steps(2, start) infinite;
 }
 
@@ -449,28 +561,22 @@ onUnmounted(() => {
   to { visibility: hidden; }
 }
 
-.loading-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
+/* 加载指示 */
+.loading-row .msg-bubble {
+  padding: 14px 16px;
 }
 
 .loading-dots {
   display: flex;
+  align-items: center;
   gap: 4px;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 16px;
-  border-top-left-radius: 4px;
 }
 
 .loading-dots span {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #0ea5e9;
+  background: var(--muted-foreground);
   animation: bounce 1.2s ease-in-out infinite;
 }
 
@@ -487,22 +593,25 @@ onUnmounted(() => {
   40% { transform: scale(1); opacity: 1; }
 }
 
+/* ==================== 快捷问题区 ==================== */
 .quick-panel {
-  background: rgba(15, 23, 42, 0.72);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 12px 12px 8px;
+  flex-shrink: 0;
+  background: var(--muted);
+  border-top: 1px solid var(--border);
   max-height: 260px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 12px 0;
 }
 
 .quick-categories {
   display: flex;
-  gap: 6px;
+  gap: 8px;
+  padding: 0 12px 12px;
   overflow-x: auto;
-  padding-bottom: 8px;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
 
 .quick-categories::-webkit-scrollbar {
@@ -510,76 +619,104 @@ onUnmounted(() => {
 }
 
 .category-chip {
-  flex-shrink: 0;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  padding: 5px 12px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 4px;
+  padding: 6px 12px;
+  min-height: 32px;
   border-radius: 999px;
   font-size: 12px;
-  color: #94a3b8;
+  font-weight: 500;
   white-space: nowrap;
-  transition: all 0.2s ease;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .category-chip.active {
-  background: rgba(14, 165, 233, 0.12);
-  border-color: rgba(14, 165, 233, 0.35);
-  color: #38bdf8;
-  font-weight: 500;
-  box-shadow: 0 0 14px rgba(14, 165, 233, 0.18);
+  background: var(--tint-chart-2-10);
+  color: var(--chart-2);
+  border-color: var(--chart-2);
 }
 
 .quick-list {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  padding: 0 12px;
 }
 
 .quick-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  padding: 0 14px;
+  min-height: 48px;
   display: flex;
   align-items: center;
-  padding: 11px 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  gap: 8px;
-  transition: all 0.2s ease;
+  gap: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s ease, transform 0.15s ease;
 }
 
 .quick-item:active {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--accent);
+  transform: scale(0.98);
 }
 
 .quick-icon {
-  font-size: 16px;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--tint-chart-2-10);
+  color: var(--chart-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .quick-text {
   flex: 1;
   font-size: 13px;
-  color: #f8fafc;
+  color: var(--foreground);
+  line-height: 1.4;
+  text-align: left;
 }
 
+.quick-arrow {
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+}
+
+/* ==================== 输入区 ==================== */
+/* MainLayout 的 main-content.with-dock 已通过 padding-bottom 预留 Dock + 安全区空间，
+   此处不再重复添加 safe-area-inset-bottom，避免双重间距 */
 .input-area {
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  padding: 10px 12px;
 }
 
 .input-row {
   display: flex;
   align-items: flex-end;
-  gap: 8px;
+  gap: 10px;
 }
 
 .input-field {
   flex: 1;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--muted);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 4px 14px;
 }
@@ -587,18 +724,44 @@ onUnmounted(() => {
 .input-field :deep(.van-field__control) {
   font-size: 14px;
   line-height: 1.5;
-  color: #f8fafc;
+  color: var(--foreground);
+  background: transparent;
 }
 
 .send-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
   padding: 0;
+  border-radius: 50%;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-foreground);
 }
 
 .send-btn :deep(.van-icon) {
   margin: 0;
+}
+
+/* ==================== 小屏适配 ==================== */
+@media (max-width: 360px) {
+  .advisor-header {
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 12px 12px;
+  }
+  .messages-area {
+    padding: 12px 8px;
+  }
+  .quick-categories {
+    padding: 0 8px 12px;
+  }
+  .quick-list {
+    padding: 0 8px;
+  }
+  .input-area {
+    padding: 10px 8px;
+  }
 }
 </style>

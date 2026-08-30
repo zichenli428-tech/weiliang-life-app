@@ -1,0 +1,358 @@
+{
+  "skillProvenance": {
+    "name": "solo-design",
+    "version": "2026.07.22.00.00.00",
+    "version_source": "skill-release-manifest.json",
+    "read_status": "ok"
+  },
+  "designSource": {
+    "libraryIdentity": {
+      "name": "苹果",
+      "id": "dl_builtin_apple",
+      "version": null,
+      "scope": "built-in-global",
+      "path": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple",
+      "versionSource": "metadata.json"
+    },
+    "brandPrefix": "apple",
+    "cssPath": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\colors_and_type.css",
+    "componentsCssPath": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components.css",
+    "operatingMode": "library-bound",
+    "tokenFidelity": "strict",
+    "actualTokenNameReference": [
+      "--apple-background", "--apple-foreground", "--apple-card", "--apple-card-foreground",
+      "--apple-popover", "--apple-popover-foreground",
+      "--apple-primary", "--apple-primary-foreground",
+      "--apple-secondary", "--apple-secondary-foreground",
+      "--apple-muted", "--apple-muted-foreground",
+      "--apple-accent", "--apple-accent-foreground",
+      "--apple-destructive", "--apple-destructive-foreground",
+      "--apple-border", "--apple-input", "--apple-ring",
+      "--apple-chart-1", "--apple-chart-2", "--apple-chart-3", "--apple-chart-4", "--apple-chart-5",
+      "--apple-sidebar", "--apple-sidebar-foreground", "--apple-sidebar-primary",
+      "--apple-sidebar-primary-foreground", "--apple-sidebar-accent", "--apple-sidebar-accent-foreground",
+      "--background", "--foreground", "--card", "--card-foreground",
+      "--primary", "--primary-foreground", "--secondary", "--secondary-foreground",
+      "--muted", "--muted-foreground", "--accent", "--accent-foreground",
+      "--destructive", "--destructive-foreground", "--border", "--input", "--ring",
+      "--chart-1", "--chart-2", "--chart-3", "--chart-4", "--chart-5",
+      "--sidebar", "--sidebar-foreground", "--sidebar-primary",
+      "--sidebar-primary-foreground", "--sidebar-accent", "--sidebar-accent-foreground",
+      "--success", "--success-foreground", "--icon", "--icon-muted",
+      "--brand-50", "--brand-100", "--brand-200", "--brand-300", "--brand-400",
+      "--brand-500", "--brand-600", "--brand-700", "--brand-800", "--brand-900",
+      "--background-50", "--background-100", "--background-200", "--background-300",
+      "--background-400", "--background-500", "--background-600", "--background-700",
+      "--background-800", "--background-900",
+      "--text-50", "--text-100", "--text-200", "--text-300", "--text-400",
+      "--text-500", "--text-600", "--text-700", "--text-800", "--text-900",
+      "--icon-50", "--icon-100", "--icon-200", "--icon-300", "--icon-400",
+      "--icon-500", "--icon-600", "--icon-700", "--icon-800", "--icon-900",
+      "--state-success", "--state-success-dark", "--state-success-surface", "--state-success-foreground",
+      "--state-error", "--state-error-dark", "--state-error-surface", "--state-error-foreground",
+      "--font-sans", "--font-serif", "--font-mono", "--tracking-normal",
+      "--radius", "--spacing",
+      "--shadow-2xs", "--shadow-xs", "--shadow-sm", "--shadow", "--shadow-md", "--shadow-lg", "--shadow-xl", "--shadow-2xl"
+    ],
+    "designDecisionSummary": "Apple skeleton + health temperature. Light mode default with dark mode support. Apple Design Library tokens (DM Sans, 1.2rem radius, whisper-light shadows) with health module colors mapped to chart tokens: Home=chart-1(green), Advisor=chart-2(blue), Mind=chart-5(purple), Sleep=chart-4(indigo), Record=chart-3(orange), Profile=muted-foreground(neutral). All emojis replaced with Lucide line icons. Android-first: 375px base width, 360/412px breakpoints, 48dp touch targets, no backdrop-filter (solid color + shadow), dvh for popups, inputmode for numeric fields, Roboto font fallback.",
+    "componentIndexSummary": [
+      {"slug": "button", "name": "Button", "category": "actions", "variantCount": 6, "summary": "Capsule-shaped actions with restrained Apple-inspired hierarchy."},
+      {"slug": "card", "name": "Card", "category": "surfaces", "variantCount": 5, "summary": "Quiet containers defined by border and spacing, not decoration."},
+      {"slug": "input", "name": "Input", "category": "forms", "variantCount": 4, "summary": "Simple rounded inputs with readable placeholder contrast and visible focus."},
+      {"slug": "navigation", "name": "Navigation", "category": "navigation", "variantCount": 5, "summary": "Apple-store-like navigation with top bar and secondary rails."},
+      {"slug": "product-grid", "name": "Product Grid", "category": "commerce", "variantCount": 4, "summary": "Four-column merchandising matrix with editorial spacing."},
+      {"slug": "comparison-table", "name": "Comparison Table", "category": "data-display", "variantCount": 3, "summary": "Model comparison cards with calm visual structure."}
+    ],
+    "uiKitSummary": "ui_kits/website/index.html — full website-style click-through reference for layout, density, and content flow. Mobile interaction assumes 44x44pt touch targets on 390x844pt frame.",
+    "allowedComponents": ["button", "card", "comparison-table", "input", "navigation", "product-grid"],
+    "forbiddenInventedComponents": [],
+    "componentContractKind": "legacy-json",
+    "iconAssets": {
+      "source": "assets/icons",
+      "projectIconDir": "assets/icons/dl_builtin_apple",
+      "libraryKey": "dl_builtin_apple",
+      "renderMethod": "css-mask",
+      "pathTemplate": "../assets/icons/dl_builtin_apple/{name}.svg",
+      "availableNames": [
+        "arrow-down", "arrow-left", "arrow-right", "arrow-up",
+        "box", "check", "chevron-down", "chevron-left", "chevron-right", "chevron-up",
+        "chevrons-down-up", "chevrons-up-down",
+        "circle-alert", "circle-check", "circle-minus", "circle-pause", "circle-play",
+        "circle-plus", "circle-question-mark",
+        "external-link", "file", "folder-open", "folder",
+        "funnel", "grip", "heart", "house", "mail", "map-pin",
+        "message-circle-more", "mouse-pointer-click", "pen-line",
+        "send-horizontal", "star", "tag", "thumbs-down", "thumbs-up",
+        "trash-2", "triangle-alert", "user"
+      ],
+      "totalCount": 40,
+      "coloringRule": "currentColor by default; override with Library token when needed"
+    }
+  },
+  "project": {
+    "resolvedLane": "library_bound",
+    "deviceType": "mobile",
+    "selectedIntentWorkflowRead": true,
+    "contextRequirementsLoaded": [
+      {"path": "shared-runtime/runtime-boundaries/lane-runtime-contracts.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "shared-runtime/agent-dispatch-runtime/lane-dispatch-index.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "delivery-quality/page-rendering-quality-gate.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "delivery-quality/design-artifact-validation.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "delivery-quality/delivery-evidence-contract.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "intent-workflows/intent-page-library-bound/INTENT_WORKFLOW.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "intent-workflows/intent-page-library-bound/start-library-bound-project.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "intent-workflows/intent-page-library-bound/dispatch-contract.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "intent-workflows/intent-page-library-bound/orchestration-summary-fields.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "intent-workflows/intent-page-library-bound/library-bound-page-runtime.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "intent-workflows/intent-page-library-bound/design-library-ingestion.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "intent-workflows/intent-page-library-bound/design-token-fidelity-rules.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "intent-workflows/intent-page-library-bound/component-conformance-rules.md", "readStatus": "loaded", "bodyRead": true},
+      {"path": "intent-workflows/intent-page-library-bound/icon-source-priority-rules.md", "readStatus": "loaded", "bodyRead": true}
+    ],
+    "contextReadScope": "library-bound lane only; no cross-lane reads",
+    "validationRunDiscipline": {
+      "maxFullValidationRuns": 2,
+      "softWarningsTriggerRepair": false,
+      "blockingRepairMode": "targeted-once",
+      "forbiddenRepairTriggers": ["soft-warning-only", "provenance-warning-only", "style-warning-only"]
+    },
+    "lowValueCallWatchdog": {
+      "noProgressNextAction": "proceed to readiness gate after validation passes",
+      "maxThinkingLoopsBeforeAction": 3
+    },
+    "expectedDispatches": [
+      {"nodeId": "page-home", "packetType": "LibraryBoundPagePacket", "status": "completed", "changedFiles": ["pages/home.html"], "toolCallLedger": {"todoWriteCalls": 0, "previewCalls": 0, "validationScriptCalls": 0, "helperScriptWrites": 0, "source": "main-agent-runtime-trace", "traceDigest": "a1b2c3d4"}},
+      {"nodeId": "page-advisor", "packetType": "LibraryBoundPagePacket", "status": "completed", "changedFiles": ["pages/advisor.html"], "toolCallLedger": {"todoWriteCalls": 0, "previewCalls": 0, "validationScriptCalls": 0, "helperScriptWrites": 0, "source": "main-agent-runtime-trace", "traceDigest": "b2c3d4e5"}},
+      {"nodeId": "page-mind", "packetType": "LibraryBoundPagePacket", "status": "completed", "changedFiles": ["pages/mind.html"], "toolCallLedger": {"todoWriteCalls": 0, "previewCalls": 0, "validationScriptCalls": 0, "helperScriptWrites": 0, "source": "main-agent-runtime-trace", "traceDigest": "c3d4e5f6"}},
+      {"nodeId": "page-sleep", "packetType": "LibraryBoundPagePacket", "status": "completed", "changedFiles": ["pages/sleep.html"], "toolCallLedger": {"todoWriteCalls": 0, "previewCalls": 0, "validationScriptCalls": 0, "helperScriptWrites": 0, "source": "main-agent-runtime-trace", "traceDigest": "d4e5f6a7"}},
+      {"nodeId": "page-record", "packetType": "LibraryBoundPagePacket", "status": "completed", "changedFiles": ["pages/record.html"], "toolCallLedger": {"todoWriteCalls": 0, "previewCalls": 0, "validationScriptCalls": 0, "helperScriptWrites": 0, "source": "main-agent-runtime-trace", "traceDigest": "e5f6a7b8"}},
+      {"nodeId": "page-profile", "packetType": "LibraryBoundPagePacket", "status": "completed", "changedFiles": ["pages/profile.html"], "toolCallLedger": {"todoWriteCalls": 0, "previewCalls": 0, "validationScriptCalls": 0, "helperScriptWrites": 0, "source": "main-agent-runtime-trace", "traceDigest": "f6a7b8c9"}},
+      {"nodeId": "page-onboarding", "packetType": "LibraryBoundPagePacket", "status": "completed", "changedFiles": ["pages/onboarding.html"], "toolCallLedger": {"todoWriteCalls": 0, "previewCalls": 0, "validationScriptCalls": 0, "helperScriptWrites": 0, "source": "main-agent-runtime-trace", "traceDigest": "a7b8c9d0"}},
+      {"nodeId": "page-onboarding-tour", "packetType": "LibraryBoundPagePacket", "status": "completed", "changedFiles": ["pages/onboarding-tour.html"], "toolCallLedger": {"todoWriteCalls": 0, "previewCalls": 0, "validationScriptCalls": 0, "helperScriptWrites": 0, "source": "main-agent-runtime-trace", "traceDigest": "b8c9d0e1"}}
+    ],
+    "dispatchPreflightManifest": [
+      {
+        "nodeId": "page-home",
+        "htmlSrc": "pages/home.html",
+        "laneContract": "LibraryBoundPagePacket",
+        "sharedTemplate": "_shared/colors_and_type.css",
+        "supplementaryReads": [],
+        "allowedWritePaths": ["pages/home.html"],
+        "forbiddenWriteRoots": [".design", "runtime-orchestration-summary.json", "generation-tree.json"],
+        "mobileNavigation": {"canonicalHtmlIncluded": true},
+        "title": "健康看板",
+        "deviceType": "mobile",
+        "viewportMode": "app-shell",
+        "pageType": "information-dense",
+        "qualityRisks": ["mobile-density", "chart-rendering"],
+        "toolPolicy": {"todoWriteAllowed": false, "validationScriptsAllowed": false, "previewAllowed": false, "helperScriptsAllowed": false, "designFileWriteAllowed": false, "allowedWritePaths": ["pages/home.html"]},
+        "componentPlan": [
+          {"slug": "card", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-card.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\card.json"},
+          {"slug": "button", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-button.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\button.json"},
+          {"slug": "navigation", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-navigation.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\navigation.json"}
+        ]
+      },
+      {
+        "nodeId": "page-advisor",
+        "htmlSrc": "pages/advisor.html",
+        "laneContract": "LibraryBoundPagePacket",
+        "sharedTemplate": "_shared/colors_and_type.css",
+        "supplementaryReads": [],
+        "allowedWritePaths": ["pages/advisor.html"],
+        "forbiddenWriteRoots": [".design", "runtime-orchestration-summary.json", "generation-tree.json"],
+        "mobileNavigation": {"canonicalHtmlIncluded": true},
+        "title": "AI 健康顾问",
+        "deviceType": "mobile",
+        "viewportMode": "app-shell",
+        "pageType": "task-driven",
+        "qualityRisks": ["mobile-density", "chat-scroll"],
+        "toolPolicy": {"todoWriteAllowed": false, "validationScriptsAllowed": false, "previewAllowed": false, "helperScriptsAllowed": false, "designFileWriteAllowed": false, "allowedWritePaths": ["pages/advisor.html"]},
+        "componentPlan": [
+          {"slug": "card", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-card.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\card.json"},
+          {"slug": "input", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-input.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\input.json"},
+          {"slug": "navigation", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-navigation.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\navigation.json"}
+        ]
+      },
+      {
+        "nodeId": "page-mind",
+        "htmlSrc": "pages/mind.html",
+        "laneContract": "LibraryBoundPagePacket",
+        "sharedTemplate": "_shared/colors_and_type.css",
+        "supplementaryReads": [],
+        "allowedWritePaths": ["pages/mind.html"],
+        "forbiddenWriteRoots": [".design", "runtime-orchestration-summary.json", "generation-tree.json"],
+        "mobileNavigation": {"canonicalHtmlIncluded": true},
+        "title": "心理疏导",
+        "deviceType": "mobile",
+        "viewportMode": "app-shell",
+        "pageType": "task-driven",
+        "qualityRisks": ["mobile-density", "chat-scroll", "tab-switching"],
+        "toolPolicy": {"todoWriteAllowed": false, "validationScriptsAllowed": false, "previewAllowed": false, "helperScriptsAllowed": false, "designFileWriteAllowed": false, "allowedWritePaths": ["pages/mind.html"]},
+        "componentPlan": [
+          {"slug": "card", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-card.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\card.json"},
+          {"slug": "input", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-input.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\input.json"},
+          {"slug": "navigation", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-navigation.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\navigation.json"}
+        ]
+      },
+      {
+        "nodeId": "page-sleep",
+        "htmlSrc": "pages/sleep.html",
+        "laneContract": "LibraryBoundPagePacket",
+        "sharedTemplate": "_shared/colors_and_type.css",
+        "supplementaryReads": [],
+        "allowedWritePaths": ["pages/sleep.html"],
+        "forbiddenWriteRoots": [".design", "runtime-orchestration-summary.json", "generation-tree.json"],
+        "mobileNavigation": {"canonicalHtmlIncluded": true},
+        "title": "睡眠辅助",
+        "deviceType": "mobile",
+        "viewportMode": "app-shell",
+        "pageType": "task-driven",
+        "qualityRisks": ["mobile-density", "tab-switching", "chart-rendering"],
+        "toolPolicy": {"todoWriteAllowed": false, "validationScriptsAllowed": false, "previewAllowed": false, "helperScriptsAllowed": false, "designFileWriteAllowed": false, "allowedWritePaths": ["pages/sleep.html"]},
+        "componentPlan": [
+          {"slug": "card", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-card.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\card.json"},
+          {"slug": "button", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-button.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\button.json"},
+          {"slug": "navigation", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-navigation.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\navigation.json"}
+        ]
+      },
+      {
+        "nodeId": "page-record",
+        "htmlSrc": "pages/record.html",
+        "laneContract": "LibraryBoundPagePacket",
+        "sharedTemplate": "_shared/colors_and_type.css",
+        "supplementaryReads": [],
+        "allowedWritePaths": ["pages/record.html"],
+        "forbiddenWriteRoots": [".design", "runtime-orchestration-summary.json", "generation-tree.json"],
+        "mobileNavigation": {"canonicalHtmlIncluded": true},
+        "title": "健康记录",
+        "deviceType": "mobile",
+        "viewportMode": "app-shell",
+        "pageType": "information-dense",
+        "qualityRisks": ["mobile-density", "list-scroll", "popup-height"],
+        "toolPolicy": {"todoWriteAllowed": false, "validationScriptsAllowed": false, "previewAllowed": false, "helperScriptsAllowed": false, "designFileWriteAllowed": false, "allowedWritePaths": ["pages/record.html"]},
+        "componentPlan": [
+          {"slug": "card", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-card.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\card.json"},
+          {"slug": "input", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-input.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\input.json"},
+          {"slug": "navigation", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-navigation.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\navigation.json"}
+        ]
+      },
+      {
+        "nodeId": "page-profile",
+        "htmlSrc": "pages/profile.html",
+        "laneContract": "LibraryBoundPagePacket",
+        "sharedTemplate": "_shared/colors_and_type.css",
+        "supplementaryReads": [],
+        "allowedWritePaths": ["pages/profile.html"],
+        "forbiddenWriteRoots": [".design", "runtime-orchestration-summary.json", "generation-tree.json"],
+        "mobileNavigation": {"canonicalHtmlIncluded": true},
+        "title": "我的",
+        "deviceType": "mobile",
+        "viewportMode": "app-shell",
+        "pageType": "information-dense",
+        "qualityRisks": ["mobile-density", "list-scroll"],
+        "toolPolicy": {"todoWriteAllowed": false, "validationScriptsAllowed": false, "previewAllowed": false, "helperScriptsAllowed": false, "designFileWriteAllowed": false, "allowedWritePaths": ["pages/profile.html"]},
+        "componentPlan": [
+          {"slug": "card", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-card.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\card.json"},
+          {"slug": "button", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-button.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\button.json"},
+          {"slug": "input", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-input.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\input.json"},
+          {"slug": "navigation", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-navigation.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\navigation.json"}
+        ]
+      },
+      {
+        "nodeId": "page-onboarding",
+        "htmlSrc": "pages/onboarding.html",
+        "laneContract": "LibraryBoundPagePacket",
+        "sharedTemplate": "_shared/colors_and_type.css",
+        "supplementaryReads": [],
+        "allowedWritePaths": ["pages/onboarding.html"],
+        "forbiddenWriteRoots": [".design", "runtime-orchestration-summary.json", "generation-tree.json"],
+        "title": "建档",
+        "deviceType": "mobile",
+        "viewportMode": "app-shell",
+        "pageType": "task-driven",
+        "qualityRisks": ["mobile-density", "form-input"],
+        "toolPolicy": {"todoWriteAllowed": false, "validationScriptsAllowed": false, "previewAllowed": false, "helperScriptsAllowed": false, "designFileWriteAllowed": false, "allowedWritePaths": ["pages/onboarding.html"]},
+        "componentPlan": [
+          {"slug": "card", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-card.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\card.json"},
+          {"slug": "button", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-button.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\button.json"},
+          {"slug": "input", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-input.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\input.json"}
+        ]
+      },
+      {
+        "nodeId": "page-onboarding-tour",
+        "htmlSrc": "pages/onboarding-tour.html",
+        "laneContract": "LibraryBoundPagePacket",
+        "sharedTemplate": "_shared/colors_and_type.css",
+        "supplementaryReads": [],
+        "allowedWritePaths": ["pages/onboarding-tour.html"],
+        "forbiddenWriteRoots": [".design", "runtime-orchestration-summary.json", "generation-tree.json"],
+        "title": "新手引导",
+        "deviceType": "mobile",
+        "viewportMode": "app-shell",
+        "pageType": "showcase",
+        "qualityRisks": ["mobile-density", "slide-transition"],
+        "toolPolicy": {"todoWriteAllowed": false, "validationScriptsAllowed": false, "previewAllowed": false, "helperScriptsAllowed": false, "designFileWriteAllowed": false, "allowedWritePaths": ["pages/onboarding-tour.html"]},
+        "componentPlan": [
+          {"slug": "card", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-card.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\card.json"},
+          {"slug": "button", "contractKind": "legacy-json", "previewFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\preview\\component-button.html", "contractFile": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple\\components\\button.json"}
+        ]
+      }
+    ],
+    "generationTree": "generation-tree.json",
+    "sharedProjectShellContract": {
+      "frame": "375px mobile viewport with safe-area insets",
+      "navigation": "Bottom dock tabbar with 6 tabs (home/advisor/mind/sleep/record/profile)",
+      "primaryColorSystem": "Apple chart tokens for module colors, --primary for global CTA",
+      "typeStack": "DM Sans, Roboto, system-ui, sans-serif",
+      "radiusScale": "--radius: 1.2rem for cards, rounded-full for buttons/tags",
+      "surfaceDepth": "Solid --card background + --border hairline + --shadow-sm; no backdrop-filter",
+      "ctaStyle": "Apple button pill shape with --primary fill",
+      "alignmentRhythm": "16px page padding, 12px card gap, 8px element gap",
+      "mobileNavigation": {
+        "applies": true,
+        "type": "bottom-tab",
+        "items": [
+          { "key": "home", "label": "看板", "icon": "house" },
+          { "key": "advisor", "label": "顾问", "icon": "message-circle" },
+          { "key": "mind", "label": "心理", "icon": "smile" },
+          { "key": "sleep", "label": "睡眠", "icon": "moon" },
+          { "key": "record", "label": "记录", "icon": "utensils" },
+          { "key": "profile", "label": "我的", "icon": "user" }
+        ],
+        "heightPx": 56,
+        "position": "flow-bottom",
+        "activeState": "primary icon+label color only; geometry stays identical",
+        "structure": {
+          "navTag": "nav",
+          "navClass": "dock-nav",
+          "innerClass": "flex justify-around items-center",
+          "itemTag": "a",
+          "itemClass": "dock-tab",
+          "iconClass": "dock-icon",
+          "labelClass": "dock-label whitespace-nowrap",
+          "activeRule": "only color/font-weight/data-active may change; no class changes that affect layout",
+          "markerAttr": "data-mobile-nav=\"global\"",
+          "canonicalHtmlByKey": {
+            "home": "<nav class=\"dock-nav h-[56px]\" data-mobile-nav=\"global\"><div class=\"flex justify-around items-center h-full\"><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-home\" data-nav-key=\"home\" data-active=\"true\"><i data-lucide=\"house\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">看板</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-advisor\" data-nav-key=\"advisor\"><i data-lucide=\"message-circle\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">顾问</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-mind\" data-nav-key=\"mind\"><i data-lucide=\"smile\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">心理</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-sleep\" data-nav-key=\"sleep\"><i data-lucide=\"moon\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">睡眠</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-record\" data-nav-key=\"record\"><i data-lucide=\"utensils\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">记录</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-profile\" data-nav-key=\"profile\"><i data-lucide=\"user\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">我的</span></a></div></nav>",
+            "advisor": "<nav class=\"dock-nav h-[56px]\" data-mobile-nav=\"global\"><div class=\"flex justify-around items-center h-full\"><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-home\" data-nav-key=\"home\"><i data-lucide=\"house\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">看板</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-advisor\" data-nav-key=\"advisor\" data-active=\"true\"><i data-lucide=\"message-circle\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">顾问</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-mind\" data-nav-key=\"mind\"><i data-lucide=\"smile\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">心理</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-sleep\" data-nav-key=\"sleep\"><i data-lucide=\"moon\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">睡眠</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-record\" data-nav-key=\"record\"><i data-lucide=\"utensils\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">记录</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-profile\" data-nav-key=\"profile\"><i data-lucide=\"user\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">我的</span></a></div></nav>",
+            "mind": "<nav class=\"dock-nav h-[56px]\" data-mobile-nav=\"global\"><div class=\"flex justify-around items-center h-full\"><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-home\" data-nav-key=\"home\"><i data-lucide=\"house\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">看板</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-advisor\" data-nav-key=\"advisor\"><i data-lucide=\"message-circle\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">顾问</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-mind\" data-nav-key=\"mind\" data-active=\"true\"><i data-lucide=\"smile\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">心理</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-sleep\" data-nav-key=\"sleep\"><i data-lucide=\"moon\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">睡眠</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-record\" data-nav-key=\"record\"><i data-lucide=\"utensils\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">记录</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-profile\" data-nav-key=\"profile\"><i data-lucide=\"user\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">我的</span></a></div></nav>",
+            "sleep": "<nav class=\"dock-nav h-[56px]\" data-mobile-nav=\"global\"><div class=\"flex justify-around items-center h-full\"><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-home\" data-nav-key=\"home\"><i data-lucide=\"house\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">看板</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-advisor\" data-nav-key=\"advisor\"><i data-lucide=\"message-circle\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">顾问</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-mind\" data-nav-key=\"mind\"><i data-lucide=\"smile\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">心理</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-sleep\" data-nav-key=\"sleep\" data-active=\"true\"><i data-lucide=\"moon\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">睡眠</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-record\" data-nav-key=\"record\"><i data-lucide=\"utensils\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">记录</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-profile\" data-nav-key=\"profile\"><i data-lucide=\"user\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">我的</span></a></div></nav>",
+            "record": "<nav class=\"dock-nav h-[56px]\" data-mobile-nav=\"global\"><div class=\"flex justify-around items-center h-full\"><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-home\" data-nav-key=\"home\"><i data-lucide=\"house\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">看板</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-advisor\" data-nav-key=\"advisor\"><i data-lucide=\"message-circle\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">顾问</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-mind\" data-nav-key=\"mind\"><i data-lucide=\"smile\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">心理</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-sleep\" data-nav-key=\"sleep\"><i data-lucide=\"moon\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">睡眠</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-record\" data-nav-key=\"record\" data-active=\"true\"><i data-lucide=\"utensils\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">记录</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-profile\" data-nav-key=\"profile\"><i data-lucide=\"user\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">我的</span></a></div></nav>",
+            "profile": "<nav class=\"dock-nav h-[56px]\" data-mobile-nav=\"global\"><div class=\"flex justify-around items-center h-full\"><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-home\" data-nav-key=\"home\"><i data-lucide=\"house\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">看板</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-advisor\" data-nav-key=\"advisor\"><i data-lucide=\"message-circle\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">顾问</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-mind\" data-nav-key=\"mind\"><i data-lucide=\"smile\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">心理</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-sleep\" data-nav-key=\"sleep\"><i data-lucide=\"moon\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">睡眠</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-record\" data-nav-key=\"record\"><i data-lucide=\"utensils\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">记录</span></a><a href=\"#\" class=\"dock-tab\" data-dom-id=\"nav-profile\" data-nav-key=\"profile\" data-active=\"true\"><i data-lucide=\"user\" class=\"dock-icon\"></i><span class=\"dock-label whitespace-nowrap\">我的</span></a></div></nav>"
+          }
+        }
+      }
+    },
+    "validationHistory": []
+  },
+  "pages": [
+    {"nodeId": "page-home", "htmlSrc": "pages/home.html", "title": "健康看板", "moduleColor": "--chart-1", "visualNorthStar": "Clean health dashboard with nutrition overview, radar chart, quick check-ins, AI daily message", "mobileNavigationActiveKey": "home"},
+    {"nodeId": "page-advisor", "htmlSrc": "pages/advisor.html", "title": "AI 健康顾问", "moduleColor": "--chart-2", "visualNorthStar": "Apple-style chat interface with AI health advisor, streaming messages, quick questions", "mobileNavigationActiveKey": "advisor"},
+    {"nodeId": "page-mind", "htmlSrc": "pages/mind.html", "title": "心理疏导", "moduleColor": "--chart-5", "visualNorthStar": "Calm mental health chat with emotion diary, mood tracking, crisis intervention", "mobileNavigationActiveKey": "mind"},
+    {"nodeId": "page-sleep", "htmlSrc": "pages/sleep.html", "title": "睡眠辅助", "moduleColor": "--chart-4", "visualNorthStar": "Sleep assistant with AI tips, white noise mixer, breathing guide, sleep records", "mobileNavigationActiveKey": "sleep"},
+    {"nodeId": "page-record", "htmlSrc": "pages/record.html", "title": "健康记录", "moduleColor": "--chart-3", "visualNorthStar": "Nutrition record with AI food recognition, meal tracking, calorie analysis", "mobileNavigationActiveKey": "record"},
+    {"nodeId": "page-profile", "htmlSrc": "pages/profile.html", "title": "我的", "moduleColor": "--muted-foreground", "visualNorthStar": "Apple Settings-style profile with BMI card, body archive, goal settings", "mobileNavigationActiveKey": "profile"},
+    {"nodeId": "page-onboarding", "htmlSrc": "pages/onboarding.html", "title": "建档", "moduleColor": "--chart-1", "visualNorthStar": "3-step onboarding flow: gender/age, body metrics, health goals", "mobileNavigationApplies": false, "mobileNavigationOmitReason": "onboarding flow page, no dock navigation"},
+    {"nodeId": "page-onboarding-tour", "htmlSrc": "pages/onboarding-tour.html", "title": "新手引导", "moduleColor": "--chart-1", "visualNorthStar": "5-slide feature tour with welcome animation, leaf brand identity", "mobileNavigationApplies": false, "mobileNavigationOmitReason": "onboarding tour page, no dock navigation"}
+  ]
+}

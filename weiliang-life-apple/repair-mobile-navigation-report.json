@@ -1,0 +1,49 @@
+{
+  "success": true,
+  "repairedPages": [
+    {
+      "htmlSrc": "pages/home.html",
+      "action": "replace-data-mobile-nav-global",
+      "activeKey": "home"
+    },
+    {
+      "htmlSrc": "pages/advisor.html",
+      "action": "replace-data-mobile-nav-global",
+      "activeKey": "advisor"
+    },
+    {
+      "htmlSrc": "pages/mind.html",
+      "action": "replace-data-mobile-nav-global",
+      "activeKey": "mind"
+    },
+    {
+      "htmlSrc": "pages/sleep.html",
+      "action": "replace-data-mobile-nav-global",
+      "activeKey": "sleep"
+    },
+    {
+      "htmlSrc": "pages/record.html",
+      "action": "replace-data-mobile-nav-global",
+      "activeKey": "record"
+    },
+    {
+      "htmlSrc": "pages/profile.html",
+      "action": "replace-data-mobile-nav-global",
+      "activeKey": "profile"
+    }
+  ],
+  "skippedPages": [
+    {
+      "htmlSrc": "pages/onboarding.html",
+      "reason": "onboarding flow page, no dock navigation"
+    },
+    {
+      "htmlSrc": "pages/onboarding-tour.html",
+      "reason": "onboarding tour page, no dock navigation"
+    }
+  ],
+  "failedPages": [],
+  "repairCount": 6,
+  "previousFailedReportDetected": false,
+  "checkedAt": "2026-08-08T05:20:42.037Z"
+}

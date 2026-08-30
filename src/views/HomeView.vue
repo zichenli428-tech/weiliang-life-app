@@ -2,7 +2,7 @@
 /**
  * 健康看板（Tab 1）
  * PRD 3.4：今日数据概览、快捷打卡、健康雷达图 | AI 每日寄语（基于昨日数据生成）
- * 重设计：极光琉璃暗色风格，Bento 玻璃卡片布局
+ * 重设计：Apple 风格，浅色默认，实色卡片 + chart token 配色
  */
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -10,11 +10,13 @@ import { showToast } from 'vant'
 import EChart from '@/components/EChart.vue'
 import GlassCard from '@/components/GlassCard.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
+import AppleIcon from '@/components/AppleIcon.vue'
 import { useUserStore } from '@/store/modules/user'
 import { useDietStore } from '@/store/modules/diet'
 import { useSleepStore } from '@/store/modules/sleep'
 import { goalLabels } from '@/constants/user'
 import { chat, buildDailyMessagePrompt, isAIConfigured, type ApiMessage } from '@/services/ai'
+import { getCurrentWeather, isWeatherConfigured, type WeatherInfo } from '@/services/weather'
 import { showAITip } from '@/utils/aiToast'
 import type { ECOption } from '@/types/echarts'
 
@@ -22,6 +24,19 @@ const router = useRouter()
 const userStore = useUserStore()
 const dietStore = useDietStore()
 const sleepStore = useSleepStore()
+
+// ==================== 实时天气 ====================
+const weather = ref<WeatherInfo | null>(null)
+const weatherVisible = computed(() => isWeatherConfigured())
+
+async function fetchWeather() {
+  if (!isWeatherConfigured()) return
+  try {
+    weather.value = await getCurrentWeather()
+  } catch {
+    // 定位被拒绝或 API 失败时静默处理，不显示天气
+  }
+}
 
 // ==================== 今日营养汇总 ====================
 const todayCalories = computed(() => dietStore.todayCalories)
@@ -42,17 +57,22 @@ const todayNutrition = computed(() => ({
   carbs: { value: todayCarbs.value, target: 240, unit: 'g' }
 }))
 
-const nutritionItems = computed(() => [
-  { key: 'calories', label: '热量', ...todayNutrition.value.calories, color: '#34d399' },
-  { key: 'protein', label: '蛋白质', ...todayNutrition.value.protein, color: '#22d3ee' },
-  { key: 'fat', label: '脂肪', ...todayNutrition.value.fat, color: '#fbbf24' },
-  { key: 'carbs', label: '碳水', ...todayNutrition.value.carbs, color: '#a78bfa' }
-])
-
 const percent = (v: number, t: number) => Math.min(100, Math.round((v / t) * 100))
 
-/** 格式化数值：四舍五入到 1 位小数 */
-const formatNum = (v: number) => Math.round(v * 10) / 10
+// 维生素 & 微量元素：食物数据库无此两项数据，基于食物种类丰富度与餐次覆盖度动态估算
+// 无饮食记录时为 0；记录越多、餐次越全，得分越高（上限 100）
+const todayFoodCount = computed(() =>
+  dietStore.todayRecords.reduce((s, r) => s + r.foods.length, 0)
+)
+const todayMealTypes = computed(() =>
+  new Set(dietStore.todayRecords.map((r) => r.mealType)).size
+)
+const vitaminScore = computed(() =>
+  Math.min(100, Math.round(todayFoodCount.value * 14 + todayMealTypes.value * 6))
+)
+const traceElementScore = computed(() =>
+  Math.min(100, Math.round(todayFoodCount.value * 11 + todayMealTypes.value * 5))
+)
 
 // ==================== 健康雷达图 ====================
 const radarOption = computed<ECOption>(() => ({
@@ -68,14 +88,14 @@ const radarOption = computed<ECOption>(() => ({
     ],
     radius: '62%',
     splitNumber: 4,
-    axisName: { color: '#64748b', fontSize: 10 },
-    splitLine: { lineStyle: { color: 'rgba(255,255,255,0.08)' } },
+    axisName: { color: '#8e8e93', fontSize: 10 },
+    splitLine: { lineStyle: { color: 'rgba(142,142,147,0.2)' } },
     splitArea: {
       areaStyle: {
-        color: ['rgba(52,211,153,0.04)', 'rgba(52,211,153,0.02)', 'rgba(52,211,153,0.04)', 'rgba(52,211,153,0.02)']
+        color: ['rgba(52,199,89,0.04)', 'rgba(52,199,89,0.02)', 'rgba(52,199,89,0.04)', 'rgba(52,199,89,0.02)']
       }
     },
-    axisLine: { lineStyle: { color: 'rgba(255,255,255,0.1)' } }
+    axisLine: { lineStyle: { color: 'rgba(142,142,147,0.2)' } }
   },
   series: [
     {
@@ -87,13 +107,13 @@ const radarOption = computed<ECOption>(() => ({
             percent(todayNutrition.value.protein.value, todayNutrition.value.protein.target),
             percent(todayNutrition.value.fat.value, todayNutrition.value.fat.target),
             percent(todayNutrition.value.carbs.value, todayNutrition.value.carbs.target),
-            55,
-            40
+            vitaminScore.value,
+            traceElementScore.value
           ],
           name: '今日摄入',
-          areaStyle: { color: 'rgba(52, 211, 153, 0.25)' },
-          lineStyle: { color: '#34d399', width: 2 },
-          itemStyle: { color: '#34d399' }
+          areaStyle: { color: 'rgba(52, 199, 89, 0.18)' },
+          lineStyle: { color: '#34c759', width: 2 },
+          itemStyle: { color: '#34c759' }
         }
       ]
     }
@@ -101,7 +121,6 @@ const radarOption = computed<ECOption>(() => ({
 }))
 
 // ==================== 快捷打卡 ====================
-// 饮水/运动打卡持久化到 localStorage，按日期 key 存储，新一天自动重置为 0
 interface CheckinData {
   water: number
   exercise: number
@@ -131,14 +150,13 @@ function saveCheckinData(data: CheckinData): void {
 
 const checkinData = ref<CheckinData>(loadCheckinData())
 
-// 从 sleepStore 读取今日睡眠时长（bedtime→wakeTime 计算）
 function calcSleepHours(bedtime?: string, wakeTime?: string): number {
   if (!bedtime || !wakeTime) return 0
   const [bh, bm] = bedtime.split(':').map(Number)
   const [wh, wm] = wakeTime.split(':').map(Number)
   if (Number.isNaN(bh) || Number.isNaN(wh)) return 0
   let minutes = wh * 60 + wm - (bh * 60 + bm)
-  if (minutes < 0) minutes += 24 * 60 // 跨天（如 23:30 → 07:00）
+  if (minutes < 0) minutes += 24 * 60
   return Math.round((minutes / 60) * 10) / 10
 }
 
@@ -148,11 +166,10 @@ const sleepHours = computed(() => {
   return calcSleepHours(record.bedtime, record.wakeTime)
 })
 
-// 统一的打卡数据（computed 保证 sleep 时长实时同步）
 const checkins = computed(() => ({
-  water: { count: checkinData.value.water, target: 8, unit: '杯', icon: '💧' },
-  exercise: { count: checkinData.value.exercise, target: 30, unit: '分钟', icon: '🏃' },
-  sleep: { count: sleepHours.value, target: 8, unit: '小时', icon: '😴' }
+  water: { count: checkinData.value.water, target: 8, unit: '杯', icon: 'droplet', color: 'var(--chart-2)' },
+  exercise: { count: checkinData.value.exercise, target: 30, unit: '分钟', icon: 'dumbbell', color: 'var(--chart-3)' },
+  sleep: { count: sleepHours.value, target: 8, unit: '小时', icon: 'moon', color: 'var(--chart-4)' }
 }))
 
 const handleCheckin = (key: 'water' | 'exercise' | 'sleep') => {
@@ -165,7 +182,6 @@ const handleCheckin = (key: 'water' | 'exercise' | 'sleep') => {
     saveCheckinData(checkinData.value)
     showToast(`+15 分钟运动，今日已运动 ${checkinData.value.exercise} 分钟`)
   } else if (key === 'sleep') {
-    // 睡眠需要记录就寝/起床时间，跳转到睡眠记录页（直接定位到记录 tab）
     router.push('/sleep?tab=record')
   }
 }
@@ -192,10 +208,10 @@ function cacheMessage(msg: string): void {
 function getDefaultMessage(): string {
   const hour = new Date().getHours()
   const nickname = userStore.profile.nickname || '朋友'
-  if (hour < 11) return `早上好，${nickname}！新的一天，记得吃一顿营养丰富的早餐哦 🌅`
-  if (hour < 14) return `中午好，${nickname}！午餐记得搭配蔬菜和优质蛋白 🥗`
-  if (hour < 18) return `下午好，${nickname}！适当补充水分，保持活力 💧`
-  return `晚上好，${nickname}！晚餐清淡为主，睡前远离手机 🌙`
+  if (hour < 11) return `早上好，${nickname}！新的一天，记得吃一顿营养丰富的早餐哦`
+  if (hour < 14) return `中午好，${nickname}！午餐记得搭配蔬菜和优质蛋白`
+  if (hour < 18) return `下午好，${nickname}！适当补充水分，保持活力`
+  return `晚上好，${nickname}！晚餐清淡为主，睡前远离手机`
 }
 
 const refreshAiMessage = async () => {
@@ -263,6 +279,12 @@ const goToMind = () => router.push({ name: 'mind' })
 const goToRecord = () => router.push({ name: 'record' })
 const goToSleep = () => router.push({ name: 'sleep' })
 
+const quickEntries = computed(() => [
+  { title: '记录饮食', desc: '拍照 / 文字 / 语音识别', icon: 'utensils', action: goToRecord, color: 'var(--chart-3)' },
+  { title: '心理疏导', desc: 'AI 陪伴，倾听心声', icon: 'heart', action: goToMind, color: 'var(--chart-5)' },
+  { title: '睡眠辅助', desc: '白噪音 · 呼吸引导 · 睡眠记录', icon: 'moon', action: goToSleep, color: 'var(--chart-4)' }
+])
+
 onMounted(async () => {
   if (!dietStore.isLoaded) {
     await dietStore.loadFromStorage()
@@ -271,238 +293,356 @@ onMounted(async () => {
     await sleepStore.loadFromStorage()
   }
   refreshAiMessage()
+  fetchWeather()
 })
 </script>
 
 <template>
   <div class="page-container home-page">
-    <!-- 顶部 Aurora Hero -->
-    <div class="home-hero safe-area-top">
-      <div class="flex items-center justify-between">
-        <div>
-          <div class="glass-chip mb-2">
-            <span>{{ goalLabel?.icon || '✨' }}</span>
-            <span>{{ goalLabel?.label || '健康生活' }}</span>
-          </div>
-          <div class="text-2xl font-bold text-content-primary">
-            你好，{{ userStore.profile.nickname || '健康用户' }}
-          </div>
-          <div class="text-xs text-content-secondary mt-1">
-            今天也是向目标靠近的一天
-          </div>
+    <!-- 顶部 Hero -->
+    <section class="home-hero safe-area-top">
+      <div class="hero-row">
+        <div class="hero-left">
+          <span class="goal-chip">
+            <AppleIcon :name="goalLabel?.icon || 'sparkles'" :size="13" />
+            {{ goalLabel?.label || '健康生活' }}
+          </span>
+          <div class="hero-greeting">你好，{{ userStore.profile.nickname || '健康用户' }}</div>
+          <div class="hero-subtitle">今天也是向目标靠近的一天</div>
         </div>
-        <div class="weather-capsule">
-          <span class="text-xl">☀️</span>
-          <span class="text-xs text-content-primary mt-0.5">今日晴</span>
-        </div>
+        <span v-if="weatherVisible" class="weather-chip">
+          <AppleIcon v-if="weather" :name="weather.icon" :size="15" :style="{ color: weather.color }" />
+          <AppleIcon v-else name="cloud" :size="15" style="color: var(--muted-foreground)" />
+          {{ weather ? `${weather.text} ${weather.temp}°` : '获取中…' }}
+        </span>
       </div>
-    </div>
+    </section>
 
     <div class="page-body stagger-fade-up">
       <!-- AI 每日寄语 -->
-      <GlassCard class="mx-4 mb-4 gradient-border" padding="md">
-        <div class="flex items-center gap-2 mb-2">
-          <div class="ai-avatar">AI</div>
-          <span class="text-sm font-semibold aurora-text">每日寄语</span>
-          <van-icon name="replay" class="ml-auto text-aurora-green" @click="handleRefreshMessage" />
+      <GlassCard class="ai-card">
+        <div class="ai-head">
+          <span class="ai-avatar"><AppleIcon name="sparkles" :size="16" /></span>
+          <span class="ai-label">每日寄语</span>
+          <button class="ai-refresh" aria-label="刷新寄语" @click="handleRefreshMessage">
+            <AppleIcon name="rotate-ccw" :size="16" />
+          </button>
         </div>
-        <div class="ai-message">
-          <van-loading v-if="aiLoading" type="spinner" size="16px" color="#34d399" />
-          <span v-else class="text-content-primary text-sm leading-relaxed">{{ aiMessage }}</span>
+        <div class="ai-text">
+          <van-loading v-if="aiLoading" type="spinner" size="16px" color="var(--primary)" />
+          <span v-else>{{ aiMessage }}</span>
         </div>
       </GlassCard>
 
-      <!-- 今日数据概览 -->
-      <SectionTitle title="今日营养" icon="🥗" class="px-4" />
-      <div class="grid grid-cols-2 gap-3 px-4 mb-4">
-        <GlassCard
-          v-for="item in nutritionItems"
-          :key="item.key"
-          padding="sm"
-          glow="green"
-          class="nutrition-card"
+      <!-- 快捷入口 -->
+      <SectionTitle title="快捷入口" icon="zap" color="var(--chart-1)" class="section-wrap" />
+      <div class="entry-list">
+        <a
+          v-for="entry in quickEntries"
+          :key="entry.title"
+          class="entry-card"
+          @click="entry.action"
         >
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-xs text-content-secondary">{{ item.label }}</span>
-            <span class="text-[10px] text-content-tertiary">{{ percent(item.value, item.target) }}%</span>
-          </div>
-          <div class="flex items-baseline gap-1 mb-2">
-            <span class="text-xl font-bold" :style="{ color: item.color }">{{ formatNum(item.value) }}</span>
-            <span class="text-[10px] text-content-tertiary">/ {{ item.target }} {{ item.unit }}</span>
-          </div>
-          <van-progress
-            :percentage="percent(item.value, item.target)"
-            stroke-width="5"
-            :color="item.color"
-            track-color="rgba(255,255,255,0.08)"
-            :show-pivot="false"
-          />
-        </GlassCard>
+          <span class="entry-icon" :style="{ background: `color-mix(in srgb, ${entry.color} 10%, transparent)` }">
+            <AppleIcon :name="entry.icon" :size="20" :style="{ color: entry.color }" />
+          </span>
+          <span class="entry-text">
+            <span class="entry-title">{{ entry.title }}</span>
+            <span class="entry-desc">{{ entry.desc }}</span>
+          </span>
+          <span class="entry-chevron"><AppleIcon name="chevron-right" :size="18" /></span>
+        </a>
       </div>
 
-      <!-- 健康雷达图 -->
-      <SectionTitle title="健康雷达" icon="📊" class="px-4" />
-      <GlassCard class="mx-4 mb-4" padding="sm" glow="green">
-        <EChart :option="radarOption" height="260px" />
-      </GlassCard>
-
       <!-- 快捷打卡 -->
-      <SectionTitle title="快捷打卡" icon="✅" class="px-4" />
-      <div class="grid grid-cols-3 gap-3 px-4 mb-4">
-        <GlassCard
+      <SectionTitle title="快捷打卡" icon="circle-check" color="var(--chart-1)" class="section-wrap" />
+      <div class="checkin-grid">
+        <div
           v-for="(item, key) in checkins"
           :key="key"
-          padding="sm"
-          glow="cyan"
           class="checkin-card"
           @click="handleCheckin(key as 'water' | 'exercise' | 'sleep')"
         >
-          <div class="text-2xl mb-1">{{ item.icon }}</div>
-          <div class="text-[10px] text-content-secondary">
-            {{ item.count }}/{{ item.target }} {{ item.unit }}
-          </div>
-          <div class="checkin-btn">+ 打卡</div>
-        </GlassCard>
-      </div>
-
-      <!-- 快捷入口 -->
-      <SectionTitle title="快捷入口" icon="🚀" class="px-4" />
-      <div class="px-4 pb-4 space-y-3">
-        <div
-          v-for="entry in [
-            { title: '记录饮食', desc: '拍照 / 文字 / 语音识别', icon: '🍽️', action: goToRecord, color: '#f59e0b' },
-            { title: '心理疏导', desc: 'AI 陪伴，倾听心声', icon: '💛', action: goToMind, color: '#a3e635' },
-            { title: '睡眠辅助', desc: '白噪音 · 呼吸引导 · 睡眠记录', icon: '🌙', action: goToSleep, color: '#818cf8' }
-          ]"
-          :key="entry.title"
-          class="quick-entry"
-          @click="entry.action"
-        >
-          <div class="quick-entry-icon" :style="{ background: `linear-gradient(135deg, ${entry.color}, transparent)`, boxShadow: `0 0 16px ${entry.color}30` }">
-            {{ entry.icon }}
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="text-sm font-medium text-content-primary">{{ entry.title }}</div>
-            <div class="text-xs text-content-secondary">{{ entry.desc }}</div>
-          </div>
-          <van-icon name="arrow" class="text-content-tertiary" />
+          <AppleIcon :name="item.icon" :size="24" :style="{ color: item.color }" />
+          <span class="checkin-val">{{ item.count }}/{{ item.target }} {{ item.unit }}</span>
+          <span class="checkin-btn">+ 打卡</span>
         </div>
       </div>
+
+      <!-- 健康雷达图 -->
+      <SectionTitle title="健康雷达" icon="radar" color="var(--chart-1)" class="section-wrap" />
+      <GlassCard class="radar-card" padding="sm">
+        <EChart :option="radarOption" height="260px" />
+      </GlassCard>
     </div>
   </div>
 </template>
 
 <style scoped>
 .home-page {
-  background-color: #0b1220;
+  background: var(--background);
+  max-width: 480px;
+  margin: 0 auto;
 }
 
+/* Hero */
 .home-hero {
   position: relative;
-  padding: 20px 16px 28px;
-  background:
-    radial-gradient(ellipse at top right, rgba(52, 211, 153, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at bottom left, rgba(34, 211, 238, 0.12) 0%, transparent 50%),
-    linear-gradient(180deg, #0f172a 0%, #0b1220 100%);
+  padding: calc(env(safe-area-inset-top, 0px) + 20px) 16px 20px;
+  background: var(--background);
   overflow: hidden;
 }
-
 .home-hero::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(52, 211, 153, 0.06) 0%, rgba(167, 139, 250, 0.06) 100%);
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: var(--chart-1);
+  opacity: 0.06;
   pointer-events: none;
 }
-
-.weather-capsule {
+.hero-row {
+  position: relative;
+  z-index: 1;
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.hero-left {
+  min-width: 0;
+}
+.goal-chip {
+  display: inline-flex;
   align-items: center;
-  padding: 8px 14px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  backdrop-filter: blur(12px);
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--chart-1) 10%, transparent);
+  color: var(--chart-1);
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.hero-greeting {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--foreground);
+  line-height: 1.2;
+}
+.hero-subtitle {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin-top: 4px;
+}
+.weather-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 12px;
+  border-radius: 9999px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  font-size: 12px;
+  color: var(--foreground);
+  min-height: 36px;
+  flex-shrink: 0;
 }
 
-.ai-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #34d399 0%, #22d3ee 50%, #a78bfa 100%);
-  color: #0b1220;
-  font-size: 11px;
-  font-weight: 700;
+/* AI 寄语卡片 */
+.ai-card {
+  margin: 0 16px 16px;
+  border-left: 4px solid var(--chart-2);
+  padding: 14px 16px;
+}
+.ai-head {
   display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.ai-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  background: var(--chart-2);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  color: var(--primary-foreground);
+  flex-shrink: 0;
 }
-
-.ai-message {
+.ai-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+  flex: 1;
+}
+.ai-refresh {
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+.ai-text {
   min-height: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--foreground);
 }
 
-.nutrition-card {
-  position: relative;
-  overflow: hidden;
+/* Section 标题外边距 */
+.section-wrap {
+  margin: 0 16px 8px;
 }
 
-.nutrition-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 60px;
-  height: 60px;
-  background: radial-gradient(circle at top right, rgba(52, 211, 153, 0.08), transparent 70%);
-  pointer-events: none;
+/* 雷达图卡片 */
+.radar-card {
+  margin: 0 16px 16px;
 }
 
+/* 快捷打卡 */
+.checkin-grid {
+  display: flex;
+  gap: 12px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
 .checkin-card {
+  flex: 1;
+  min-width: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 12px 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  gap: 6px;
+  min-height: 48px;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
-
+.checkin-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+}
+.checkin-card:active {
+  transform: scale(0.97);
+}
+.checkin-val {
+  font-size: 10px;
+  color: var(--muted-foreground);
+}
 .checkin-btn {
-  margin-top: 6px;
   padding: 2px 10px;
-  background: rgba(52, 211, 153, 0.12);
-  color: #34d399;
-  border-radius: 999px;
+  background: color-mix(in srgb, var(--chart-1) 12%, transparent);
+  color: var(--chart-1);
+  border-radius: 9999px;
   font-size: 10px;
   font-weight: 600;
+  transition: background 0.2s ease;
+}
+.checkin-card:hover .checkin-btn {
+  background: color-mix(in srgb, var(--chart-1) 22%, transparent);
 }
 
-.quick-entry {
+/* 快捷入口 */
+.entry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+.entry-card {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(2, 8, 20, 0.36);
-  transition: all 0.2s ease;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 12px;
+  min-height: 64px;
+  text-decoration: none;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
-
-.quick-entry:active {
-  transform: scale(0.98);
-  background: rgba(255, 255, 255, 0.1);
+.entry-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
 }
-
-.quick-entry-icon {
+.entry-card:active {
+  transform: scale(0.99);
+  background: var(--accent);
+}
+.entry-icon {
   width: 40px;
   height: 40px;
-  border-radius: 12px;
-  display: flex;
+  border-radius: var(--radius-md);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
   flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.entry-card:hover .entry-icon {
+  transform: scale(1.1);
+}
+.entry-text {
+  flex: 1;
+  min-width: 0;
+}
+.entry-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+}
+.entry-desc {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin-top: 2px;
+}
+.entry-chevron {
+  color: var(--muted-foreground);
+  display: inline-flex;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.entry-card:hover .entry-chevron {
+  transform: translateX(3px);
+  color: var(--primary);
+}
+
+/* 小屏适配 */
+@media (max-width: 360px) {
+  .home-hero {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .section-wrap,
+  .ai-card,
+  .radar-card {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+  .checkin-grid,
+  .entry-list {
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: 8px;
+  }
 }
 </style>

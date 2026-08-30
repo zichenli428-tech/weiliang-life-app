@@ -3,7 +3,7 @@
  *
  * 功能：
  * 1. 提供静态文件服务（dist/ 目录）
- * 2. 代理 AI API 请求（/ai-proxy/* → https://token.sensenova.cn/*）绕过浏览器 CORS
+ * 2. 代理 AI API 请求（/ai-proxy/* → https://opencode.ai/zen/*）绕过浏览器 CORS
  * 3. SPA 路由回退（非文件请求统一返回 index.html）
  *
  * 使用方法：
@@ -23,15 +23,32 @@ const PORT = process.env.PORT || 8080
 // 手机端（APK）走 CapacitorHttp 直连，不依赖此 server
 const HOST = process.env.HOST || '127.0.0.1'
 const DIST_DIR = path.join(__dirname, 'dist')
-const AI_PROXY_TARGET = 'token.sensenova.cn'
-// AI 密钥由服务端持有，客户端不接触；必须通过环境变量 AI_API_KEY 传入
-// 启动方式：AI_API_KEY=sk-xxx node server.js  或  在 .env 中配置后用 dotenv 加载
+const AI_PROXY_HOST = 'opencode.ai'
+const AI_PROXY_PATH_PREFIX = '/zen' // OpenCode Zen 端点路径前缀（/ai-proxy/v1/* → /zen/v1/*）
+
+// 内置 .env 加载（零依赖）：若项目根存在 .env，将其键值写入 process.env（不覆盖 shell 已有值）
+// 这样 AI_API_KEY 既可由 shell 传入，也可写在 .env 中，免去每次启动都加前缀
+try {
+  const envFile = path.join(__dirname, '.env')
+  if (fs.existsSync(envFile)) {
+    for (const line of fs.readFileSync(envFile, 'utf-8').split('\n')) {
+      const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$/)
+      if (!m) continue
+      const [, k, v] = m
+      if (process.env[k] === undefined) {
+        process.env[k] = v.replace(/^['"]|['"]$/g, '')
+      }
+    }
+  }
+} catch { /* .env 读取失败时忽略，回退到纯环境变量 */ }
+
+// AI 密钥由服务端持有，客户端不接触；通过环境变量 AI_API_KEY 传入（可写在 .env）
 const AI_API_KEY = process.env.AI_API_KEY
 if (!AI_API_KEY) {
-  console.error('\n❌ 未配置 AI_API_KEY 环境变量，请通过 AI_API_KEY=sk-xxx node server.js 启动\n')
+  console.error('\n❌ 未配置 AI_API_KEY，请在 .env 中设置 AI_API_KEY 或通过 AI_API_KEY=sk-xxx node server.js 启动\n')
   process.exit(1)
 }
-// 代理超时（毫秒），商汤 API 推理阶段较长，给足 2 分钟
+// 代理超时（毫秒），AI 推理阶段较长，给足 2 分钟
 const AI_PROXY_TIMEOUT = 120000
 
 const MIME_TYPES = {
@@ -67,11 +84,11 @@ const server = http.createServer((req, res) => {
   // ==================== AI API 代理 ====================
   if (pathname.startsWith('/ai-proxy/')) {
     const targetPath = pathname.replace(/^\/ai-proxy/, '')
-    const targetUrl = `https://${AI_PROXY_TARGET}${targetPath}`
+    const targetUrl = `https://${AI_PROXY_HOST}${AI_PROXY_PATH_PREFIX}${targetPath}`
 
     // 转发请求头，替换 host
     const proxyHeaders = { ...req.headers }
-    proxyHeaders.host = AI_PROXY_TARGET
+    proxyHeaders.host = AI_PROXY_HOST
     delete proxyHeaders['accept-encoding'] // 避免压缩问题
     // 安全关键：删除客户端可能携带的 Authorization，改由服务端注入
     // 这样即使客户端泄露密钥，也无法通过本代理调用 API

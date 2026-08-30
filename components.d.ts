@@ -7,9 +7,11 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AppleIcon: typeof import('./src/components/AppleIcon.vue')['default']
     AuroraButton: typeof import('./src/components/AuroraButton.vue')['default']
     BreathingGuide: typeof import('./src/components/BreathingGuide.vue')['default']
     EChart: typeof import('./src/components/EChart.vue')['default']
+    FeatureTutorial: typeof import('./src/components/FeatureTutorial.vue')['default']
     GlassCard: typeof import('./src/components/GlassCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

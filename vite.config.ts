@@ -27,12 +27,12 @@ export default defineConfig(({ mode }) => {
       host: '0.0.0.0',
       port: 5173,
       open: false,
-      // 商汤 SenseNova API 不允许浏览器直连（无 CORS 响应头）
-      // 开发环境通过 Vite 代理绕过：前端请求 /ai-proxy/* 由 dev server 转发到 token.sensenova.cn
+      // OpenCode Zen API 不允许浏览器直连（无 CORS 响应头）
+      // 开发环境通过 Vite 代理绕过：前端请求 /ai-proxy/* 由 dev server 转发到 opencode.ai/zen
       // 安全：前端不带 Authorization，由 proxy 注入（密钥不暴露到浏览器请求头）
       proxy: {
         '/ai-proxy': {
-          target: 'https://token.sensenova.cn',
+          target: 'https://opencode.ai/zen',
           changeOrigin: true,
           secure: true,
           timeout: 120000,

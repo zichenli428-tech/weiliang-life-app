@@ -1,7 +1,7 @@
 /**
  * 营养膳食分析服务
  * PRD 3.1：AI 智能解析 — 从模糊描述中提取食材清单 + 估算重量
- * PRD 7.3：豆包大模型 System Prompt（适配 SenseNova）
+ * PRD 7.3：膳食分析 System Prompt（OpenCode Zen mimo-v2.5-free）
  * PRD 7.4：前端防报错过滤清洗代码
  * PRD 3.1：本地知识库计算 — 匹配 foodLibrary 计算营养值
  * PRD 3.1：人工干预机制 — AI 结果需用户确认/微调后入库
@@ -91,9 +91,10 @@ export function cleanAndParseFoodJSON(rawResponse: string): RawFoodItem[] {
       )
       .map((item: Record<string, unknown>) => ({
         font_name: String(item.font_name).trim(),
+        // 下限 1g：0g 食材无意义，且会在 RecordView 重量滑块按比例换算时触发除零（NaN）
         font_g: isNaN(parseFloat(String(item.font_g)))
           ? 100
-          : Math.max(0, parseFloat(String(item.font_g)))
+          : Math.max(1, parseFloat(String(item.font_g)))
       }))
       .filter((item: RawFoodItem) => item.font_name.length > 0)
   } catch (error) {
@@ -243,7 +244,7 @@ export async function analyzeFoodText(input: string): Promise<FoodAnalysisResult
 /**
  * PRD 3.1：AI 拍照识别入口
  * 输入图片 base64 → AI 多模态识别食材清单 → 本地知识库匹配营养值
- * sensenova-6.7-flash-lite 支持文字+图片输入，文字输出
+ * mimo-v2.5-free 支持文字+图片输入，文字输出
  */
 export async function analyzeFoodImage(
   imageBase64: string,

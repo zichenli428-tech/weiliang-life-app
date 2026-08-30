@@ -175,7 +175,7 @@ onUnmounted(() => {
 
 <style scoped>
 .breathing-guide {
-  color: #f8fafc;
+  color: var(--foreground);
 }
 
 /* ==================== 模式选择 ==================== */
@@ -191,17 +191,17 @@ onUnmounted(() => {
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  transition: all 0.2s ease;
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mode-card.active {
-  background: rgba(34, 211, 238, 0.08);
-  border-color: rgba(34, 211, 238, 0.4);
-  box-shadow: 0 0 16px rgba(34, 211, 238, 0.15);
+  background: color-mix(in srgb, var(--chart-4) 8%, transparent);
+  border-color: color-mix(in srgb, var(--chart-4) 40%, transparent);
 }
 
 .mode-card.disabled {
@@ -225,12 +225,12 @@ onUnmounted(() => {
 .mode-label {
   font-size: 14px;
   font-weight: 600;
-  color: #f8fafc;
+  color: var(--foreground);
 }
 
 .mode-desc {
   font-size: 11px;
-  color: #94a3b8;
+  color: var(--muted-foreground);
   margin-top: 2px;
   line-height: 1.4;
 }
@@ -258,14 +258,14 @@ onUnmounted(() => {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #22d3ee 0%, #a78bfa 100%);
+  background: linear-gradient(135deg, var(--chart-4) 0%, #af52de 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   z-index: 2;
   transform: scale(1);
-  box-shadow: 0 0 30px rgba(34, 211, 238, 0.25), 0 0 60px rgba(167, 139, 250, 0.2);
+  box-shadow: 0 0 30px rgba(88, 86, 214, 0.25), 0 0 60px rgba(88, 86, 214, 0.2);
 }
 
 .breathing-halo {
@@ -273,7 +273,7 @@ onUnmounted(() => {
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.25) 0%, rgba(167, 139, 250, 0.1) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(88, 86, 214, 0.22) 0%, rgba(175, 82, 222, 0.1) 40%, transparent 70%);
   z-index: 1;
   opacity: 0.6;
 }
@@ -286,16 +286,15 @@ onUnmounted(() => {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.22);
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(8px);
 }
 
 .ball-text {
   font-size: 13px;
-  color: #fff;
+  color: #ffffff;
   font-weight: 600;
   text-align: center;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
@@ -304,7 +303,7 @@ onUnmounted(() => {
 .cycle-count {
   margin-top: 20px;
   font-size: 13px;
-  color: #a5b4fc;
+  color: var(--chart-4);
   font-weight: 500;
 }
 
@@ -317,7 +316,7 @@ onUnmounted(() => {
 
 .guide-tip {
   font-size: 11px;
-  color: #64748b;
+  color: var(--muted-foreground);
   text-align: center;
 }
 </style>

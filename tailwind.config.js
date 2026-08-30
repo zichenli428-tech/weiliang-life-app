@@ -1,68 +1,80 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: ['class', '[class~="dark"]'],
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        // 深色背景系
-        surface: {
-          bg: '#0b1220',
-          primary: '#0f172a',
-          secondary: '#131c31',
-          tertiary: '#1e293b'
+        // Apple 语义角色（映射到 apple-tokens.css 的 CSS 变量，浅色默认 + 深色自动切换）
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        card: {
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)'
         },
-        // 玻璃拟态
-        glass: {
-          DEFAULT: 'rgba(255, 255, 255, 0.06)',
-          border: 'rgba(255, 255, 255, 0.10)',
-          highlight: 'rgba(255, 255, 255, 0.12)',
-          text: 'rgba(255, 255, 255, 0.70)'
+        popover: {
+          DEFAULT: 'var(--popover)',
+          foreground: 'var(--popover-foreground)'
         },
-        // 极光强调色
-        aurora: {
-          green: '#34d399',
-          cyan: '#22d3ee',
-          violet: '#a78bfa',
-          pink: '#f472b6'
+        primary: {
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)'
         },
-        // 状态色（适配深色主题）
-        status: {
-          healthy: '#34d399',
-          warning: '#fbbf24',
-          danger: '#fb7185'
+        secondary: {
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)'
         },
-        // 模块 hero 强调色
+        muted: {
+          DEFAULT: 'var(--muted)',
+          foreground: 'var(--muted-foreground)'
+        },
+        accent: {
+          DEFAULT: 'var(--accent)',
+          foreground: 'var(--accent-foreground)'
+        },
+        destructive: {
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)'
+        },
+        success: {
+          DEFAULT: 'var(--success)',
+          foreground: 'var(--success-foreground)'
+        },
+        border: 'var(--border)',
+        input: 'var(--input)',
+        ring: 'var(--ring)',
+        // chart 色板 + 模块别名
+        chart: {
+          1: 'var(--chart-1)',
+          2: 'var(--chart-2)',
+          3: 'var(--chart-3)',
+          4: 'var(--chart-4)',
+          5: 'var(--chart-5)'
+        },
         module: {
-          nutrition: {
-            from: '#f59e0b',
-            to: '#f43f5e'
-          },
-          sleep: {
-            from: '#818cf8',
-            to: '#c084fc'
-          },
-          mind: {
-            from: '#a3e635',
-            to: '#818cf8'
-          },
-          advisor: {
-            from: '#0ea5e9',
-            to: '#2563eb'
-          },
-          profile: {
-            from: '#64748b',
-            to: '#94a3b8'
-          }
+          home: 'var(--module-home)',
+          advisor: 'var(--module-advisor)',
+          record: 'var(--module-record)',
+          sleep: 'var(--module-sleep)',
+          mind: 'var(--module-mind)'
         },
-        // 文字色
+        sidebar: {
+          DEFAULT: 'var(--sidebar)',
+          foreground: 'var(--sidebar-foreground)',
+          primary: 'var(--sidebar-primary)',
+          'primary-foreground': 'var(--sidebar-primary-foreground)'
+        },
+        // 保留旧语义色，供尚未迁移处兼容（指向同一变量）
         content: {
-          primary: '#f8fafc',
-          secondary: '#94a3b8',
-          tertiary: '#64748b'
+          primary: 'var(--foreground)',
+          secondary: 'var(--muted-foreground)',
+          tertiary: 'var(--muted-foreground)'
         }
       },
       fontFamily: {
         sans: [
+          'DM Sans',
+          'Roboto',
           '-apple-system',
           'BlinkMacSystemFont',
           '"Segoe UI"',
@@ -73,31 +85,36 @@ export default {
         ]
       },
       spacing: {
-        // Safe Area 安全区（PRD 4.2：处理刘海屏/灵动岛）
         'safe-top': 'env(safe-area-inset-top)',
         'safe-bottom': 'env(safe-area-inset-bottom)',
         'safe-left': 'env(safe-area-inset-left)',
         'safe-right': 'env(safe-area-inset-right)'
       },
       borderRadius: {
-        '2xl': '16px',
-        '3xl': '20px',
-        '4xl': '24px'
+        sm: 'var(--radius-sm)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
+        xl: 'var(--radius-xl)',
+        '2xl': '1rem',
+        '3xl': '1.25rem',
+        '4xl': '1.5rem'
       },
       boxShadow: {
-        'glass': '0 8px 32px rgba(2, 8, 20, 0.36)',
-        'glass-lg': '0 12px 48px rgba(2, 8, 20, 0.48)',
-        'glow-green': '0 0 20px rgba(52, 211, 153, 0.25)',
-        'glow-cyan': '0 0 20px rgba(34, 211, 238, 0.25)',
-        'glow-violet': '0 0 20px rgba(167, 139, 250, 0.25)'
+        '2xs': 'var(--shadow-2xs)',
+        xs: 'var(--shadow-xs)',
+        sm: 'var(--shadow-sm)',
+        DEFAULT: 'var(--shadow)',
+        md: 'var(--shadow-md)',
+        lg: 'var(--shadow-lg)',
+        xl: 'var(--shadow-xl)',
+        '2xl': 'var(--shadow-2xl)'
       },
       animation: {
-        // 呼吸灯、思考中
-        'breathe': 'breathe 4s ease-in-out infinite',
+        breathe: 'breathe 4s ease-in-out infinite',
         'fade-in': 'fadeIn 0.3s ease-out',
         'slide-up': 'slideUp 0.3s ease-out',
-        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
-        'shimmer': 'shimmer 2s linear infinite'
+        'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
+        shimmer: 'shimmer 2s linear infinite'
       },
       keyframes: {
         breathe: {
@@ -112,18 +129,14 @@ export default {
           '0%': { transform: 'translateY(20px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' }
         },
-        pulseGlow: {
-          '0%, 100%': { boxShadow: '0 0 12px rgba(52, 211, 153, 0.2)' },
-          '50%': { boxShadow: '0 0 24px rgba(52, 211, 153, 0.45)' }
+        pulseSoft: {
+          '0%, 100%': { opacity: '0.6' },
+          '50%': { opacity: '1' }
         },
         shimmer: {
           '0%': { backgroundPosition: '-200% 0' },
           '100%': { backgroundPosition: '200% 0' }
         }
-      },
-      backgroundImage: {
-        'aurora-gradient': 'linear-gradient(135deg, #34d399 0%, #22d3ee 50%, #a78bfa 100%)',
-        'aurora-soft': 'linear-gradient(135deg, rgba(52,211,153,0.15) 0%, rgba(34,211,238,0.15) 50%, rgba(167,139,250,0.15) 100%)'
       }
     }
   },

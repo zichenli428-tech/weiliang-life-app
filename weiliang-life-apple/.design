@@ -1,0 +1,361 @@
+{
+  "data": [
+    {
+      "id": "page-home",
+      "title": "健康看板",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1786163300000,
+      "canvasData": {
+        "x": 618,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-23485e14",
+          "measuredAt": 1786165660574
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/home.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home"
+          },
+          {
+            "domId": "nav-advisor",
+            "targetPageId": "page-advisor"
+          },
+          {
+            "domId": "nav-mind",
+            "targetPageId": "page-mind"
+          },
+          {
+            "domId": "nav-sleep",
+            "targetPageId": "page-sleep"
+          },
+          {
+            "domId": "nav-record",
+            "targetPageId": "page-record"
+          },
+          {
+            "domId": "nav-profile",
+            "targetPageId": "page-profile"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-advisor",
+      "title": "AI 健康顾问",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1786163300000,
+      "canvasData": {
+        "x": 0,
+        "y": 376,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-bfddd9c9",
+          "measuredAt": 1786165660574
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/advisor.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home"
+          },
+          {
+            "domId": "nav-advisor",
+            "targetPageId": "page-advisor"
+          },
+          {
+            "domId": "nav-mind",
+            "targetPageId": "page-mind"
+          },
+          {
+            "domId": "nav-sleep",
+            "targetPageId": "page-sleep"
+          },
+          {
+            "domId": "nav-record",
+            "targetPageId": "page-record"
+          },
+          {
+            "domId": "nav-profile",
+            "targetPageId": "page-profile"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-mind",
+      "title": "心理疏导",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1786163300000,
+      "canvasData": {
+        "x": 0,
+        "y": 752,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-6edcc938",
+          "measuredAt": 1786165660574
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/mind.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home"
+          },
+          {
+            "domId": "nav-advisor",
+            "targetPageId": "page-advisor"
+          },
+          {
+            "domId": "nav-mind",
+            "targetPageId": "page-mind"
+          },
+          {
+            "domId": "nav-sleep",
+            "targetPageId": "page-sleep"
+          },
+          {
+            "domId": "nav-record",
+            "targetPageId": "page-record"
+          },
+          {
+            "domId": "nav-profile",
+            "targetPageId": "page-profile"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-sleep",
+      "title": "睡眠辅助",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1786163300000,
+      "canvasData": {
+        "x": 0,
+        "y": 1128,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-d706f0b8",
+          "measuredAt": 1786165660574
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/sleep.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home"
+          },
+          {
+            "domId": "nav-advisor",
+            "targetPageId": "page-advisor"
+          },
+          {
+            "domId": "nav-mind",
+            "targetPageId": "page-mind"
+          },
+          {
+            "domId": "nav-sleep",
+            "targetPageId": "page-sleep"
+          },
+          {
+            "domId": "nav-record",
+            "targetPageId": "page-record"
+          },
+          {
+            "domId": "nav-profile",
+            "targetPageId": "page-profile"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-record",
+      "title": "健康记录",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1786163300000,
+      "canvasData": {
+        "x": 0,
+        "y": 1902,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-25ee3d8c",
+          "measuredAt": 1786165660574
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/record.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home"
+          },
+          {
+            "domId": "nav-advisor",
+            "targetPageId": "page-advisor"
+          },
+          {
+            "domId": "nav-mind",
+            "targetPageId": "page-mind"
+          },
+          {
+            "domId": "nav-sleep",
+            "targetPageId": "page-sleep"
+          },
+          {
+            "domId": "nav-record",
+            "targetPageId": "page-record"
+          },
+          {
+            "domId": "nav-profile",
+            "targetPageId": "page-profile"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-profile",
+      "title": "我的",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1786163300000,
+      "canvasData": {
+        "x": 0,
+        "y": 2326,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-ace769bd",
+          "measuredAt": 1786165660574
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/profile.html",
+        "interactions": [
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home"
+          },
+          {
+            "domId": "nav-advisor",
+            "targetPageId": "page-advisor"
+          },
+          {
+            "domId": "nav-mind",
+            "targetPageId": "page-mind"
+          },
+          {
+            "domId": "nav-sleep",
+            "targetPageId": "page-sleep"
+          },
+          {
+            "domId": "nav-record",
+            "targetPageId": "page-record"
+          },
+          {
+            "domId": "nav-profile",
+            "targetPageId": "page-profile"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-onboarding",
+      "title": "建档",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1786163300000,
+      "canvasData": {
+        "x": 0,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-a2fa0298",
+          "measuredAt": 1786165660574
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/onboarding.html",
+        "interactions": [
+          {
+            "domId": "btn-complete",
+            "targetPageId": "page-onboarding-tour"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-onboarding-tour",
+      "title": "新手引导",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1786163300000,
+      "canvasData": {
+        "x": 309,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-fedc02d5",
+          "measuredAt": 1786165660574
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/onboarding-tour.html",
+        "interactions": [
+          {
+            "domId": "btn-start",
+            "targetPageId": "page-home"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": true,
+    "deviceType": "mobile",
+    "designLibrary": {
+      "name": "苹果",
+      "id": "dl_builtin_apple",
+      "version": null,
+      "scope": "built-in-global",
+      "path": "c:\\Users\\lizichen\\.trae-cn\\design_libraries\\dl_builtin_apple",
+      "versionSource": "metadata.json"
+    },
+    "visualEditorEnabled": false
+  }
+}

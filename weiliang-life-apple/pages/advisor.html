@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 健康顾问</title>
+    <style id="theme-vars">
+/*
+ * Pinguo design tokens — extended for solo-design consumption
+ * Brand: Pinguo (Apple Design Library)
+ * Domain: Consumer imaging product
+ * Style: Restrained, elegant, Apple-inspired
+ * Theme mode: light-dark
+ * Source language: zh
+ * Output language: en
+ *
+ * This file extends the Apple Design Library colors_and_type.css with
+ * required semantic radius aliases for apply-html-head-contract.mjs.
+ * All original tokens are preserved unchanged.
+ *
+ * Color architecture (two layers):
+ *   1. Primitive palette - six categories. brand / background / text / icon
+ *      are each a 10-step scale (50 lightest to 900 darkest). state-success and
+ *      state-error are functional colors anchored on Apple system colors.
+ *      Anchors follow Apple Human Interface Guidelines system colors
+ *      (System Blue #007AFF, System Green #34C759, System Red #FF3B30,
+ *      system grays / label / background colors).
+ *   2. Semantic tokens - :root (light) and .dark map roles onto primitives.
+ *      Components and UI kits must only consume the semantic tokens below.
+ */
+
+/* @group-priority: brand, background, text, icon, state-success, state-error */
+
+:root {
+  
+  /* solo-design consumption aliases: explicit prefix for fill-html-head.mjs */
+  --apple-background: var(--background, #ffffff);
+  --apple-foreground: var(--foreground, #0f172a);
+  --apple-card: var(--card, var(--background));
+  --apple-card-foreground: var(--card-foreground, var(--foreground));
+  --apple-popover: var(--popover, var(--card));
+  --apple-popover-foreground: var(--popover-foreground, var(--card-foreground, var(--foreground)));
+  --apple-primary: var(--primary, #111827);
+  --apple-primary-foreground: var(--primary-foreground, #ffffff);
+  --apple-secondary: var(--secondary, var(--muted, var(--card)));
+  --apple-secondary-foreground: var(--secondary-foreground, var(--foreground));
+  --apple-muted: var(--muted, var(--card));
+  --apple-muted-foreground: var(--muted-foreground, var(--foreground));
+  --apple-accent: var(--accent, var(--secondary, var(--muted, var(--card))));
+  --apple-accent-foreground: var(--accent-foreground, var(--foreground));
+  --apple-destructive: var(--destructive, #ef4444);
+  --apple-destructive-foreground: var(--destructive-foreground, #ffffff);
+  --apple-border: var(--border, currentColor);
+  --apple-input: var(--input, var(--border));
+  --apple-ring: var(--ring, var(--primary));
+  --apple-chart-1: var(--chart-1, var(--primary));
+  --apple-chart-2: var(--chart-2, var(--secondary, var(--primary)));
+  --apple-chart-3: var(--chart-3, var(--accent, var(--primary)));
+  --apple-chart-4: var(--chart-4, var(--muted-foreground, var(--foreground)));
+  --apple-chart-5: var(--chart-5, var(--foreground));
+  --apple-sidebar: var(--sidebar, var(--background));
+  --apple-sidebar-foreground: var(--sidebar-foreground, var(--foreground));
+  --apple-sidebar-primary: var(--sidebar-primary, var(--primary));
+  --apple-sidebar-primary-foreground: var(--sidebar-primary-foreground, var(--primary-foreground));
+  --apple-sidebar-accent: var(--sidebar-accent, var(--accent, var(--muted, var(--card))));
+  --apple-sidebar-accent-foreground: var(--sidebar-accent-foreground, var(--accent-foreground, var(--foreground)));
+
+/* ===== PRIMITIVE PALETTE ===== */
+
+  /* brand */
+  --brand-50: #e8f2ff;
+  --brand-100: #cfe5ff;
+  --brand-200: #9fcbff;
+  --brand-300: #66abff;
+  --brand-400: #2e8dff;
+  --brand-500: #007aff; /* @primary */
+  --brand-600: #0064d6;
+  --brand-700: #004fad;
+  --brand-800: #003b82;
+  --brand-900: #00275a;
+
+  /* background */
+  --background-50: #ffffff;
+  --background-100: #f7f7fa;
+  --background-200: #f2f2f7;
+  --background-300: #e5e5ea;
+  --background-400: #d1d1d6;
+  --background-500: #aeaeb2;
+  --background-600: #8e8e93;
+  --background-700: #3a3a3c;
+  --background-800: #1c1c1e;
+  --background-900: #000000;
+
+  /* text */
+  --text-50: #f5f5f7;
+  --text-100: #e3e3e8;
+  --text-200: #c7c7cc;
+  --text-300: #aeaeb2;
+  --text-400: #8e8e93;
+  --text-500: #6e6e73;
+  --text-600: #48484a;
+  --text-700: #3c3c43;
+  --text-800: #1d1d1f;
+  --text-900: #000000;
+
+  /* icon */
+  --icon-50: #f5f5f7;
+  --icon-100: #e5e5ea;
+  --icon-200: #d1d1d6;
+  --icon-300: #c7c7cc;
+  --icon-400: #aeaeb2;
+  --icon-500: #8e8e93;
+  --icon-600: #6e6e73;
+  --icon-700: #48484a;
+  --icon-800: #2c2c2e;
+  --icon-900: #1d1d1f;
+
+  /* state-success */
+  --state-success: #34c759; /* @primary */
+  --state-success-dark: #30d158;
+  --state-success-surface: #e9f9ee;
+  --state-success-foreground: #ffffff;
+
+  /* state-error */
+  --state-error: #ff3b30; /* @primary */
+  --state-error-dark: #ff453a;
+  --state-error-surface: #ffecea;
+  --state-error-foreground: #ffffff;
+
+  /* ===== SEMANTIC ROLES ===== */
+
+  /* semantic */
+  --background: var(--background-50);
+  --foreground: var(--text-800);
+  --card: var(--background-50);
+  --card-foreground: var(--text-800);
+  --popover: var(--background-50);
+  --popover-foreground: var(--text-900);
+
+  --primary: var(--brand-500);
+  --primary-foreground: var(--background-50);
+  --secondary: var(--background-200);
+  --secondary-foreground: var(--text-800);
+  --muted: var(--background-200);
+  --muted-foreground: var(--text-400);
+  --accent: var(--background-100);
+  --accent-foreground: var(--text-800);
+  --destructive: var(--state-error);
+  --destructive-foreground: var(--state-error-foreground);
+  --success: var(--state-success);
+  --success-foreground: var(--state-success-foreground);
+  --border: var(--background-300);
+  --input: var(--background-400);
+  --ring: var(--brand-500);
+
+  --icon: var(--icon-900);
+  --icon-muted: var(--icon-500);
+
+  /* chart */
+  --chart-1: var(--state-success);
+  --chart-2: var(--brand-500);
+  --chart-3: #ff9500;
+  --chart-4: #5856d6;
+  --chart-5: #af52de;
+
+  /* sidebar */
+  --sidebar: var(--background-200);
+  --sidebar-foreground: var(--text-800);
+  --sidebar-primary: var(--brand-500);
+  --sidebar-primary-foreground: var(--background-50);
+  --sidebar-accent: var(--background-300);
+  --sidebar-accent-foreground: var(--text-800);
+  --sidebar-border: var(--background-300);
+  --sidebar-ring: var(--brand-500);
+
+  /* TYPOGRAPHY */
+  --font-sans: DM Sans, Roboto, ui-sans-serif, sans-serif, system-ui;
+  --font-serif: DM Sans, Roboto, ui-sans-serif, sans-serif, system-ui;
+  --font-mono: JetBrains Mono, monospace;
+  --tracking-normal: 0em;
+
+  /* RADIUS */
+  --radius: 1.2rem;
+
+  /* Radius semantic aliases for solo-design apply-html-head-contract.mjs */
+  --apple-radius-sm: 0.5rem;
+  --apple-radius-md: 0.75rem;
+  --apple-radius-lg: var(--radius);
+  --apple-radius-xl: calc(var(--radius) * 1.25);
+
+  /* SHADOWS */
+  --shadow-2xs: 0 1px 2px -1px rgba(0, 0, 0, 0.04); /* Hairline */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.04); /* Subtle */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.05); /* Card */
+  --shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.05); /* Raised */
+  --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.05); /* Card Hover */
+  --shadow-lg: 0 8px 24px -8px rgba(0, 0, 0, 0.08), 0 4px 8px -4px rgba(0, 0, 0, 0.05); /* Float */
+  --shadow-xl: 0 16px 40px -10px rgba(0, 0, 0, 0.10), 0 8px 16px -8px rgba(0, 0, 0, 0.06); /* Overlay */
+  --shadow-2xl: 0 24px 64px -12px rgba(0, 0, 0, 0.12); /* Modal */
+
+  /* SPACING */
+  --spacing: 0.24rem;
+}
+
+/* ===== SEMANTIC ROLES - dark (primitive palette inherited) ===== */
+.dark {
+  --background: var(--background-900);
+  --foreground: var(--text-50);
+  --card: var(--background-800);
+  --card-foreground: var(--text-50);
+  --popover: var(--background-700);
+  --popover-foreground: var(--text-50);
+
+  --primary: var(--brand-400);
+  --primary-foreground: var(--background-900);
+  --secondary: var(--background-800);
+  --secondary-foreground: var(--text-50);
+  --muted: var(--background-800);
+  --muted-foreground: var(--text-400);
+  --accent: var(--background-700);
+  --accent-foreground: var(--text-50);
+  --destructive: var(--state-error-dark);
+  --destructive-foreground: var(--state-error-foreground);
+  --success: var(--state-success-dark);
+  --success-foreground: var(--state-success-foreground);
+  --border: var(--background-700);
+  --input: var(--background-700);
+  --ring: var(--brand-400);
+
+  --icon: var(--icon-50);
+  --icon-muted: var(--icon-500);
+
+  --chart-1: var(--state-success-dark);
+  --chart-2: var(--brand-400);
+  --chart-3: #ff9f0a;
+  --chart-4: #5e5ce6;
+  --chart-5: #bf5af2;
+
+  --sidebar: var(--background-800);
+  --sidebar-foreground: var(--text-50);
+  --sidebar-primary: var(--brand-400);
+  --sidebar-primary-foreground: var(--background-900);
+  --sidebar-accent: var(--background-700);
+  --sidebar-accent-foreground: var(--text-50);
+  --sidebar-border: var(--background-700);
+  --sidebar-ring: var(--brand-400);
+
+  --shadow-2xs: 0 1px 2px -1px rgba(0, 0, 0, 0.30);
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.36), 0 1px 3px -1px rgba(0, 0, 0, 0.36);
+  --shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.40), 0 1px 2px -1px rgba(0, 0, 0, 0.36);
+  --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.44), 0 2px 4px -2px rgba(0, 0, 0, 0.36);
+  --shadow-lg: 0 8px 24px -8px rgba(0, 0, 0, 0.50), 0 4px 8px -4px rgba(0, 0, 0, 0.40);
+  --shadow-xl: 0 16px 40px -10px rgba(0, 0, 0, 0.55), 0 8px 16px -8px rgba(0, 0, 0, 0.44);
+  --shadow-2xl: 0 24px 64px -12px rgba(0, 0, 0, 0.60);
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--apple-background);
+    --color-foreground: var(--apple-foreground);
+    --color-card: var(--apple-card);
+    --color-card-foreground: var(--apple-card-foreground);
+    --color-popover: var(--apple-popover);
+    --color-popover-foreground: var(--apple-popover-foreground);
+    --color-primary: var(--apple-primary);
+    --color-primary-foreground: var(--apple-primary-foreground);
+    --color-secondary: var(--apple-secondary);
+    --color-secondary-foreground: var(--apple-secondary-foreground);
+    --color-muted: var(--apple-muted);
+    --color-muted-foreground: var(--apple-muted-foreground);
+    --color-accent: var(--apple-accent);
+    --color-accent-foreground: var(--apple-accent-foreground);
+    --color-destructive: var(--apple-destructive);
+    --color-destructive-foreground: var(--apple-destructive-foreground);
+    --color-border: var(--apple-border);
+    --color-input: var(--apple-input);
+    --color-ring: var(--apple-ring);
+    --color-chart-1: var(--apple-chart-1);
+    --color-chart-2: var(--apple-chart-2);
+    --color-chart-3: var(--apple-chart-3);
+    --color-chart-4: var(--apple-chart-4);
+    --color-chart-5: var(--apple-chart-5);
+    --color-sidebar: var(--apple-sidebar);
+    --color-sidebar-foreground: var(--apple-sidebar-foreground);
+    --color-sidebar-primary: var(--apple-sidebar-primary);
+    --color-sidebar-primary-foreground: var(--apple-sidebar-primary-foreground);
+    --color-sidebar-accent: var(--apple-sidebar-accent);
+    --color-sidebar-accent-foreground: var(--apple-sidebar-accent-foreground);
+    --radius-sm: var(--apple-radius-sm);
+    --radius-md: var(--apple-radius-md);
+    --radius-lg: var(--apple-radius-lg);
+    --radius-xl: var(--apple-radius-xl);
+  }
+  @layer base {
+    body { background: var(--apple-background); color: var(--apple-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--apple-background); }
+      .text-background { color: var(--apple-background); }
+      .border-background { border-color: var(--apple-background); }
+      .ring-background { --tw-ring-color: var(--apple-background); }
+      .bg-foreground { background-color: var(--apple-foreground); }
+      .text-foreground { color: var(--apple-foreground); }
+      .border-foreground { border-color: var(--apple-foreground); }
+      .ring-foreground { --tw-ring-color: var(--apple-foreground); }
+      .bg-card { background-color: var(--apple-card); }
+      .text-card { color: var(--apple-card); }
+      .border-card { border-color: var(--apple-card); }
+      .ring-card { --tw-ring-color: var(--apple-card); }
+      .bg-card-foreground { background-color: var(--apple-card-foreground); }
+      .text-card-foreground { color: var(--apple-card-foreground); }
+      .border-card-foreground { border-color: var(--apple-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--apple-card-foreground); }
+      .bg-popover { background-color: var(--apple-popover); }
+      .text-popover { color: var(--apple-popover); }
+      .border-popover { border-color: var(--apple-popover); }
+      .ring-popover { --tw-ring-color: var(--apple-popover); }
+      .bg-popover-foreground { background-color: var(--apple-popover-foreground); }
+      .text-popover-foreground { color: var(--apple-popover-foreground); }
+      .border-popover-foreground { border-color: var(--apple-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--apple-popover-foreground); }
+      .bg-primary { background-color: var(--apple-primary); }
+      .text-primary { color: var(--apple-primary); }
+      .border-primary { border-color: var(--apple-primary); }
+      .ring-primary { --tw-ring-color: var(--apple-primary); }
+      .bg-primary-foreground { background-color: var(--apple-primary-foreground); }
+      .text-primary-foreground { color: var(--apple-primary-foreground); }
+      .border-primary-foreground { border-color: var(--apple-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--apple-primary-foreground); }
+      .bg-secondary { background-color: var(--apple-secondary); }
+      .text-secondary { color: var(--apple-secondary); }
+      .border-secondary { border-color: var(--apple-secondary); }
+      .ring-secondary { --tw-ring-color: var(--apple-secondary); }
+      .bg-secondary-foreground { background-color: var(--apple-secondary-foreground); }
+      .text-secondary-foreground { color: var(--apple-secondary-foreground); }
+      .border-secondary-foreground { border-color: var(--apple-secondary-foreground); }
+      .ring-secondary-foreground { --tw-ring-color: var(--apple-secondary-foreground); }
+      .bg-muted { background-color: var(--apple-muted); }
+      .text-muted { color: var(--apple-muted); }
+      .border-muted { border-color: var(--apple-muted); }
+      .ring-muted { --tw-ring-color: var(--apple-muted); }
+      .bg-muted-foreground { background-color: var(--apple-muted-foreground); }
+      .text-muted-foreground { color: var(--apple-muted-foreground); }
+      .border-muted-foreground { border-color: var(--apple-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--apple-muted-foreground); }
+      .bg-accent { background-color: var(--apple-accent); }
+      .text-accent { color: var(--apple-accent); }
+      .border-accent { border-color: var(--apple-accent); }
+      .ring-accent { --tw-ring-color: var(--apple-accent); }
+      .bg-accent-foreground { background-color: var(--apple-accent-foreground); }
+      .text-accent-foreground { color: var(--apple-accent-foreground); }
+      .border-accent-foreground { border-color: var(--apple-accent-foreground); }
+      .ring-accent-foreground { --tw-ring-color: var(--apple-accent-foreground); }
+      .bg-destructive { background-color: var(--apple-destructive); }
+      .text-destructive { color: var(--apple-destructive); }
+      .border-destructive { border-color: var(--apple-destructive); }
+      .ring-destructive { --tw-ring-color: var(--apple-destructive); }
+      .bg-destructive-foreground { background-color: var(--apple-destructive-foreground); }
+      .text-destructive-foreground { color: var(--apple-destructive-foreground); }
+      .border-destructive-foreground { border-color: var(--apple-destructive-foreground); }
+      .ring-destructive-foreground { --tw-ring-color: var(--apple-destructive-foreground); }
+      .bg-border { background-color: var(--apple-border); }
+      .text-border { color: var(--apple-border); }
+      .border-border { border-color: var(--apple-border); }
+      .ring-border { --tw-ring-color: var(--apple-border); }
+      .bg-input { background-color: var(--apple-input); }
+      .text-input { color: var(--apple-input); }
+      .border-input { border-color: var(--apple-input); }
+      .ring-input { --tw-ring-color: var(--apple-input); }
+      .bg-ring { background-color: var(--apple-ring); }
+      .text-ring { color: var(--apple-ring); }
+      .border-ring { border-color: var(--apple-ring); }
+      .ring-ring { --tw-ring-color: var(--apple-ring); }
+      .bg-chart-1 { background-color: var(--apple-chart-1); }
+      .text-chart-1 { color: var(--apple-chart-1); }
+      .border-chart-1 { border-color: var(--apple-chart-1); }
+      .ring-chart-1 { --tw-ring-color: var(--apple-chart-1); }
+      .bg-chart-2 { background-color: var(--apple-chart-2); }
+      .text-chart-2 { color: var(--apple-chart-2); }
+      .border-chart-2 { border-color: var(--apple-chart-2); }
+      .ring-chart-2 { --tw-ring-color: var(--apple-chart-2); }
+      .bg-chart-3 { background-color: var(--apple-chart-3); }
+      .text-chart-3 { color: var(--apple-chart-3); }
+      .border-chart-3 { border-color: var(--apple-chart-3); }
+      .ring-chart-3 { --tw-ring-color: var(--apple-chart-3); }
+      .bg-chart-4 { background-color: var(--apple-chart-4); }
+      .text-chart-4 { color: var(--apple-chart-4); }
+      .border-chart-4 { border-color: var(--apple-chart-4); }
+      .ring-chart-4 { --tw-ring-color: var(--apple-chart-4); }
+      .bg-chart-5 { background-color: var(--apple-chart-5); }
+      .text-chart-5 { color: var(--apple-chart-5); }
+      .border-chart-5 { border-color: var(--apple-chart-5); }
+      .ring-chart-5 { --tw-ring-color: var(--apple-chart-5); }
+      .bg-sidebar { background-color: var(--apple-sidebar); }
+      .text-sidebar { color: var(--apple-sidebar); }
+      .border-sidebar { border-color: var(--apple-sidebar); }
+      .ring-sidebar { --tw-ring-color: var(--apple-sidebar); }
+      .bg-sidebar-foreground { background-color: var(--apple-sidebar-foreground); }
+      .text-sidebar-foreground { color: var(--apple-sidebar-foreground); }
+      .border-sidebar-foreground { border-color: var(--apple-sidebar-foreground); }
+      .ring-sidebar-foreground { --tw-ring-color: var(--apple-sidebar-foreground); }
+      .bg-sidebar-primary { background-color: var(--apple-sidebar-primary); }
+      .text-sidebar-primary { color: var(--apple-sidebar-primary); }
+      .border-sidebar-primary { border-color: var(--apple-sidebar-primary); }
+      .ring-sidebar-primary { --tw-ring-color: var(--apple-sidebar-primary); }
+      .bg-sidebar-primary-foreground { background-color: var(--apple-sidebar-primary-foreground); }
+      .text-sidebar-primary-foreground { color: var(--apple-sidebar-primary-foreground); }
+      .border-sidebar-primary-foreground { border-color: var(--apple-sidebar-primary-foreground); }
+      .ring-sidebar-primary-foreground { --tw-ring-color: var(--apple-sidebar-primary-foreground); }
+      .bg-sidebar-accent { background-color: var(--apple-sidebar-accent); }
+      .text-sidebar-accent { color: var(--apple-sidebar-accent); }
+      .border-sidebar-accent { border-color: var(--apple-sidebar-accent); }
+      .ring-sidebar-accent { --tw-ring-color: var(--apple-sidebar-accent); }
+      .bg-sidebar-accent-foreground { background-color: var(--apple-sidebar-accent-foreground); }
+      .text-sidebar-accent-foreground { color: var(--apple-sidebar-accent-foreground); }
+      .border-sidebar-accent-foreground { border-color: var(--apple-sidebar-accent-foreground); }
+      .ring-sidebar-accent-foreground { --tw-ring-color: var(--apple-sidebar-accent-foreground); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main>
+      <style>
+        /* ===== Advisor Page Layout ===== */
+        .advisor-page {
+          height: 100dvh;
+          display: flex;
+          flex-direction: column;
+          max-width: 480px;
+          margin: 0 auto;
+          background: var(--apple-background);
+          position: relative;
+        }
+
+        /* ===== Chat Header ===== */
+        .advisor-header {
+          flex-shrink: 0;
+          background: var(--apple-card);
+          border-bottom: 1px solid var(--apple-border);
+          padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 12px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          z-index: 10;
+        }
+        .advisor-header-avatar {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background: var(--apple-chart-2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--apple-primary-foreground);
+          flex-shrink: 0;
+        }
+        .advisor-header-avatar svg {
+          width: 20px;
+          height: 20px;
+          stroke-width: 2;
+        }
+        .advisor-header-info {
+          flex: 1;
+          min-width: 0;
+        }
+        .advisor-header-title {
+          font-size: 16px;
+          font-weight: 600;
+          color: var(--apple-foreground);
+          line-height: 1.3;
+        }
+        .advisor-header-subtitle {
+          font-size: 12px;
+          color: var(--apple-muted-foreground);
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          line-height: 1.3;
+          margin-top: 2px;
+        }
+        .status-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--apple-chart-1);
+          flex-shrink: 0;
+        }
+        .advisor-header-actions {
+          display: flex;
+          gap: 8px;
+          flex-shrink: 0;
+        }
+        .advisor-header-btn {
+          width: 34px;
+          height: 34px;
+          border-radius: 12px;
+          background: var(--apple-muted);
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--apple-foreground);
+          cursor: pointer;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .advisor-header-btn svg {
+          width: 18px;
+          height: 18px;
+          stroke-width: 2;
+        }
+
+        /* ===== Messages Area ===== */
+        .advisor-messages {
+          flex: 1;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior: contain;
+          padding: 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        /* ===== Welcome Card ===== */
+        .welcome-card {
+          background: var(--apple-card);
+          border: 1px solid var(--apple-border);
+          border-radius: var(--apple-radius-lg);
+          box-shadow: var(--shadow-sm);
+          padding: 32px 24px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 12px;
+        }
+        .welcome-avatar {
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+          background: var(--apple-chart-2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--apple-primary-foreground);
+          margin-bottom: 4px;
+        }
+        .welcome-avatar svg {
+          width: 22px;
+          height: 22px;
+          stroke-width: 2;
+        }
+        .welcome-title {
+          font-size: 17px;
+          font-weight: 600;
+          color: var(--apple-foreground);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .welcome-title svg {
+          width: 18px;
+          height: 18px;
+          stroke-width: 2;
+          color: var(--apple-chart-2);
+        }
+        .welcome-desc {
+          font-size: 13px;
+          color: var(--apple-muted-foreground);
+          line-height: 1.7;
+        }
+        .welcome-tip {
+          font-size: 12px;
+          color: var(--apple-muted-foreground);
+          margin-top: 4px;
+        }
+
+        /* ===== Chat Messages ===== */
+        .chat-msg {
+          display: flex;
+          gap: 8px;
+          align-items: flex-start;
+        }
+        .chat-msg.user {
+          flex-direction: row-reverse;
+        }
+        .chat-avatar {
+          width: 34px;
+          height: 34px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--apple-primary-foreground);
+          flex-shrink: 0;
+          font-size: 13px;
+          font-weight: 600;
+        }
+        .chat-avatar.assistant {
+          background: var(--apple-chart-2);
+        }
+        .chat-avatar.assistant svg {
+          width: 18px;
+          height: 18px;
+          stroke-width: 2;
+        }
+        .chat-avatar.user {
+          background: var(--apple-chart-1);
+        }
+        .chat-bubble {
+          max-width: 75%;
+          padding: 10px 14px;
+          font-size: 14px;
+          line-height: 1.6;
+          word-break: break-word;
+        }
+        .chat-bubble.assistant {
+          background: var(--apple-secondary);
+          color: var(--apple-secondary-foreground);
+          border-radius: 1rem;
+          border-top-left-radius: 0.375rem;
+        }
+        .chat-bubble.user {
+          background: var(--apple-chart-2);
+          color: var(--apple-primary-foreground);
+          border-radius: 1rem;
+          border-top-right-radius: 0.375rem;
+          font-weight: 500;
+        }
+        .chat-bubble.pre-line {
+          white-space: pre-line;
+        }
+
+        /* ===== Quick Questions Panel ===== */
+        .advisor-questions {
+          flex-shrink: 0;
+          background: var(--apple-muted);
+          border-top: 1px solid var(--apple-border);
+          max-height: 260px;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior: contain;
+          padding: 12px 0;
+        }
+        .question-categories {
+          display: flex;
+          gap: 8px;
+          padding: 0 16px 12px;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+        .question-categories::-webkit-scrollbar {
+          display: none;
+        }
+        .category-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          padding: 5px 12px;
+          min-height: 32px;
+          border-radius: 999px;
+          font-size: 12px;
+          font-weight: 500;
+          white-space: nowrap;
+          flex-shrink: 0;
+          border: 1px solid var(--apple-border);
+          background: var(--apple-card);
+          color: var(--apple-muted-foreground);
+          cursor: pointer;
+          font-family: inherit;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .category-chip svg {
+          width: 14px;
+          height: 14px;
+          stroke-width: 2;
+        }
+        .category-chip.active {
+          background: var(--tint-chart-2-12);
+          color: var(--apple-chart-2);
+          border-color: var(--apple-chart-2);
+        }
+        .question-list {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          padding: 0 16px;
+        }
+        .question-item {
+          background: var(--apple-card);
+          border: 1px solid var(--apple-border);
+          border-radius: var(--apple-radius-md);
+          box-shadow: var(--shadow-sm);
+          padding: 0 14px;
+          min-height: 48px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .question-item-icon {
+          width: 28px;
+          height: 28px;
+          border-radius: 8px;
+          background: var(--tint-chart-2-10);
+          color: var(--apple-chart-2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        .question-item-icon svg {
+          width: 16px;
+          height: 16px;
+          stroke-width: 2;
+        }
+        .question-item-text {
+          flex: 1;
+          font-size: 13px;
+          color: var(--apple-foreground);
+          line-height: 1.4;
+        }
+        .question-item-arrow {
+          color: var(--apple-muted-foreground);
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+        }
+        .question-item-arrow svg {
+          width: 16px;
+          height: 16px;
+          stroke-width: 2;
+        }
+
+        /* ===== Input Area ===== */
+        .advisor-input {
+          flex-shrink: 0;
+          background: var(--apple-card);
+          border-top: 1px solid var(--apple-border);
+          padding: 10px 12px;
+          padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 64px);
+          display: flex;
+          align-items: flex-end;
+          gap: 10px;
+        }
+        .advisor-input textarea {
+          flex: 1;
+          background: var(--apple-muted);
+          border: 1px solid var(--apple-border);
+          border-radius: 1rem;
+          padding: 10px 14px;
+          font-size: 14px;
+          font-family: var(--font-sans);
+          color: var(--apple-foreground);
+          resize: none;
+          outline: none;
+          max-height: 100px;
+          min-height: 40px;
+          line-height: 1.4;
+          -webkit-appearance: none;
+          appearance: none;
+        }
+        .advisor-input textarea::placeholder {
+          color: var(--apple-muted-foreground);
+        }
+        .advisor-send-btn {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: var(--apple-chart-2);
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--apple-primary-foreground);
+          flex-shrink: 0;
+          cursor: pointer;
+          -webkit-tap-highlight-color: transparent;
+          min-width: 48px;
+          min-height: 48px;
+        }
+        .advisor-send-btn svg {
+          width: 20px;
+          height: 20px;
+          stroke-width: 2;
+        }
+
+        /* ===== Dock Navigation ===== */
+        .dock-nav {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          background: var(--apple-sidebar);
+          border-top: 1px solid var(--apple-border);
+          padding-bottom: max(env(safe-area-inset-bottom), 8px);
+          z-index: 50;
+          box-shadow: var(--shadow-sm);
+        }
+        .dock-tab {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 2px;
+          min-height: 48px;
+          min-width: 48px;
+          padding: 6px 4px;
+          color: var(--apple-muted-foreground);
+          text-decoration: none;
+          -webkit-tap-highlight-color: transparent;
+          flex: 1;
+        }
+        .dock-tab[data-active="true"] {
+          color: var(--apple-primary);
+        }
+        .dock-icon {
+          width: 22px;
+          height: 22px;
+          stroke-width: 1.5;
+        }
+        .dock-label {
+          font-size: 10px;
+          font-weight: 500;
+          line-height: 1.2;
+        }
+        @media (max-width: 360px) {
+          .dock-label {
+            font-size: 9px;
+          }
+        }
+      </style>
+
+      <div class="advisor-page">
+        <!-- ===== Section 1: Chat Header ===== -->
+        <header class="advisor-header">
+          <div class="advisor-header-avatar">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <div class="advisor-header-info">
+            <div class="advisor-header-title">AI 健康顾问</div>
+            <div class="advisor-header-subtitle">
+              <span class="status-dot"></span>
+              <span>随时为你服务</span>
+            </div>
+          </div>
+          <div class="advisor-header-actions">
+            <button class="advisor-header-btn" aria-label="新建会话" type="button">
+              <i data-lucide="plus"></i>
+            </button>
+            <button class="advisor-header-btn" aria-label="清空会话" type="button">
+              <i data-lucide="trash-2"></i>
+            </button>
+          </div>
+        </header>
+
+        <!-- ===== Section 2: Messages Area (scrollable) ===== -->
+        <div class="advisor-messages">
+          <!-- Welcome Card (empty state) -->
+          <div class="welcome-card">
+            <div class="welcome-avatar">
+              <i data-lucide="sparkles"></i>
+            </div>
+            <div class="welcome-title">
+              你好，健康用户
+              <i data-lucide="hand"></i>
+            </div>
+            <div class="welcome-desc">
+              我是你的 AI 健康顾问，可以为你提供饮食建议、运动方案、睡眠指导、心理疏导等全方位健康陪伴。
+            </div>
+            <div class="welcome-tip">试试下面的问题，或直接输入你想问的内容</div>
+          </div>
+
+          <!-- Sample Assistant Message -->
+          <div class="chat-msg">
+            <div class="chat-avatar assistant">
+              <i data-lucide="sparkles"></i>
+            </div>
+            <div class="chat-bubble assistant">
+              你好！我是你的 AI 健康顾问。有什么健康方面的问题都可以问我，比如饮食搭配、运动建议、睡眠改善等。
+            </div>
+          </div>
+
+          <!-- Sample User Message -->
+          <div class="chat-msg user">
+            <div class="chat-avatar user">健</div>
+            <div class="chat-bubble user">
+              我今天吃什么比较健康？
+            </div>
+          </div>
+
+          <!-- Sample Assistant Response (multiline) -->
+          <div class="chat-msg">
+            <div class="chat-avatar assistant">
+              <i data-lucide="sparkles"></i>
+            </div>
+            <div class="chat-bubble assistant pre-line">根据你的身体档案，建议今天可以这样安排：
+早餐：全麦面包 + 鸡蛋 + 牛奶
+午餐：糙米饭 + 鸡胸肉 + 西兰花
+晚餐：杂粮粥 + 蒸鱼 + 蔬菜沙拉
+注意控制油盐摄入，保持营养均衡。</div>
+          </div>
+        </div>
+
+        <!-- ===== Section 3: Quick Questions Panel ===== -->
+        <div class="advisor-questions">
+          <!-- Category Chips (horizontal scroll) -->
+          <div class="question-categories">
+            <button class="category-chip active" type="button">
+              <i data-lucide="list"></i>
+              <span>全部</span>
+            </button>
+            <button class="category-chip" type="button">
+              <i data-lucide="salad"></i>
+              <span>饮食</span>
+            </button>
+            <button class="category-chip" type="button">
+              <i data-lucide="dumbbell"></i>
+              <span>运动</span>
+            </button>
+            <button class="category-chip" type="button">
+              <i data-lucide="moon"></i>
+              <span>睡眠</span>
+            </button>
+            <button class="category-chip" type="button">
+              <i data-lucide="heart"></i>
+              <span>心理</span>
+            </button>
+            <button class="category-chip" type="button">
+              <i data-lucide="lightbulb"></i>
+              <span>综合</span>
+            </button>
+          </div>
+
+          <!-- Question List (vertical) -->
+          <div class="question-list">
+            <div class="question-item">
+              <div class="question-item-icon"><i data-lucide="salad"></i></div>
+              <div class="question-item-text">我今天吃什么比较健康？</div>
+              <div class="question-item-arrow"><i data-lucide="chevron-right"></i></div>
+            </div>
+            <div class="question-item">
+              <div class="question-item-icon"><i data-lucide="salad"></i></div>
+              <div class="question-item-text">想减脂，三餐应该怎么搭配？</div>
+              <div class="question-item-arrow"><i data-lucide="chevron-right"></i></div>
+            </div>
+            <div class="question-item">
+              <div class="question-item-icon"><i data-lucide="salad"></i></div>
+              <div class="question-item-text">蛋白质摄入不足怎么办？</div>
+              <div class="question-item-arrow"><i data-lucide="chevron-right"></i></div>
+            </div>
+            <div class="question-item">
+              <div class="question-item-icon"><i data-lucide="dumbbell"></i></div>
+              <div class="question-item-text">上班族每天 20 分钟怎么运动？</div>
+              <div class="question-item-arrow"><i data-lucide="chevron-right"></i></div>
+            </div>
+            <div class="question-item">
+              <div class="question-item-icon"><i data-lucide="dumbbell"></i></div>
+              <div class="question-item-text">跑步和跳绳哪个更减脂？</div>
+              <div class="question-item-arrow"><i data-lucide="chevron-right"></i></div>
+            </div>
+            <div class="question-item">
+              <div class="question-item-icon"><i data-lucide="moon"></i></div>
+              <div class="question-item-text">最近总失眠，有什么改善方法？</div>
+              <div class="question-item-arrow"><i data-lucide="chevron-right"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== Section 4: Input Area ===== -->
+        <div class="advisor-input">
+          <textarea rows="1" placeholder="输入你的健康问题…"></textarea>
+          <button class="advisor-send-btn" aria-label="发送" type="button">
+            <i data-lucide="send"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- ===== Section 5: Dock Navigation ===== -->
+      <nav class="dock-nav h-[56px]" data-mobile-nav="global"><div class="flex justify-around items-center h-full"><a href="#" class="dock-tab" data-dom-id="nav-home" data-nav-key="home"><i data-lucide="house" class="dock-icon"></i><span class="dock-label whitespace-nowrap">看板</span></a><a href="#" class="dock-tab" data-dom-id="nav-advisor" data-nav-key="advisor" data-active="true"><i data-lucide="message-circle" class="dock-icon"></i><span class="dock-label whitespace-nowrap">顾问</span></a><a href="#" class="dock-tab" data-dom-id="nav-mind" data-nav-key="mind"><i data-lucide="smile" class="dock-icon"></i><span class="dock-label whitespace-nowrap">心理</span></a><a href="#" class="dock-tab" data-dom-id="nav-sleep" data-nav-key="sleep"><i data-lucide="moon" class="dock-icon"></i><span class="dock-label whitespace-nowrap">睡眠</span></a><a href="#" class="dock-tab" data-dom-id="nav-record" data-nav-key="record"><i data-lucide="utensils" class="dock-icon"></i><span class="dock-label whitespace-nowrap">记录</span></a><a href="#" class="dock-tab" data-dom-id="nav-profile" data-nav-key="profile"><i data-lucide="user" class="dock-icon"></i><span class="dock-label whitespace-nowrap">我的</span></a></div></nav>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

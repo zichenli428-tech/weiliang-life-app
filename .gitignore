@@ -34,3 +34,9 @@ dist-ssr
 # Trae / IDE
 .trae-cn/
 .trae/
+
+# 本地下载的 JDK（仅用于 Android 打包，勿提交）
+.jdk21/
+
+# Android 打包产物（debug APK 副本）
+*.apk

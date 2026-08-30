@@ -1,12 +1,14 @@
 <script setup lang="ts">
 /**
- * 极光按钮
- * primary：极光渐变背景，深色文字
- * glass：玻璃半透明背景，白色文字
+ * Apple 按钮
+ * primary：主色实色背景（System Blue），白字
+ * secondary：浅灰背景 + 边框
+ * text：透明背景，主色文字
+ * 兼容旧 type='glass' → 映射为 secondary
  */
 const props = withDefaults(
   defineProps<{
-    type?: 'primary' | 'glass'
+    type?: 'primary' | 'glass' | 'secondary' | 'text'
     size?: 'sm' | 'md' | 'lg'
     block?: boolean
     disabled?: boolean
@@ -31,21 +33,26 @@ const handleClick = (e: MouseEvent) => {
 }
 
 const sizeClasses = {
-  sm: 'px-4 py-1.5 text-xs',
-  md: 'px-5 py-2.5 text-sm',
-  lg: 'px-6 py-3 text-base'
+  sm: 'px-4 py-1.5 text-xs min-h-[36px]',
+  md: 'px-5 py-2.5 text-sm min-h-[44px]',
+  lg: 'px-6 py-3 text-base min-h-[48px]'
+}
+
+const typeClass = (t: string) => {
+  if (t === 'primary') return 'btn-primary'
+  if (t === 'text') return 'btn-text'
+  // glass 兼容映射为 secondary
+  return 'btn-secondary'
 }
 </script>
 
 <template>
   <button
-    class="aurora-btn inline-flex items-center justify-center gap-1.5 rounded-full font-semibold transition-all duration-200 active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none"
+    class="aurora-btn inline-flex items-center justify-center gap-1.5 rounded-md font-semibold transition-all duration-200 active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none"
     :class="[
       sizeClasses[size],
       block ? 'w-full' : '',
-      type === 'primary'
-        ? 'aurora-gradient text-surface-bg shadow-lg shadow-aurora-green/20'
-        : 'glass text-content-primary'
+      typeClass(type)
     ]"
     :disabled="disabled || loading"
     @click="handleClick"
@@ -56,21 +63,5 @@ const sizeClasses = {
 </template>
 
 <style scoped>
-.aurora-btn {
-  -webkit-tap-highlight-color: transparent;
-}
-
-.aurora-gradient {
-  background: linear-gradient(135deg, #34d399 0%, #22d3ee 50%, #a78bfa 100%);
-}
-
-.glass {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 16px rgba(2, 8, 20, 0.24);
-}
-
-.glass:active {
-  background: rgba(255, 255, 255, 0.12);
-}
+/* 按钮样式由全局 main.css 的 .btn-primary/.btn-secondary/.btn-text 提供 */
 </style>

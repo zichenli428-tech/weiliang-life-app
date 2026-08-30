@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>建档</title>
+    <style id="theme-vars">
+/*
+ * Pinguo design tokens — extended for solo-design consumption
+ * Brand: Pinguo (Apple Design Library)
+ * Domain: Consumer imaging product
+ * Style: Restrained, elegant, Apple-inspired
+ * Theme mode: light-dark
+ * Source language: zh
+ * Output language: en
+ *
+ * This file extends the Apple Design Library colors_and_type.css with
+ * required semantic radius aliases for apply-html-head-contract.mjs.
+ * All original tokens are preserved unchanged.
+ *
+ * Color architecture (two layers):
+ *   1. Primitive palette - six categories. brand / background / text / icon
+ *      are each a 10-step scale (50 lightest to 900 darkest). state-success and
+ *      state-error are functional colors anchored on Apple system colors.
+ *      Anchors follow Apple Human Interface Guidelines system colors
+ *      (System Blue #007AFF, System Green #34C759, System Red #FF3B30,
+ *      system grays / label / background colors).
+ *   2. Semantic tokens - :root (light) and .dark map roles onto primitives.
+ *      Components and UI kits must only consume the semantic tokens below.
+ */
+
+/* @group-priority: brand, background, text, icon, state-success, state-error */
+
+:root {
+  
+  /* solo-design consumption aliases: explicit prefix for fill-html-head.mjs */
+  --apple-background: var(--background, #ffffff);
+  --apple-foreground: var(--foreground, #0f172a);
+  --apple-card: var(--card, var(--background));
+  --apple-card-foreground: var(--card-foreground, var(--foreground));
+  --apple-popover: var(--popover, var(--card));
+  --apple-popover-foreground: var(--popover-foreground, var(--card-foreground, var(--foreground)));
+  --apple-primary: var(--primary, #111827);
+  --apple-primary-foreground: var(--primary-foreground, #ffffff);
+  --apple-secondary: var(--secondary, var(--muted, var(--card)));
+  --apple-secondary-foreground: var(--secondary-foreground, var(--foreground));
+  --apple-muted: var(--muted, var(--card));
+  --apple-muted-foreground: var(--muted-foreground, var(--foreground));
+  --apple-accent: var(--accent, var(--secondary, var(--muted, var(--card))));
+  --apple-accent-foreground: var(--accent-foreground, var(--foreground));
+  --apple-destructive: var(--destructive, #ef4444);
+  --apple-destructive-foreground: var(--destructive-foreground, #ffffff);
+  --apple-border: var(--border, currentColor);
+  --apple-input: var(--input, var(--border));
+  --apple-ring: var(--ring, var(--primary));
+  --apple-chart-1: var(--chart-1, var(--primary));
+  --apple-chart-2: var(--chart-2, var(--secondary, var(--primary)));
+  --apple-chart-3: var(--chart-3, var(--accent, var(--primary)));
+  --apple-chart-4: var(--chart-4, var(--muted-foreground, var(--foreground)));
+  --apple-chart-5: var(--chart-5, var(--foreground));
+  --apple-sidebar: var(--sidebar, var(--background));
+  --apple-sidebar-foreground: var(--sidebar-foreground, var(--foreground));
+  --apple-sidebar-primary: var(--sidebar-primary, var(--primary));
+  --apple-sidebar-primary-foreground: var(--sidebar-primary-foreground, var(--primary-foreground));
+  --apple-sidebar-accent: var(--sidebar-accent, var(--accent, var(--muted, var(--card))));
+  --apple-sidebar-accent-foreground: var(--sidebar-accent-foreground, var(--accent-foreground, var(--foreground)));
+
+/* ===== PRIMITIVE PALETTE ===== */
+
+  /* brand */
+  --brand-50: #e8f2ff;
+  --brand-100: #cfe5ff;
+  --brand-200: #9fcbff;
+  --brand-300: #66abff;
+  --brand-400: #2e8dff;
+  --brand-500: #007aff; /* @primary */
+  --brand-600: #0064d6;
+  --brand-700: #004fad;
+  --brand-800: #003b82;
+  --brand-900: #00275a;
+
+  /* background */
+  --background-50: #ffffff;
+  --background-100: #f7f7fa;
+  --background-200: #f2f2f7;
+  --background-300: #e5e5ea;
+  --background-400: #d1d1d6;
+  --background-500: #aeaeb2;
+  --background-600: #8e8e93;
+  --background-700: #3a3a3c;
+  --background-800: #1c1c1e;
+  --background-900: #000000;
+
+  /* text */
+  --text-50: #f5f5f7;
+  --text-100: #e3e3e8;
+  --text-200: #c7c7cc;
+  --text-300: #aeaeb2;
+  --text-400: #8e8e93;
+  --text-500: #6e6e73;
+  --text-600: #48484a;
+  --text-700: #3c3c43;
+  --text-800: #1d1d1f;
+  --text-900: #000000;
+
+  /* icon */
+  --icon-50: #f5f5f7;
+  --icon-100: #e5e5ea;
+  --icon-200: #d1d1d6;
+  --icon-300: #c7c7cc;
+  --icon-400: #aeaeb2;
+  --icon-500: #8e8e93;
+  --icon-600: #6e6e73;
+  --icon-700: #48484a;
+  --icon-800: #2c2c2e;
+  --icon-900: #1d1d1f;
+
+  /* state-success */
+  --state-success: #34c759; /* @primary */
+  --state-success-dark: #30d158;
+  --state-success-surface: #e9f9ee;
+  --state-success-foreground: #ffffff;
+
+  /* state-error */
+  --state-error: #ff3b30; /* @primary */
+  --state-error-dark: #ff453a;
+  --state-error-surface: #ffecea;
+  --state-error-foreground: #ffffff;
+
+  /* ===== SEMANTIC ROLES ===== */
+
+  /* semantic */
+  --background: var(--background-50);
+  --foreground: var(--text-800);
+  --card: var(--background-50);
+  --card-foreground: var(--text-800);
+  --popover: var(--background-50);
+  --popover-foreground: var(--text-900);
+
+  --primary: var(--brand-500);
+  --primary-foreground: var(--background-50);
+  --secondary: var(--background-200);
+  --secondary-foreground: var(--text-800);
+  --muted: var(--background-200);
+  --muted-foreground: var(--text-400);
+  --accent: var(--background-100);
+  --accent-foreground: var(--text-800);
+  --destructive: var(--state-error);
+  --destructive-foreground: var(--state-error-foreground);
+  --success: var(--state-success);
+  --success-foreground: var(--state-success-foreground);
+  --border: var(--background-300);
+  --input: var(--background-400);
+  --ring: var(--brand-500);
+
+  --icon: var(--icon-900);
+  --icon-muted: var(--icon-500);
+
+  /* chart */
+  --chart-1: var(--state-success);
+  --chart-2: var(--brand-500);
+  --chart-3: #ff9500;
+  --chart-4: #5856d6;
+  --chart-5: #af52de;
+
+  /* sidebar */
+  --sidebar: var(--background-200);
+  --sidebar-foreground: var(--text-800);
+  --sidebar-primary: var(--brand-500);
+  --sidebar-primary-foreground: var(--background-50);
+  --sidebar-accent: var(--background-300);
+  --sidebar-accent-foreground: var(--text-800);
+  --sidebar-border: var(--background-300);
+  --sidebar-ring: var(--brand-500);
+
+  /* TYPOGRAPHY */
+  --font-sans: DM Sans, Roboto, ui-sans-serif, sans-serif, system-ui;
+  --font-serif: DM Sans, Roboto, ui-sans-serif, sans-serif, system-ui;
+  --font-mono: JetBrains Mono, monospace;
+  --tracking-normal: 0em;
+
+  /* RADIUS */
+  --radius: 1.2rem;
+
+  /* Radius semantic aliases for solo-design apply-html-head-contract.mjs */
+  --apple-radius-sm: 0.5rem;
+  --apple-radius-md: 0.75rem;
+  --apple-radius-lg: var(--radius);
+  --apple-radius-xl: calc(var(--radius) * 1.25);
+
+  /* SHADOWS */
+  --shadow-2xs: 0 1px 2px -1px rgba(0, 0, 0, 0.04); /* Hairline */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.04); /* Subtle */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.05); /* Card */
+  --shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.05); /* Raised */
+  --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.05); /* Card Hover */
+  --shadow-lg: 0 8px 24px -8px rgba(0, 0, 0, 0.08), 0 4px 8px -4px rgba(0, 0, 0, 0.05); /* Float */
+  --shadow-xl: 0 16px 40px -10px rgba(0, 0, 0, 0.10), 0 8px 16px -8px rgba(0, 0, 0, 0.06); /* Overlay */
+  --shadow-2xl: 0 24px 64px -12px rgba(0, 0, 0, 0.12); /* Modal */
+
+  /* SPACING */
+  --spacing: 0.24rem;
+}
+
+/* ===== SEMANTIC ROLES - dark (primitive palette inherited) ===== */
+.dark {
+  --background: var(--background-900);
+  --foreground: var(--text-50);
+  --card: var(--background-800);
+  --card-foreground: var(--text-50);
+  --popover: var(--background-700);
+  --popover-foreground: var(--text-50);
+
+  --primary: var(--brand-400);
+  --primary-foreground: var(--background-900);
+  --secondary: var(--background-800);
+  --secondary-foreground: var(--text-50);
+  --muted: var(--background-800);
+  --muted-foreground: var(--text-400);
+  --accent: var(--background-700);
+  --accent-foreground: var(--text-50);
+  --destructive: var(--state-error-dark);
+  --destructive-foreground: var(--state-error-foreground);
+  --success: var(--state-success-dark);
+  --success-foreground: var(--state-success-foreground);
+  --border: var(--background-700);
+  --input: var(--background-700);
+  --ring: var(--brand-400);
+
+  --icon: var(--icon-50);
+  --icon-muted: var(--icon-500);
+
+  --chart-1: var(--state-success-dark);
+  --chart-2: var(--brand-400);
+  --chart-3: #ff9f0a;
+  --chart-4: #5e5ce6;
+  --chart-5: #bf5af2;
+
+  --sidebar: var(--background-800);
+  --sidebar-foreground: var(--text-50);
+  --sidebar-primary: var(--brand-400);
+  --sidebar-primary-foreground: var(--background-900);
+  --sidebar-accent: var(--background-700);
+  --sidebar-accent-foreground: var(--text-50);
+  --sidebar-border: var(--background-700);
+  --sidebar-ring: var(--brand-400);
+
+  --shadow-2xs: 0 1px 2px -1px rgba(0, 0, 0, 0.30);
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.36), 0 1px 3px -1px rgba(0, 0, 0, 0.36);
+  --shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.40), 0 1px 2px -1px rgba(0, 0, 0, 0.36);
+  --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.44), 0 2px 4px -2px rgba(0, 0, 0, 0.36);
+  --shadow-lg: 0 8px 24px -8px rgba(0, 0, 0, 0.50), 0 4px 8px -4px rgba(0, 0, 0, 0.40);
+  --shadow-xl: 0 16px 40px -10px rgba(0, 0, 0, 0.55), 0 8px 16px -8px rgba(0, 0, 0, 0.44);
+  --shadow-2xl: 0 24px 64px -12px rgba(0, 0, 0, 0.60);
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--apple-background);
+    --color-foreground: var(--apple-foreground);
+    --color-card: var(--apple-card);
+    --color-card-foreground: var(--apple-card-foreground);
+    --color-popover: var(--apple-popover);
+    --color-popover-foreground: var(--apple-popover-foreground);
+    --color-primary: var(--apple-primary);
+    --color-primary-foreground: var(--apple-primary-foreground);
+    --color-secondary: var(--apple-secondary);
+    --color-secondary-foreground: var(--apple-secondary-foreground);
+    --color-muted: var(--apple-muted);
+    --color-muted-foreground: var(--apple-muted-foreground);
+    --color-accent: var(--apple-accent);
+    --color-accent-foreground: var(--apple-accent-foreground);
+    --color-destructive: var(--apple-destructive);
+    --color-destructive-foreground: var(--apple-destructive-foreground);
+    --color-border: var(--apple-border);
+    --color-input: var(--apple-input);
+    --color-ring: var(--apple-ring);
+    --color-chart-1: var(--apple-chart-1);
+    --color-chart-2: var(--apple-chart-2);
+    --color-chart-3: var(--apple-chart-3);
+    --color-chart-4: var(--apple-chart-4);
+    --color-chart-5: var(--apple-chart-5);
+    --color-sidebar: var(--apple-sidebar);
+    --color-sidebar-foreground: var(--apple-sidebar-foreground);
+    --color-sidebar-primary: var(--apple-sidebar-primary);
+    --color-sidebar-primary-foreground: var(--apple-sidebar-primary-foreground);
+    --color-sidebar-accent: var(--apple-sidebar-accent);
+    --color-sidebar-accent-foreground: var(--apple-sidebar-accent-foreground);
+    --radius-sm: var(--apple-radius-sm);
+    --radius-md: var(--apple-radius-md);
+    --radius-lg: var(--apple-radius-lg);
+    --radius-xl: var(--apple-radius-xl);
+  }
+  @layer base {
+    body { background: var(--apple-background); color: var(--apple-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--apple-background); }
+      .text-background { color: var(--apple-background); }
+      .border-background { border-color: var(--apple-background); }
+      .ring-background { --tw-ring-color: var(--apple-background); }
+      .bg-foreground { background-color: var(--apple-foreground); }
+      .text-foreground { color: var(--apple-foreground); }
+      .border-foreground { border-color: var(--apple-foreground); }
+      .ring-foreground { --tw-ring-color: var(--apple-foreground); }
+      .bg-card { background-color: var(--apple-card); }
+      .text-card { color: var(--apple-card); }
+      .border-card { border-color: var(--apple-card); }
+      .ring-card { --tw-ring-color: var(--apple-card); }
+      .bg-card-foreground { background-color: var(--apple-card-foreground); }
+      .text-card-foreground { color: var(--apple-card-foreground); }
+      .border-card-foreground { border-color: var(--apple-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--apple-card-foreground); }
+      .bg-popover { background-color: var(--apple-popover); }
+      .text-popover { color: var(--apple-popover); }
+      .border-popover { border-color: var(--apple-popover); }
+      .ring-popover { --tw-ring-color: var(--apple-popover); }
+      .bg-popover-foreground { background-color: var(--apple-popover-foreground); }
+      .text-popover-foreground { color: var(--apple-popover-foreground); }
+      .border-popover-foreground { border-color: var(--apple-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--apple-popover-foreground); }
+      .bg-primary { background-color: var(--apple-primary); }
+      .text-primary { color: var(--apple-primary); }
+      .border-primary { border-color: var(--apple-primary); }
+      .ring-primary { --tw-ring-color: var(--apple-primary); }
+      .bg-primary-foreground { background-color: var(--apple-primary-foreground); }
+      .text-primary-foreground { color: var(--apple-primary-foreground); }
+      .border-primary-foreground { border-color: var(--apple-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--apple-primary-foreground); }
+      .bg-secondary { background-color: var(--apple-secondary); }
+      .text-secondary { color: var(--apple-secondary); }
+      .border-secondary { border-color: var(--apple-secondary); }
+      .ring-secondary { --tw-ring-color: var(--apple-secondary); }
+      .bg-secondary-foreground { background-color: var(--apple-secondary-foreground); }
+      .text-secondary-foreground { color: var(--apple-secondary-foreground); }
+      .border-secondary-foreground { border-color: var(--apple-secondary-foreground); }
+      .ring-secondary-foreground { --tw-ring-color: var(--apple-secondary-foreground); }
+      .bg-muted { background-color: var(--apple-muted); }
+      .text-muted { color: var(--apple-muted); }
+      .border-muted { border-color: var(--apple-muted); }
+      .ring-muted { --tw-ring-color: var(--apple-muted); }
+      .bg-muted-foreground { background-color: var(--apple-muted-foreground); }
+      .text-muted-foreground { color: var(--apple-muted-foreground); }
+      .border-muted-foreground { border-color: var(--apple-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--apple-muted-foreground); }
+      .bg-accent { background-color: var(--apple-accent); }
+      .text-accent { color: var(--apple-accent); }
+      .border-accent { border-color: var(--apple-accent); }
+      .ring-accent { --tw-ring-color: var(--apple-accent); }
+      .bg-accent-foreground { background-color: var(--apple-accent-foreground); }
+      .text-accent-foreground { color: var(--apple-accent-foreground); }
+      .border-accent-foreground { border-color: var(--apple-accent-foreground); }
+      .ring-accent-foreground { --tw-ring-color: var(--apple-accent-foreground); }
+      .bg-destructive { background-color: var(--apple-destructive); }
+      .text-destructive { color: var(--apple-destructive); }
+      .border-destructive { border-color: var(--apple-destructive); }
+      .ring-destructive { --tw-ring-color: var(--apple-destructive); }
+      .bg-destructive-foreground { background-color: var(--apple-destructive-foreground); }
+      .text-destructive-foreground { color: var(--apple-destructive-foreground); }
+      .border-destructive-foreground { border-color: var(--apple-destructive-foreground); }
+      .ring-destructive-foreground { --tw-ring-color: var(--apple-destructive-foreground); }
+      .bg-border { background-color: var(--apple-border); }
+      .text-border { color: var(--apple-border); }
+      .border-border { border-color: var(--apple-border); }
+      .ring-border { --tw-ring-color: var(--apple-border); }
+      .bg-input { background-color: var(--apple-input); }
+      .text-input { color: var(--apple-input); }
+      .border-input { border-color: var(--apple-input); }
+      .ring-input { --tw-ring-color: var(--apple-input); }
+      .bg-ring { background-color: var(--apple-ring); }
+      .text-ring { color: var(--apple-ring); }
+      .border-ring { border-color: var(--apple-ring); }
+      .ring-ring { --tw-ring-color: var(--apple-ring); }
+      .bg-chart-1 { background-color: var(--apple-chart-1); }
+      .text-chart-1 { color: var(--apple-chart-1); }
+      .border-chart-1 { border-color: var(--apple-chart-1); }
+      .ring-chart-1 { --tw-ring-color: var(--apple-chart-1); }
+      .bg-chart-2 { background-color: var(--apple-chart-2); }
+      .text-chart-2 { color: var(--apple-chart-2); }
+      .border-chart-2 { border-color: var(--apple-chart-2); }
+      .ring-chart-2 { --tw-ring-color: var(--apple-chart-2); }
+      .bg-chart-3 { background-color: var(--apple-chart-3); }
+      .text-chart-3 { color: var(--apple-chart-3); }
+      .border-chart-3 { border-color: var(--apple-chart-3); }
+      .ring-chart-3 { --tw-ring-color: var(--apple-chart-3); }
+      .bg-chart-4 { background-color: var(--apple-chart-4); }
+      .text-chart-4 { color: var(--apple-chart-4); }
+      .border-chart-4 { border-color: var(--apple-chart-4); }
+      .ring-chart-4 { --tw-ring-color: var(--apple-chart-4); }
+      .bg-chart-5 { background-color: var(--apple-chart-5); }
+      .text-chart-5 { color: var(--apple-chart-5); }
+      .border-chart-5 { border-color: var(--apple-chart-5); }
+      .ring-chart-5 { --tw-ring-color: var(--apple-chart-5); }
+      .bg-sidebar { background-color: var(--apple-sidebar); }
+      .text-sidebar { color: var(--apple-sidebar); }
+      .border-sidebar { border-color: var(--apple-sidebar); }
+      .ring-sidebar { --tw-ring-color: var(--apple-sidebar); }
+      .bg-sidebar-foreground { background-color: var(--apple-sidebar-foreground); }
+      .text-sidebar-foreground { color: var(--apple-sidebar-foreground); }
+      .border-sidebar-foreground { border-color: var(--apple-sidebar-foreground); }
+      .ring-sidebar-foreground { --tw-ring-color: var(--apple-sidebar-foreground); }
+      .bg-sidebar-primary { background-color: var(--apple-sidebar-primary); }
+      .text-sidebar-primary { color: var(--apple-sidebar-primary); }
+      .border-sidebar-primary { border-color: var(--apple-sidebar-primary); }
+      .ring-sidebar-primary { --tw-ring-color: var(--apple-sidebar-primary); }
+      .bg-sidebar-primary-foreground { background-color: var(--apple-sidebar-primary-foreground); }
+      .text-sidebar-primary-foreground { color: var(--apple-sidebar-primary-foreground); }
+      .border-sidebar-primary-foreground { border-color: var(--apple-sidebar-primary-foreground); }
+      .ring-sidebar-primary-foreground { --tw-ring-color: var(--apple-sidebar-primary-foreground); }
+      .bg-sidebar-accent { background-color: var(--apple-sidebar-accent); }
+      .text-sidebar-accent { color: var(--apple-sidebar-accent); }
+      .border-sidebar-accent { border-color: var(--apple-sidebar-accent); }
+      .ring-sidebar-accent { --tw-ring-color: var(--apple-sidebar-accent); }
+      .bg-sidebar-accent-foreground { background-color: var(--apple-sidebar-accent-foreground); }
+      .text-sidebar-accent-foreground { color: var(--apple-sidebar-accent-foreground); }
+      .border-sidebar-accent-foreground { border-color: var(--apple-sidebar-accent-foreground); }
+      .ring-sidebar-accent-foreground { --tw-ring-color: var(--apple-sidebar-accent-foreground); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main>
+      <style>
+        /* ===== Onboarding Page Styles ===== */
+        * {
+          -webkit-tap-highlight-color: transparent;
+        }
+
+        .page-container {
+          max-width: 480px;
+          margin: 0 auto;
+          min-height: 100vh;
+          background: var(--apple-background);
+          display: flex;
+          flex-direction: column;
+          padding-top: env(safe-area-inset-top, 0px);
+          padding-bottom: env(safe-area-inset-bottom, 0px);
+          position: relative;
+        }
+
+        /* ===== Header ===== */
+        .onb-header {
+          padding: 16px 20px 12px;
+          background: var(--apple-background);
+          box-shadow: var(--shadow-2xs);
+          z-index: 10;
+        }
+
+        .onb-header-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 12px;
+        }
+
+        .onb-step-indicator {
+          font-size: 15px;
+          font-weight: 600;
+          color: var(--apple-primary);
+          letter-spacing: 0.02em;
+        }
+
+        .onb-step-label {
+          font-size: 13px;
+          color: var(--apple-muted-foreground);
+          font-weight: 500;
+        }
+
+        .onb-progress-track {
+          width: 100%;
+          height: 4px;
+          background: var(--apple-muted);
+          border-radius: 9999px;
+          overflow: hidden;
+        }
+
+        .onb-progress-fill {
+          height: 100%;
+          width: 33%;
+          background: var(--apple-primary);
+          border-radius: 9999px;
+          transition: width 0.3s ease;
+        }
+
+        /* ===== Content Area ===== */
+        .onb-content {
+          flex: 1;
+          overflow-y: auto;
+          padding: 24px 20px 24px;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .onb-step {
+          display: none;
+          animation: onbFadeIn 0.3s ease;
+        }
+
+        .onb-step.active {
+          display: block;
+        }
+
+        @keyframes onbFadeIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .onb-step-title {
+          font-size: 24px;
+          font-weight: 700;
+          color: var(--apple-foreground);
+          margin-bottom: 6px;
+          letter-spacing: -0.02em;
+        }
+
+        .onb-step-title .step-num {
+          color: var(--apple-primary);
+          margin-right: 6px;
+        }
+
+        .onb-step-subtitle {
+          font-size: 14px;
+          color: var(--apple-muted-foreground);
+          margin-bottom: 28px;
+          line-height: 1.5;
+        }
+
+        /* ===== Section Label ===== */
+        .onb-section-label {
+          font-size: 15px;
+          font-weight: 600;
+          color: var(--apple-foreground);
+          margin-bottom: 14px;
+        }
+
+        .onb-section-label .accent-val {
+          color: var(--apple-primary);
+          font-weight: 700;
+        }
+
+        .onb-section-block {
+          margin-bottom: 32px;
+        }
+
+        /* ===== Gender Cards ===== */
+        .onb-gender-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+
+        .onb-gender-card {
+          min-height: 96px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          border: 2px solid var(--apple-border);
+          border-radius: var(--apple-radius-lg);
+          background: var(--apple-card);
+          cursor: pointer;
+          transition: all 0.2s ease;
+          -webkit-tap-highlight-color: transparent;
+          user-select: none;
+        }
+
+        .onb-gender-card .gender-icon {
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--apple-muted-foreground);
+          transition: color 0.2s ease;
+        }
+
+        .onb-gender-card .gender-icon svg {
+          width: 28px;
+          height: 28px;
+        }
+
+        .onb-gender-card .gender-label {
+          font-size: 16px;
+          font-weight: 600;
+          color: var(--apple-foreground);
+        }
+
+        .onb-gender-card.active {
+          border-color: var(--apple-primary);
+          background: var(--brand-50);
+        }
+
+        .onb-gender-card.active .gender-icon {
+          color: var(--apple-primary);
+        }
+
+        .onb-gender-card.active .gender-label {
+          color: var(--apple-primary);
+        }
+
+        .onb-gender-card:active {
+          transform: scale(0.97);
+        }
+
+        /* ===== Slider ===== */
+        .onb-slider {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 100%;
+          height: 4px;
+          border-radius: 9999px;
+          background: var(--apple-muted);
+          outline: none;
+          margin: 24px 0 8px;
+        }
+
+        .onb-slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          background: var(--apple-primary);
+          cursor: pointer;
+          box-shadow: var(--shadow-md);
+          border: 3px solid var(--apple-background);
+        }
+
+        .onb-slider::-moz-range-thumb {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          background: var(--apple-primary);
+          cursor: pointer;
+          border: 3px solid var(--apple-background);
+          box-shadow: var(--shadow-md);
+        }
+
+        .onb-slider-range {
+          display: flex;
+          justify-content: space-between;
+          font-size: 12px;
+          color: var(--apple-muted-foreground);
+          margin-top: 6px;
+        }
+
+        /* ===== Body Data Sliders (Step 2) ===== */
+        .onb-slider-card {
+          background: var(--apple-card);
+          border: 1px solid var(--apple-border);
+          border-radius: var(--apple-radius-lg);
+          padding: 18px 16px;
+          margin-bottom: 14px;
+          box-shadow: var(--shadow-2xs);
+        }
+
+        .onb-slider-card-head {
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          margin-bottom: 4px;
+        }
+
+        .onb-slider-card-label {
+          font-size: 14px;
+          font-weight: 600;
+          color: var(--apple-foreground);
+        }
+
+        .onb-slider-card-value {
+          font-size: 20px;
+          font-weight: 700;
+          color: var(--apple-primary);
+        }
+
+        .onb-slider-card-value .unit {
+          font-size: 13px;
+          font-weight: 500;
+          color: var(--apple-muted-foreground);
+          margin-left: 2px;
+        }
+
+        /* ===== Goal Grid (Step 3) ===== */
+        .onb-goal-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          margin-bottom: 28px;
+        }
+
+        .onb-goal-card {
+          min-height: 48px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+          padding: 16px 14px;
+          border: 2px solid var(--apple-border);
+          border-radius: var(--apple-radius-lg);
+          background: var(--apple-card);
+          cursor: pointer;
+          transition: all 0.2s ease;
+          user-select: none;
+        }
+
+        .onb-goal-card .goal-icon {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--apple-muted);
+          color: var(--apple-foreground);
+          transition: all 0.2s ease;
+        }
+
+        .onb-goal-card .goal-icon svg {
+          width: 20px;
+          height: 20px;
+        }
+
+        .onb-goal-card .goal-label {
+          font-size: 14px;
+          font-weight: 600;
+          color: var(--apple-foreground);
+        }
+
+        .onb-goal-card.active {
+          border-color: var(--apple-primary);
+          background: var(--brand-50);
+        }
+
+        .onb-goal-card.active .goal-icon {
+          background: var(--apple-primary);
+          color: var(--apple-primary-foreground);
+        }
+
+        .onb-goal-card.active .goal-label {
+          color: var(--apple-primary);
+        }
+
+        .onb-goal-card:active {
+          transform: scale(0.97);
+        }
+
+        /* ===== Activity Level List (Step 3) ===== */
+        .onb-activity-list {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .onb-activity-item {
+          min-height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 14px 16px;
+          border: 2px solid var(--apple-border);
+          border-radius: var(--apple-radius-md);
+          background: var(--apple-card);
+          cursor: pointer;
+          transition: all 0.2s ease;
+          user-select: none;
+        }
+
+        .onb-activity-item .activity-label {
+          font-size: 15px;
+          font-weight: 500;
+          color: var(--apple-foreground);
+        }
+
+        .onb-activity-item .activity-check {
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          border: 2px solid var(--apple-border);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+        }
+
+        .onb-activity-item .activity-check svg {
+          width: 14px;
+          height: 14px;
+          color: var(--apple-primary-foreground);
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+
+        .onb-activity-item.active {
+          border-color: var(--apple-primary);
+          background: var(--brand-50);
+        }
+
+        .onb-activity-item.active .activity-label {
+          color: var(--apple-primary);
+          font-weight: 600;
+        }
+
+        .onb-activity-item.active .activity-check {
+          background: var(--apple-primary);
+          border-color: var(--apple-primary);
+        }
+
+        .onb-activity-item.active .activity-check svg {
+          opacity: 1;
+        }
+
+        .onb-activity-item:active {
+          transform: scale(0.98);
+        }
+
+        /* ===== Footer ===== */
+        .onb-footer {
+          padding: 12px 20px;
+          padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+          background: var(--apple-background);
+          box-shadow: 0 -1px 0 var(--apple-border), var(--shadow-sm);
+        }
+
+        .onb-footer-single {
+          display: flex;
+        }
+
+        .onb-footer-double {
+          display: flex;
+          gap: 12px;
+        }
+
+        .onb-btn {
+          min-height: 48px;
+          border-radius: var(--apple-radius-lg);
+          font-size: 16px;
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          cursor: pointer;
+          transition: all 0.15s ease;
+          border: none;
+          -webkit-tap-highlight-color: transparent;
+          user-select: none;
+        }
+
+        .onb-btn svg {
+          width: 18px;
+          height: 18px;
+        }
+
+        .onb-btn-primary {
+          flex: 1;
+          background: var(--apple-primary);
+          color: var(--apple-primary-foreground);
+          box-shadow: var(--shadow-sm);
+        }
+
+        .onb-btn-primary:active {
+          transform: scale(0.98);
+          opacity: 0.9;
+        }
+
+        .onb-btn-back {
+          flex: 1;
+          background: var(--apple-secondary);
+          color: var(--apple-secondary-foreground);
+        }
+
+        .onb-btn-next {
+          flex: 2;
+          background: var(--apple-primary);
+          color: var(--apple-primary-foreground);
+          box-shadow: var(--shadow-sm);
+        }
+
+        .onb-btn-back:active,
+        .onb-btn-next:active {
+          transform: scale(0.98);
+          opacity: 0.9;
+        }
+
+        /* ===== Small screen breakpoint ===== */
+        @media (max-width: 360px) {
+          .onb-content {
+            padding: 20px 16px 20px;
+          }
+          .onb-header {
+            padding: 14px 16px 10px;
+          }
+          .onb-footer {
+            padding: 10px 16px;
+            padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+          }
+          .onb-step-title {
+            font-size: 22px;
+          }
+          .onb-gender-grid,
+          .onb-goal-grid {
+            gap: 10px;
+          }
+          .onb-gender-card {
+            min-height: 84px;
+          }
+        }
+      </style>
+
+      <div class="page-container">
+        <!-- ===== Header with Progress ===== -->
+        <div class="onb-header">
+          <div class="onb-header-row">
+            <span class="onb-step-indicator">1 / 3</span>
+            <span class="onb-step-label">微量生活 · 建档</span>
+          </div>
+          <div class="onb-progress-track">
+            <div class="onb-progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- ===== Content ===== -->
+        <div class="onb-content">
+
+          <!-- ===== Step 1: Gender + Age (ACTIVE) ===== -->
+          <div class="onb-step active" id="step-1">
+            <h2 class="onb-step-title"><span class="step-num">01</span>先了解一下你</h2>
+            <p class="onb-step-subtitle">性别与年龄影响营养与运动建议</p>
+
+            <!-- Gender -->
+            <div class="onb-section-block">
+              <div class="onb-section-label">性别</div>
+              <div class="onb-gender-grid">
+                <div class="onb-gender-card active" data-gender="male">
+                  <span class="gender-icon"><i data-lucide="user"></i></span>
+                  <span class="gender-label">男</span>
+                </div>
+                <div class="onb-gender-card" data-gender="female">
+                  <span class="gender-icon"><i data-lucide="user-round"></i></span>
+                  <span class="gender-label">女</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Age -->
+            <div class="onb-section-block">
+              <div class="onb-section-label">年龄：<span class="accent-val" id="age-display">25</span> 岁</div>
+              <input type="range" class="onb-slider" id="age-slider" min="12" max="80" value="25" inputmode="numeric">
+              <div class="onb-slider-range">
+                <span>12 岁</span>
+                <span>80 岁</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== Step 2: Body Data (hidden) ===== -->
+          <div class="onb-step" id="step-2">
+            <h2 class="onb-step-title"><span class="step-num">02</span>身体数据</h2>
+            <p class="onb-step-subtitle">用于计算 BMI 与每日营养目标</p>
+
+            <div class="onb-slider-card">
+              <div class="onb-slider-card-head">
+                <span class="onb-slider-card-label">身高</span>
+                <span class="onb-slider-card-value">170<span class="unit">cm</span></span>
+              </div>
+              <input type="range" class="onb-slider" min="140" max="210" value="170" inputmode="numeric">
+              <div class="onb-slider-range"><span>140 cm</span><span>210 cm</span></div>
+            </div>
+
+            <div class="onb-slider-card">
+              <div class="onb-slider-card-head">
+                <span class="onb-slider-card-label">体重</span>
+                <span class="onb-slider-card-value">65<span class="unit">kg</span></span>
+              </div>
+              <input type="range" class="onb-slider" min="30" max="150" value="65" inputmode="numeric">
+              <div class="onb-slider-range"><span>30 kg</span><span>150 kg</span></div>
+            </div>
+
+            <div class="onb-slider-card">
+              <div class="onb-slider-card-head">
+                <span class="onb-slider-card-label">目标体重</span>
+                <span class="onb-slider-card-value">60<span class="unit">kg</span></span>
+              </div>
+              <input type="range" class="onb-slider" min="30" max="150" value="60" inputmode="numeric">
+              <div class="onb-slider-range"><span>30 kg</span><span>150 kg</span></div>
+            </div>
+          </div>
+
+          <!-- ===== Step 3: Goals (hidden) ===== -->
+          <div class="onb-step" id="step-3">
+            <h2 class="onb-step-title"><span class="step-num">03</span>你的健康目标</h2>
+            <p class="onb-step-subtitle">AI 将围绕此目标给出个性化建议</p>
+
+            <!-- Goal options -->
+            <div class="onb-section-label">选择目标</div>
+            <div class="onb-goal-grid">
+              <div class="onb-goal-card active" data-goal="fat-loss">
+                <span class="goal-icon"><i data-lucide="flame"></i></span>
+                <span class="goal-label">减脂塑形</span>
+              </div>
+              <div class="onb-goal-card" data-goal="muscle-gain">
+                <span class="goal-icon"><i data-lucide="dumbbell"></i></span>
+                <span class="goal-label">增肌增重</span>
+              </div>
+              <div class="onb-goal-card" data-goal="maintain">
+                <span class="goal-icon"><i data-lucide="scale"></i></span>
+                <span class="goal-label">保持健康</span>
+              </div>
+              <div class="onb-goal-card" data-goal="sleep">
+                <span class="goal-icon"><i data-lucide="moon"></i></span>
+                <span class="goal-label">改善睡眠</span>
+              </div>
+              <div class="onb-goal-card" data-goal="stress">
+                <span class="goal-icon"><i data-lucide="brain"></i></span>
+                <span class="goal-label">缓解压力</span>
+              </div>
+            </div>
+
+            <!-- Activity level -->
+            <div class="onb-section-label" style="margin-top: 8px;">活动水平</div>
+            <div class="onb-activity-list">
+              <div class="onb-activity-item active" data-activity="sedentary">
+                <span class="activity-label">久坐</span>
+                <span class="activity-check"><i data-lucide="check"></i></span>
+              </div>
+              <div class="onb-activity-item" data-activity="light">
+                <span class="activity-label">轻度</span>
+                <span class="activity-check"><i data-lucide="check"></i></span>
+              </div>
+              <div class="onb-activity-item" data-activity="moderate">
+                <span class="activity-label">中度</span>
+                <span class="activity-check"><i data-lucide="check"></i></span>
+              </div>
+              <div class="onb-activity-item" data-activity="high">
+                <span class="activity-label">高度</span>
+                <span class="activity-check"><i data-lucide="check"></i></span>
+              </div>
+              <div class="onb-activity-item" data-activity="extreme">
+                <span class="activity-label">极高</span>
+                <span class="activity-check"><i data-lucide="check"></i></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ===== Footer (Step 1: single button) ===== -->
+        <div class="onb-footer">
+          <div class="onb-footer-single" id="footer-single">
+            <button class="onb-btn onb-btn-primary" id="btn-next-single">
+              下一步
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+          <div class="onb-footer-double" id="footer-double" style="display:none;">
+            <button class="onb-btn onb-btn-back" id="btn-back">
+              <i data-lucide="arrow-left"></i>
+              上一步
+            </button>
+            <button class="onb-btn onb-btn-next" id="btn-next-double" data-dom-id="btn-complete">
+              下一步
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        // Initialize Lucide icons
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+          window.lucide.createIcons();
+        }
+
+        // ===== Onboarding interaction logic =====
+        (function() {
+          var currentStep = 1;
+          var totalSteps = 3;
+
+          var stepEls = {
+            1: document.getElementById('step-1'),
+            2: document.getElementById('step-2'),
+            3: document.getElementById('step-3')
+          };
+
+          var stepIndicator = document.querySelector('.onb-step-indicator');
+          var progressFill = document.querySelector('.onb-progress-fill');
+          var footerSingle = document.getElementById('footer-single');
+          var footerDouble = document.getElementById('footer-double');
+
+          function showStep(step) {
+            for (var i = 1; i <= totalSteps; i++) {
+              if (stepEls[i]) {
+                stepEls[i].classList.toggle('active', i === step);
+              }
+            }
+            stepIndicator.textContent = step + ' / ' + totalSteps;
+            progressFill.style.width = (step / totalSteps * 100) + '%';
+
+            if (step === 1) {
+              footerSingle.style.display = 'flex';
+              footerDouble.style.display = 'none';
+            } else {
+              footerSingle.style.display = 'none';
+              footerDouble.style.display = 'flex';
+            }
+
+            // Update next button text on last step
+            var nextDouble = document.getElementById('btn-next-double');
+            if (step === totalSteps) {
+              nextDouble.innerHTML = '完成建档 <i data-lucide="check"></i>';
+            } else {
+              nextDouble.innerHTML = '下一步 <i data-lucide="arrow-right"></i>';
+            }
+            if (window.lucide) window.lucide.createIcons();
+          }
+
+          document.getElementById('btn-next-single').addEventListener('click', function() {
+            if (currentStep < totalSteps) {
+              currentStep++;
+              showStep(currentStep);
+            }
+          });
+
+          document.getElementById('btn-next-double').addEventListener('click', function() {
+            if (currentStep < totalSteps) {
+              currentStep++;
+              showStep(currentStep);
+            }
+          });
+
+          document.getElementById('btn-back').addEventListener('click', function() {
+            if (currentStep > 1) {
+              currentStep--;
+              showStep(currentStep);
+            }
+          });
+
+          // ===== Gender card selection =====
+          var genderCards = document.querySelectorAll('.onb-gender-card');
+          genderCards.forEach(function(card) {
+            card.addEventListener('click', function() {
+              genderCards.forEach(function(c) { c.classList.remove('active'); });
+              this.classList.add('active');
+            });
+          });
+
+          // ===== Age slider live update =====
+          var ageSlider = document.getElementById('age-slider');
+          var ageDisplay = document.getElementById('age-display');
+          if (ageSlider && ageDisplay) {
+            ageSlider.addEventListener('input', function() {
+              ageDisplay.textContent = this.value;
+            });
+          }
+
+          // ===== Goal card selection =====
+          var goalCards = document.querySelectorAll('.onb-goal-card');
+          goalCards.forEach(function(card) {
+            card.addEventListener('click', function() {
+              goalCards.forEach(function(c) { c.classList.remove('active'); });
+              this.classList.add('active');
+            });
+          });
+
+          // ===== Activity item selection =====
+          var activityItems = document.querySelectorAll('.onb-activity-item');
+          activityItems.forEach(function(item) {
+            item.addEventListener('click', function() {
+              activityItems.forEach(function(i) { i.classList.remove('active'); });
+              this.classList.add('active');
+            });
+          });
+        })();
+      </script>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

@@ -59,8 +59,8 @@ async function toggleTrack(track: WhiteNoiseTrack): Promise<void> {
   const existing = activeTracks.value.get(track.id)
 
   if (existing) {
-    // 停止该音轨
-    existing.source.stop()
+    // 停止该音轨（source.stop() 对已停止的节点会抛 InvalidStateError，需兜底）
+    try { existing.source.stop() } catch { /* 音轨已停止 */ }
     existing.source.disconnect()
     existing.gainNode.disconnect()
     activeTracks.value.delete(track.id)
@@ -131,7 +131,8 @@ function updateActiveState(): void {
 function stopAll(): void {
   if (!audioContext.value) return
   activeTracks.value.forEach((active) => {
-    active.source.stop()
+    // source.stop() 对已停止的节点会抛 InvalidStateError，需兜底，避免中断 forEach 导致清理未完成
+    try { active.source.stop() } catch { /* 音轨已停止 */ }
     active.source.disconnect()
     active.gainNode.disconnect()
   })
@@ -162,7 +163,7 @@ function clearTimer(): void {
     timerInterval = null
   }
   if (fadeInterval) {
-    clearInterval(fadeInterval)
+    clearTimeout(fadeInterval)
     fadeInterval = null
   }
   timerMinutes.value = 0
@@ -182,7 +183,9 @@ function fadeOutAndStop(): void {
     active.gainNode.gain.setTargetAtTime(0, ctx.currentTime, fadeDuration / 2)
   })
 
-  fadeInterval = setInterval(() => {
+  // 用 setTimeout 而非 setInterval：单次触发后由 stopAll → clearTimer 自清理；
+  // 若用 setInterval 且 stopAll 抛错未走到 clearTimer，会持续重复触发
+  fadeInterval = setTimeout(() => {
     stopAll()
   }, fadeDuration * 1000)
 }
@@ -208,7 +211,7 @@ onUnmounted(() => {
 <template>
   <div class="noise-mixer">
     <div class="mixer-header">
-      <div class="text-xs text-content-secondary">可同时播放多个音轨，混合出专属助眠白噪音</div>
+      <div class="mixer-hint">可同时播放多个音轨，混合出专属助眠白噪音</div>
       <div v-if="hasActiveTracks" class="mixer-stop" @click="stopAll">全部停止</div>
     </div>
 
@@ -222,7 +225,7 @@ onUnmounted(() => {
         :style="isTrackActive(track.id) ? { borderColor: track.color, boxShadow: `0 0 16px ${track.color}33` } : {}"
         @click="toggleTrack(track)"
       >
-        <div class="track-icon" :style="{ background: isTrackActive(track.id) ? track.color : 'rgba(255,255,255,0.08)' }">
+        <div class="track-icon" :style="{ background: isTrackActive(track.id) ? track.color : 'var(--muted)' }">
           <span v-if="isTrackLoading(track.id)" class="loading-spinner"></span>
           <span v-else>{{ track.icon }}</span>
         </div>
@@ -235,8 +238,8 @@ onUnmounted(() => {
             :min="0"
             :max="1"
             :step="0.05"
-            bar-color="#818cf8"
-            inactive-color="rgba(255,255,255,0.08)"
+            bar-color="var(--chart-4)"
+            inactive-color="var(--muted)"
             @update:model-value="(v: number) => setVolume(track.id, v)"
           />
         </div>
@@ -246,7 +249,7 @@ onUnmounted(() => {
     <!-- 定时关闭 -->
     <div class="timer-section">
       <div class="timer-label">
-        <van-icon name="clock-o" size="14" color="#94a3b8" />
+        <van-icon name="clock-o" size="14" color="var(--muted-foreground)" />
         <span>定时关闭</span>
       </div>
       <div class="timer-options">
@@ -269,7 +272,7 @@ onUnmounted(() => {
 
 <style scoped>
 .noise-mixer {
-  color: #f8fafc;
+  color: var(--foreground);
 }
 
 .mixer-header {
@@ -280,18 +283,25 @@ onUnmounted(() => {
   gap: 12px;
 }
 
+.mixer-hint {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  line-height: 1.4;
+}
+
 .mixer-stop {
   flex-shrink: 0;
   font-size: 12px;
-  color: #fb7185;
+  color: var(--destructive);
   padding: 4px 10px;
-  border: 1px solid rgba(251, 113, 133, 0.4);
+  border: 1px solid color-mix(in srgb, var(--destructive) 40%, transparent);
   border-radius: 999px;
-  background: rgba(251, 113, 133, 0.08);
+  background: color-mix(in srgb, var(--destructive) 8%, transparent);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mixer-stop:active {
-  background: rgba(251, 113, 133, 0.15);
+  background: color-mix(in srgb, var(--destructive) 15%, transparent);
 }
 
 .track-grid {
@@ -306,15 +316,17 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   padding: 14px 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  transition: all 0.2s ease;
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 48px;
 }
 
 .track-card.active {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--accent);
 }
 
 .track-card:active {
@@ -331,12 +343,12 @@ onUnmounted(() => {
   font-size: 22px;
   margin-bottom: 8px;
   transition: background 0.3s;
-  color: #f8fafc;
+  color: var(--foreground);
 }
 
 .track-name {
   font-size: 12px;
-  color: #94a3b8;
+  color: var(--muted-foreground);
   margin-bottom: 4px;
 }
 
@@ -346,7 +358,7 @@ onUnmounted(() => {
 }
 
 .timer-section {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--border);
   padding-top: 14px;
 }
 
@@ -355,7 +367,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 6px;
   font-size: 13px;
-  color: #94a3b8;
+  color: var(--muted-foreground);
   margin-bottom: 10px;
 }
 
@@ -368,25 +380,30 @@ onUnmounted(() => {
   flex: 1;
   text-align: center;
   padding: 8px 6px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 12px;
-  color: #94a3b8;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--muted-foreground);
+  background: var(--muted);
+  border: 1px solid transparent;
   border-radius: 999px;
   transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .timer-chip.active {
-  background: rgba(129, 140, 248, 0.15);
-  border-color: rgba(129, 140, 248, 0.4);
-  color: #a5b4fc;
+  background: color-mix(in srgb, var(--chart-4) 15%, transparent);
+  border-color: color-mix(in srgb, var(--chart-4) 40%, transparent);
+  color: var(--chart-4);
   font-weight: 600;
 }
 
 .timer-countdown {
   margin-top: 10px;
   font-size: 12px;
-  color: #a5b4fc;
+  color: var(--chart-4);
   text-align: center;
   font-weight: 500;
 }
@@ -395,8 +412,8 @@ onUnmounted(() => {
   display: inline-block;
   width: 18px;
   height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #a5b4fc;
+  border: 2px solid var(--border);
+  border-top-color: var(--chart-4);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }

@@ -20,6 +20,16 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    path: '/onboarding-tour',
+    name: 'onboarding-tour',
+    component: () => import('@/views/OnboardingTourView.vue'),
+    meta: {
+      title: '新手引导',
+      showTabBar: false,
+      requiresOnboarding: false
+    }
+  },
+  {
     path: '/',
     name: 'home',
     component: () => import('@/views/HomeView.vue'),
@@ -112,8 +122,11 @@ router.beforeEach(async (to, _from, next) => {
   if (requiresOnboarding && !userStore.isOnboarded) {
     // 需要建档但未建档 → 跳转建档页
     next({ name: 'onboarding' })
-  } else if (to.name === 'onboarding' && userStore.isOnboarded) {
-    // 已建档还去建档页 → 跳转首页
+  } else if (
+    (to.name === 'onboarding' || to.name === 'onboarding-tour') &&
+    userStore.isOnboarded
+  ) {
+    // 已完成首启流程还访问建档/引导页 → 跳转首页
     next({ name: 'home' })
   } else {
     next()

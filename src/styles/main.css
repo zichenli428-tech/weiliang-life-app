@@ -1,70 +1,69 @@
+@import './apple-tokens.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ==================== Vant 主题变量覆盖（深色极光琉璃） ==================== */
+/* ==================== Vant 主题变量覆盖（Apple 浅色风格，深色自动跟随） ==================== */
 :root {
-  /* 基础色 */
-  --van-primary-color: #34d399;
-  --van-success-color: #34d399;
-  --van-danger-color: #fb7185;
-  --van-warning-color: #fbbf24;
-  --van-text-color: #f8fafc;
-  --van-text-color-2: #94a3b8;
-  --van-text-color-3: #64748b;
-  --van-background: #0b1220;
-  --van-background-2: #0f172a;
-  --van-background-3: #131c31;
+  --van-primary-color: var(--primary);
+  --van-success-color: var(--success);
+  --van-danger-color: var(--destructive);
+  --van-warning-color: #ff9500;
+  --van-text-color: var(--foreground);
+  --van-text-color-2: var(--muted-foreground);
+  --van-text-color-3: var(--muted-foreground);
+  --van-background: var(--background);
+  --van-background-2: var(--background-100);
+  --van-background-3: var(--background-200);
 
-  /* 组件色 */
-  --van-active-color: rgba(255, 255, 255, 0.08);
+  --van-active-color: var(--accent);
   --van-active-opacity: 0.7;
   --van-disabled-opacity: 0.4;
-  --van-border-color: rgba(255, 255, 255, 0.10);
+  --van-border-color: var(--border);
   --van-cell-background: transparent;
-  --van-cell-border-color: rgba(255, 255, 255, 0.08);
-  --van-popup-background-color: #0f172a;
-  --van-dialog-background: #0f172a;
-  --van-dialog-has-title-message-text-color: #94a3b8;
-  --van-action-sheet-background: #0f172a;
-  --van-action-sheet-item-background: #0f172a;
-  --van-action-sheet-item-text-color: #f8fafc;
-  --van-action-sheet-cancel-text-color: #94a3b8;
-  --van-action-sheet-cancel-item-background: #131c31;
-  --van-tabbar-background: transparent;
-  --van-tabbar-item-active-color: #34d399;
-  --van-tabbar-item-inactive-color: #64748b;
-  --van-field-input-text-color: #f8fafc;
-  --van-field-label-color: #94a3b8;
-  --van-field-placeholder-text-color: #64748b;
-  --van-search-background: #0f172a;
-  --van-search-content-background: rgba(255, 255, 255, 0.06);
-  --van-button-default-color: #f8fafc;
-  --van-button-default-background: rgba(255, 255, 255, 0.08);
-  --van-button-default-border-color: rgba(255, 255, 255, 0.10);
-  --van-button-primary-background: linear-gradient(135deg, #34d399, #22d3ee);
-  --van-button-primary-color: #0b1220;
-  --van-slider-active-background: #34d399;
-  --van-progress-background: rgba(255, 255, 255, 0.08);
-  --van-progress-pivot-background: #34d399;
-  --van-progress-pivot-color: #0b1220;
-  --van-loading-spinner-color: #34d399;
-  --van-toast-background: rgba(15, 23, 42, 0.95);
-  --van-toast-text-color: #f8fafc;
+  --van-cell-border-color: var(--border);
+  --van-popup-background-color: var(--popover);
+  --van-dialog-background: var(--popover);
+  --van-dialog-has-title-message-text-color: var(--muted-foreground);
+  --van-action-sheet-background: var(--popover);
+  --van-action-sheet-item-background: var(--popover);
+  --van-action-sheet-item-text-color: var(--foreground);
+  --van-action-sheet-cancel-text-color: var(--muted-foreground);
+  --van-action-sheet-cancel-item-background: var(--background-200);
+  --van-tabbar-background: var(--sidebar);
+  --van-tabbar-item-active-color: var(--primary);
+  --van-tabbar-item-inactive-color: var(--muted-foreground);
+  --van-field-input-text-color: var(--foreground);
+  --van-field-label-color: var(--muted-foreground);
+  --van-field-placeholder-text-color: var(--muted-foreground);
+  --van-search-background: var(--background-100);
+  --van-search-content-background: var(--card);
+  --van-button-default-color: var(--foreground);
+  --van-button-default-background: var(--secondary);
+  --van-button-default-border-color: var(--border);
+  --van-button-primary-background: var(--primary);
+  --van-button-primary-color: var(--primary-foreground);
+  --van-slider-active-background: var(--primary);
+  --van-slider-bar-bg: var(--muted);
+  --van-progress-background: var(--muted);
+  --van-progress-pivot-background: var(--primary);
+  --van-progress-pivot-color: var(--primary-foreground);
+  --van-loading-spinner-color: var(--primary);
+  --van-toast-background: var(--popover);
+  --van-toast-text-color: var(--foreground);
   --van-nav-bar-background: transparent;
-  --van-nav-bar-title-text-color: #f8fafc;
-  --van-nav-bar-icon-color: #f8fafc;
+  --van-nav-bar-title-text-color: var(--foreground);
+  --van-nav-bar-icon-color: var(--foreground);
   --van-cell-group-background: transparent;
-  --van-cell-group-title-color: #94a3b8;
-  --van-tag-default-color: #f8fafc;
-  --van-tag-default-background: rgba(255, 255, 255, 0.08);
-
-  /* 圆角 */
-  --van-radius-sm: 8px;
-  --van-radius-md: 12px;
-  --van-radius-lg: 16px;
-  --van-radius-xl: 20px;
-  --van-radius-max: 999px;
+  --van-cell-group-title-color: var(--muted-foreground);
+  --van-tag-default-color: var(--foreground);
+  --van-tag-default-background: var(--secondary);
+  --van-popup-round-radius: var(--radius-lg);
+  --van-radius-sm: var(--radius-sm);
+  --van-radius-md: var(--radius-md);
+  --van-radius-lg: var(--radius-lg);
+  --van-radius-xl: var(--radius-xl);
+  --van-radius-max: 9999px;
 }
 
 /* ==================== 全局基础样式 ==================== */
@@ -77,33 +76,31 @@
   body {
     margin: 0;
     padding: 0;
-    font-family: theme('fontFamily.sans');
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #0b1220;
-    color: #f8fafc;
+    background-color: var(--background);
+    color: var(--foreground);
   }
 
   #app {
     min-height: 100vh;
-    background-color: #0b1220;
+    background-color: var(--background);
   }
 
-  /* PRD 4.2：处理 Safe Area */
+  /* Safe Area */
   .safe-area-top {
     padding-top: env(safe-area-inset-top);
   }
-
   .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom);
   }
-
   .safe-area-x {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
 
-  /* PRD 4.2：1px 边框高清方案 */
+  /* 1px hairline（浅色 hairline 用 border 色） */
   .hairline-top {
     position: relative;
   }
@@ -114,7 +111,7 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--border);
     transform: scaleY(0.5);
     transform-origin: 0 0;
   }
@@ -128,12 +125,11 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--border);
     transform: scaleY(0.5);
     transform-origin: 0 100%;
   }
 
-  /* 触摸反馈 */
   .touch-feedback {
     transition: background-color 0.15s ease, opacity 0.15s ease, transform 0.15s ease;
   }
@@ -144,7 +140,6 @@
     transform: scale(0.97);
   }
 
-  /* 惯性滚动 */
   .smooth-scroll {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
@@ -155,132 +150,128 @@
   }
 }
 
-/* ==================== 玻璃拟态组件类 ==================== */
+/* ==================== Apple 风格组件类 ==================== */
 @layer components {
+  /* Apple Card：实色背景 + 边框 + 低 alpha 阴影，不依赖 backdrop-filter */
+  .apple-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* 兼容旧名 glass-card：迁移期指向 Apple Card 样式 */
   .glass-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(2, 8, 20, 0.36);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
   }
 
   .glass-panel {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(12px) saturate(160%);
-    -webkit-backdrop-filter: blur(12px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
   }
 
   .glass-border {
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid var(--border);
   }
-
   .glass-border-subtle {
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border);
   }
 
-  .gradient-border {
-    position: relative;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-    border-radius: 20px;
+  /* Apple 按钮 */
+  .btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.15s ease, opacity 0.15s ease;
   }
-  .gradient-border::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 20px;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(52, 211, 153, 0.5), rgba(34, 211, 238, 0.5), rgba(167, 139, 250, 0.5));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+  .btn-primary:active {
+    transform: scale(0.97);
+    opacity: 0.9;
   }
 
+  .btn-secondary {
+    background: var(--secondary);
+    color: var(--secondary-foreground);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-secondary:active {
+    transform: scale(0.97);
+    background: var(--accent);
+  }
+
+  .btn-text {
+    background: transparent;
+    color: var(--primary);
+    border: none;
+    font-weight: 600;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-text:active {
+    opacity: 0.6;
+  }
+
+  /* 旧名兼容：aurora-btn / glass */
+  .aurora-btn {
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .aurora-btn:active {
+    transform: scale(0.97);
+    opacity: 0.9;
+  }
   .aurora-gradient {
-    background: linear-gradient(135deg, #34d399 0%, #22d3ee 50%, #a78bfa 100%);
+    background: var(--primary);
+    color: var(--primary-foreground);
   }
-
   .aurora-text {
-    background: linear-gradient(135deg, #34d399 0%, #22d3ee 50%, #a78bfa 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--primary);
   }
 
-  .aurora-glow {
-    box-shadow: 0 0 20px rgba(52, 211, 153, 0.25), 0 0 40px rgba(34, 211, 238, 0.15);
+  /* Apple Settings 风格列表行 */
+  .list-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    min-height: 56px;
+    text-decoration: none;
+    color: var(--foreground);
+    transition: background 0.15s ease;
+  }
+  .list-row:last-child {
+    border-bottom: none;
+  }
+  .list-row:active {
+    background: var(--accent);
   }
 
-  .glow-green {
-    box-shadow: 0 0 20px rgba(52, 211, 153, 0.25);
-  }
-
-  .glow-cyan {
-    box-shadow: 0 0 20px rgba(34, 211, 238, 0.25);
-  }
-
-  .glow-violet {
-    box-shadow: 0 0 20px rgba(167, 139, 250, 0.25);
-  }
-
-  /* 模块 hero 渐变 */
-  .hero-nutrition {
-    background: linear-gradient(135deg, #f59e0b 0%, #f43f5e 100%);
-  }
-  .hero-sleep {
-    background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
-  }
-  .hero-mind {
-    background: linear-gradient(135deg, #a3e635 0%, #818cf8 100%);
-  }
-  .hero-advisor {
-    background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
-  }
-  .hero-profile {
-    background: linear-gradient(135deg, #475569 0%, #1e293b 100%);
-  }
-  .hero-home {
-    background: linear-gradient(135deg, #0b1220 0%, #131c31 50%, #0f172a 100%);
-  }
-
-  /* 模块光晕 */
-  .glow-nutrition {
-    box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
-  }
-  .glow-sleep {
-    box-shadow: 0 0 20px rgba(129, 140, 248, 0.25);
-  }
-  .glow-mind {
-    box-shadow: 0 0 20px rgba(163, 230, 53, 0.2);
-  }
-
-  .glow-advisor {
-    box-shadow: 0 0 20px rgba(14, 165, 233, 0.25);
-  }
-
-  .glow-profile {
-    box-shadow: 0 0 20px rgba(100, 116, 139, 0.2);
-  }
-
-  /* 胶囊 chip */
+  /* Apple 风格 chip */
   .glass-chip {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 6px 12px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    border-radius: 999px;
+    padding: 4px 10px;
+    background: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 9999px;
     font-size: 12px;
-    color: #f8fafc;
+    color: var(--foreground);
     transition: all 0.2s ease;
   }
   .glass-chip:active {
-    background: rgba(255, 255, 255, 0.12);
     transform: scale(0.97);
   }
 
@@ -289,45 +280,45 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #0b1220;
+    background-color: var(--background);
   }
-
   .page-body {
     flex: 1;
     padding: 16px 0;
+  }
+
+  /* Apple 风格 section eyebrow 标题 */
+  .section-eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
   }
 }
 
 /* ==================== 全局工具类 ==================== */
 @layer utilities {
-  /* 禁止文本选择 */
   .no-select {
     -webkit-user-select: none;
     user-select: none;
   }
-
-  /* 单行省略 */
   .text-ellipsis {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  /* 多行省略（2 行） */
   .text-ellipsis-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-
-  /* 最小触控目标 44px */
+  /* 最小触控目标 48px（Android Material 规范） */
   .touch-target {
-    min-width: 44px;
-    min-height: 44px;
+    min-width: 48px;
+    min-height: 48px;
   }
-
-  /* 隐藏滚动条 */
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -335,25 +326,6 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-
-  /* 文字渐变 */
-  .text-gradient-aurora {
-    background: linear-gradient(135deg, #34d399 0%, #22d3ee 50%, #a78bfa 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* 呼吸动画 */
-  .animate-breathe {
-    animation: breathe 4s ease-in-out infinite;
-  }
-
-  .animate-pulse-glow {
-    animation: pulseGlow 2s ease-in-out infinite;
-  }
-
-  /* 按压反馈 */
   .press-effect {
     transition: transform 0.15s ease;
   }
@@ -362,39 +334,26 @@
   }
 }
 
-/* ==================== 滚动条隐藏 ==================== */
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* ==================== 路由切换过渡动画 ==================== */
+/* ==================== 路由切换过渡 ==================== */
 .fade-slide-enter-active,
 .fade-slide-leave-active {
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
-
 .fade-slide-enter-from {
   opacity: 0;
   transform: translateY(8px);
 }
-
 .fade-slide-leave-to {
   opacity: 0;
   transform: translateY(-8px);
 }
 
-/* ==================== 列表进入动画 ==================== */
+/* 列表进入动画 */
 .stagger-fade-up > * {
   opacity: 0;
   transform: translateY(12px);
   animation: fadeSlideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-
 .stagger-fade-up > *:nth-child(1) { animation-delay: 0.05s; }
 .stagger-fade-up > *:nth-child(2) { animation-delay: 0.10s; }
 .stagger-fade-up > *:nth-child(3) { animation-delay: 0.15s; }
@@ -406,14 +365,5 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 12px rgba(52, 211, 153, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 24px rgba(52, 211, 153, 0.45);
   }
 }

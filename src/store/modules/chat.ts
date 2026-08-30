@@ -5,7 +5,7 @@
  * PRD 4.3：对话记录仅存本地 IndexedDB（通过 localforage 持久化）
  * PRD 7.2：弱网超时降级
  *
- * P3 阶段：接入商汤 SenseNova 大模型流式接口
+ * P3 阶段：接入 OpenCode Zen 大模型流式接口
  */
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
@@ -191,7 +191,7 @@ export const useChatStore = defineStore('chat', () => {
 
   /**
    * PRD 3.4：AI 健康顾问回复（流式）
-   * P3 阶段接入商汤 SenseNova 大模型
+   * P3 阶段接入 OpenCode Zen 大模型
    * 降级策略：API 未配置或失败时回退到本地 mock 回复
    */
   async function assistantReply(userContent: string): Promise<void> {

@@ -1,0 +1,80 @@
+<!-- Dock Navigation Bar Partial — Apple style tabbar -->
+<!-- Usage: Include this fragment at the bottom of each page's <main> content -->
+<!-- Replace data-active="true" on the correct tab for each page -->
+<nav class="dock-nav" data-nav-key="dock">
+  <a href="#" class="dock-tab" data-dom-id="nav-home" data-nav-key="home">
+    <i data-lucide="house" class="dock-icon"></i>
+    <span class="dock-label">看板</span>
+  </a>
+  <a href="#" class="dock-tab" data-dom-id="nav-advisor" data-nav-key="advisor">
+    <i data-lucide="message-circle" class="dock-icon"></i>
+    <span class="dock-label">顾问</span>
+  </a>
+  <a href="#" class="dock-tab" data-dom-id="nav-mind" data-nav-key="mind">
+    <i data-lucide="smile" class="dock-icon"></i>
+    <span class="dock-label">心理</span>
+  </a>
+  <a href="#" class="dock-tab" data-dom-id="nav-sleep" data-nav-key="sleep">
+    <i data-lucide="moon" class="dock-icon"></i>
+    <span class="dock-label">睡眠</span>
+  </a>
+  <a href="#" class="dock-tab" data-dom-id="nav-record" data-nav-key="record">
+    <i data-lucide="utensils" class="dock-icon"></i>
+    <span class="dock-label">记录</span>
+  </a>
+  <a href="#" class="dock-tab" data-dom-id="nav-profile" data-nav-key="profile">
+    <i data-lucide="user" class="dock-icon"></i>
+    <span class="dock-label">我的</span>
+  </a>
+</nav>
+<style>
+  .dock-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: var(--apple-sidebar);
+    border-top: 1px solid var(--apple-border);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-bottom: max(env(safe-area-inset-bottom), 8px);
+    z-index: 50;
+    box-shadow: 0 -1px 3px rgba(0,0,0,0.04);
+  }
+  .dock-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-height: 48px;
+    min-width: 48px;
+    padding: 6px 4px;
+    color: var(--apple-muted-foreground);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 150ms cubic-bezier(0.32, 0.72, 0, 1);
+    flex: 1;
+  }
+  .dock-tab[data-active="true"] {
+    color: var(--apple-primary);
+  }
+  .dock-icon {
+    width: 22px;
+    height: 22px;
+    stroke-width: 1.5;
+  }
+  .dock-label {
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.2;
+    font-family: var(--font-sans);
+  }
+  /* Android WebView: no backdrop-filter, use solid background */
+  @media (max-width: 360px) {
+    .dock-label { font-size: 9px; }
+    .dock-tab { padding: 4px 2px; }
+  }
+</style>

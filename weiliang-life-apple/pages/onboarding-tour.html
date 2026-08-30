@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新手引导</title>
+    <style id="theme-vars">
+/*
+ * Pinguo design tokens — extended for solo-design consumption
+ * Brand: Pinguo (Apple Design Library)
+ * Domain: Consumer imaging product
+ * Style: Restrained, elegant, Apple-inspired
+ * Theme mode: light-dark
+ * Source language: zh
+ * Output language: en
+ *
+ * This file extends the Apple Design Library colors_and_type.css with
+ * required semantic radius aliases for apply-html-head-contract.mjs.
+ * All original tokens are preserved unchanged.
+ *
+ * Color architecture (two layers):
+ *   1. Primitive palette - six categories. brand / background / text / icon
+ *      are each a 10-step scale (50 lightest to 900 darkest). state-success and
+ *      state-error are functional colors anchored on Apple system colors.
+ *      Anchors follow Apple Human Interface Guidelines system colors
+ *      (System Blue #007AFF, System Green #34C759, System Red #FF3B30,
+ *      system grays / label / background colors).
+ *   2. Semantic tokens - :root (light) and .dark map roles onto primitives.
+ *      Components and UI kits must only consume the semantic tokens below.
+ */
+
+/* @group-priority: brand, background, text, icon, state-success, state-error */
+
+:root {
+  
+  /* solo-design consumption aliases: explicit prefix for fill-html-head.mjs */
+  --apple-background: var(--background, #ffffff);
+  --apple-foreground: var(--foreground, #0f172a);
+  --apple-card: var(--card, var(--background));
+  --apple-card-foreground: var(--card-foreground, var(--foreground));
+  --apple-popover: var(--popover, var(--card));
+  --apple-popover-foreground: var(--popover-foreground, var(--card-foreground, var(--foreground)));
+  --apple-primary: var(--primary, #111827);
+  --apple-primary-foreground: var(--primary-foreground, #ffffff);
+  --apple-secondary: var(--secondary, var(--muted, var(--card)));
+  --apple-secondary-foreground: var(--secondary-foreground, var(--foreground));
+  --apple-muted: var(--muted, var(--card));
+  --apple-muted-foreground: var(--muted-foreground, var(--foreground));
+  --apple-accent: var(--accent, var(--secondary, var(--muted, var(--card))));
+  --apple-accent-foreground: var(--accent-foreground, var(--foreground));
+  --apple-destructive: var(--destructive, #ef4444);
+  --apple-destructive-foreground: var(--destructive-foreground, #ffffff);
+  --apple-border: var(--border, currentColor);
+  --apple-input: var(--input, var(--border));
+  --apple-ring: var(--ring, var(--primary));
+  --apple-chart-1: var(--chart-1, var(--primary));
+  --apple-chart-2: var(--chart-2, var(--secondary, var(--primary)));
+  --apple-chart-3: var(--chart-3, var(--accent, var(--primary)));
+  --apple-chart-4: var(--chart-4, var(--muted-foreground, var(--foreground)));
+  --apple-chart-5: var(--chart-5, var(--foreground));
+  --apple-sidebar: var(--sidebar, var(--background));
+  --apple-sidebar-foreground: var(--sidebar-foreground, var(--foreground));
+  --apple-sidebar-primary: var(--sidebar-primary, var(--primary));
+  --apple-sidebar-primary-foreground: var(--sidebar-primary-foreground, var(--primary-foreground));
+  --apple-sidebar-accent: var(--sidebar-accent, var(--accent, var(--muted, var(--card))));
+  --apple-sidebar-accent-foreground: var(--sidebar-accent-foreground, var(--accent-foreground, var(--foreground)));
+
+/* ===== PRIMITIVE PALETTE ===== */
+
+  /* brand */
+  --brand-50: #e8f2ff;
+  --brand-100: #cfe5ff;
+  --brand-200: #9fcbff;
+  --brand-300: #66abff;
+  --brand-400: #2e8dff;
+  --brand-500: #007aff; /* @primary */
+  --brand-600: #0064d6;
+  --brand-700: #004fad;
+  --brand-800: #003b82;
+  --brand-900: #00275a;
+
+  /* background */
+  --background-50: #ffffff;
+  --background-100: #f7f7fa;
+  --background-200: #f2f2f7;
+  --background-300: #e5e5ea;
+  --background-400: #d1d1d6;
+  --background-500: #aeaeb2;
+  --background-600: #8e8e93;
+  --background-700: #3a3a3c;
+  --background-800: #1c1c1e;
+  --background-900: #000000;
+
+  /* text */
+  --text-50: #f5f5f7;
+  --text-100: #e3e3e8;
+  --text-200: #c7c7cc;
+  --text-300: #aeaeb2;
+  --text-400: #8e8e93;
+  --text-500: #6e6e73;
+  --text-600: #48484a;
+  --text-700: #3c3c43;
+  --text-800: #1d1d1f;
+  --text-900: #000000;
+
+  /* icon */
+  --icon-50: #f5f5f7;
+  --icon-100: #e5e5ea;
+  --icon-200: #d1d1d6;
+  --icon-300: #c7c7cc;
+  --icon-400: #aeaeb2;
+  --icon-500: #8e8e93;
+  --icon-600: #6e6e73;
+  --icon-700: #48484a;
+  --icon-800: #2c2c2e;
+  --icon-900: #1d1d1f;
+
+  /* state-success */
+  --state-success: #34c759; /* @primary */
+  --state-success-dark: #30d158;
+  --state-success-surface: #e9f9ee;
+  --state-success-foreground: #ffffff;
+
+  /* state-error */
+  --state-error: #ff3b30; /* @primary */
+  --state-error-dark: #ff453a;
+  --state-error-surface: #ffecea;
+  --state-error-foreground: #ffffff;
+
+  /* ===== SEMANTIC ROLES ===== */
+
+  /* semantic */
+  --background: var(--background-50);
+  --foreground: var(--text-800);
+  --card: var(--background-50);
+  --card-foreground: var(--text-800);
+  --popover: var(--background-50);
+  --popover-foreground: var(--text-900);
+
+  --primary: var(--brand-500);
+  --primary-foreground: var(--background-50);
+  --secondary: var(--background-200);
+  --secondary-foreground: var(--text-800);
+  --muted: var(--background-200);
+  --muted-foreground: var(--text-400);
+  --accent: var(--background-100);
+  --accent-foreground: var(--text-800);
+  --destructive: var(--state-error);
+  --destructive-foreground: var(--state-error-foreground);
+  --success: var(--state-success);
+  --success-foreground: var(--state-success-foreground);
+  --border: var(--background-300);
+  --input: var(--background-400);
+  --ring: var(--brand-500);
+
+  --icon: var(--icon-900);
+  --icon-muted: var(--icon-500);
+
+  /* chart */
+  --chart-1: var(--state-success);
+  --chart-2: var(--brand-500);
+  --chart-3: #ff9500;
+  --chart-4: #5856d6;
+  --chart-5: #af52de;
+
+  /* sidebar */
+  --sidebar: var(--background-200);
+  --sidebar-foreground: var(--text-800);
+  --sidebar-primary: var(--brand-500);
+  --sidebar-primary-foreground: var(--background-50);
+  --sidebar-accent: var(--background-300);
+  --sidebar-accent-foreground: var(--text-800);
+  --sidebar-border: var(--background-300);
+  --sidebar-ring: var(--brand-500);
+
+  /* TYPOGRAPHY */
+  --font-sans: DM Sans, Roboto, ui-sans-serif, sans-serif, system-ui;
+  --font-serif: DM Sans, Roboto, ui-sans-serif, sans-serif, system-ui;
+  --font-mono: JetBrains Mono, monospace;
+  --tracking-normal: 0em;
+
+  /* RADIUS */
+  --radius: 1.2rem;
+
+  /* Radius semantic aliases for solo-design apply-html-head-contract.mjs */
+  --apple-radius-sm: 0.5rem;
+  --apple-radius-md: 0.75rem;
+  --apple-radius-lg: var(--radius);
+  --apple-radius-xl: calc(var(--radius) * 1.25);
+
+  /* SHADOWS */
+  --shadow-2xs: 0 1px 2px -1px rgba(0, 0, 0, 0.04); /* Hairline */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.04); /* Subtle */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.05); /* Card */
+  --shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.05); /* Raised */
+  --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.05); /* Card Hover */
+  --shadow-lg: 0 8px 24px -8px rgba(0, 0, 0, 0.08), 0 4px 8px -4px rgba(0, 0, 0, 0.05); /* Float */
+  --shadow-xl: 0 16px 40px -10px rgba(0, 0, 0, 0.10), 0 8px 16px -8px rgba(0, 0, 0, 0.06); /* Overlay */
+  --shadow-2xl: 0 24px 64px -12px rgba(0, 0, 0, 0.12); /* Modal */
+
+  /* SPACING */
+  --spacing: 0.24rem;
+}
+
+/* ===== SEMANTIC ROLES - dark (primitive palette inherited) ===== */
+.dark {
+  --background: var(--background-900);
+  --foreground: var(--text-50);
+  --card: var(--background-800);
+  --card-foreground: var(--text-50);
+  --popover: var(--background-700);
+  --popover-foreground: var(--text-50);
+
+  --primary: var(--brand-400);
+  --primary-foreground: var(--background-900);
+  --secondary: var(--background-800);
+  --secondary-foreground: var(--text-50);
+  --muted: var(--background-800);
+  --muted-foreground: var(--text-400);
+  --accent: var(--background-700);
+  --accent-foreground: var(--text-50);
+  --destructive: var(--state-error-dark);
+  --destructive-foreground: var(--state-error-foreground);
+  --success: var(--state-success-dark);
+  --success-foreground: var(--state-success-foreground);
+  --border: var(--background-700);
+  --input: var(--background-700);
+  --ring: var(--brand-400);
+
+  --icon: var(--icon-50);
+  --icon-muted: var(--icon-500);
+
+  --chart-1: var(--state-success-dark);
+  --chart-2: var(--brand-400);
+  --chart-3: #ff9f0a;
+  --chart-4: #5e5ce6;
+  --chart-5: #bf5af2;
+
+  --sidebar: var(--background-800);
+  --sidebar-foreground: var(--text-50);
+  --sidebar-primary: var(--brand-400);
+  --sidebar-primary-foreground: var(--background-900);
+  --sidebar-accent: var(--background-700);
+  --sidebar-accent-foreground: var(--text-50);
+  --sidebar-border: var(--background-700);
+  --sidebar-ring: var(--brand-400);
+
+  --shadow-2xs: 0 1px 2px -1px rgba(0, 0, 0, 0.30);
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.30);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.36), 0 1px 3px -1px rgba(0, 0, 0, 0.36);
+  --shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.40), 0 1px 2px -1px rgba(0, 0, 0, 0.36);
+  --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.44), 0 2px 4px -2px rgba(0, 0, 0, 0.36);
+  --shadow-lg: 0 8px 24px -8px rgba(0, 0, 0, 0.50), 0 4px 8px -4px rgba(0, 0, 0, 0.40);
+  --shadow-xl: 0 16px 40px -10px rgba(0, 0, 0, 0.55), 0 8px 16px -8px rgba(0, 0, 0, 0.44);
+  --shadow-2xl: 0 24px 64px -12px rgba(0, 0, 0, 0.60);
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--apple-background);
+    --color-foreground: var(--apple-foreground);
+    --color-card: var(--apple-card);
+    --color-card-foreground: var(--apple-card-foreground);
+    --color-popover: var(--apple-popover);
+    --color-popover-foreground: var(--apple-popover-foreground);
+    --color-primary: var(--apple-primary);
+    --color-primary-foreground: var(--apple-primary-foreground);
+    --color-secondary: var(--apple-secondary);
+    --color-secondary-foreground: var(--apple-secondary-foreground);
+    --color-muted: var(--apple-muted);
+    --color-muted-foreground: var(--apple-muted-foreground);
+    --color-accent: var(--apple-accent);
+    --color-accent-foreground: var(--apple-accent-foreground);
+    --color-destructive: var(--apple-destructive);
+    --color-destructive-foreground: var(--apple-destructive-foreground);
+    --color-border: var(--apple-border);
+    --color-input: var(--apple-input);
+    --color-ring: var(--apple-ring);
+    --color-chart-1: var(--apple-chart-1);
+    --color-chart-2: var(--apple-chart-2);
+    --color-chart-3: var(--apple-chart-3);
+    --color-chart-4: var(--apple-chart-4);
+    --color-chart-5: var(--apple-chart-5);
+    --color-sidebar: var(--apple-sidebar);
+    --color-sidebar-foreground: var(--apple-sidebar-foreground);
+    --color-sidebar-primary: var(--apple-sidebar-primary);
+    --color-sidebar-primary-foreground: var(--apple-sidebar-primary-foreground);
+    --color-sidebar-accent: var(--apple-sidebar-accent);
+    --color-sidebar-accent-foreground: var(--apple-sidebar-accent-foreground);
+    --radius-sm: var(--apple-radius-sm);
+    --radius-md: var(--apple-radius-md);
+    --radius-lg: var(--apple-radius-lg);
+    --radius-xl: var(--apple-radius-xl);
+  }
+  @layer base {
+    body { background: var(--apple-background); color: var(--apple-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--apple-background); }
+      .text-background { color: var(--apple-background); }
+      .border-background { border-color: var(--apple-background); }
+      .ring-background { --tw-ring-color: var(--apple-background); }
+      .bg-foreground { background-color: var(--apple-foreground); }
+      .text-foreground { color: var(--apple-foreground); }
+      .border-foreground { border-color: var(--apple-foreground); }
+      .ring-foreground { --tw-ring-color: var(--apple-foreground); }
+      .bg-card { background-color: var(--apple-card); }
+      .text-card { color: var(--apple-card); }
+      .border-card { border-color: var(--apple-card); }
+      .ring-card { --tw-ring-color: var(--apple-card); }
+      .bg-card-foreground { background-color: var(--apple-card-foreground); }
+      .text-card-foreground { color: var(--apple-card-foreground); }
+      .border-card-foreground { border-color: var(--apple-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--apple-card-foreground); }
+      .bg-popover { background-color: var(--apple-popover); }
+      .text-popover { color: var(--apple-popover); }
+      .border-popover { border-color: var(--apple-popover); }
+      .ring-popover { --tw-ring-color: var(--apple-popover); }
+      .bg-popover-foreground { background-color: var(--apple-popover-foreground); }
+      .text-popover-foreground { color: var(--apple-popover-foreground); }
+      .border-popover-foreground { border-color: var(--apple-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--apple-popover-foreground); }
+      .bg-primary { background-color: var(--apple-primary); }
+      .text-primary { color: var(--apple-primary); }
+      .border-primary { border-color: var(--apple-primary); }
+      .ring-primary { --tw-ring-color: var(--apple-primary); }
+      .bg-primary-foreground { background-color: var(--apple-primary-foreground); }
+      .text-primary-foreground { color: var(--apple-primary-foreground); }
+      .border-primary-foreground { border-color: var(--apple-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--apple-primary-foreground); }
+      .bg-secondary { background-color: var(--apple-secondary); }
+      .text-secondary { color: var(--apple-secondary); }
+      .border-secondary { border-color: var(--apple-secondary); }
+      .ring-secondary { --tw-ring-color: var(--apple-secondary); }
+      .bg-secondary-foreground { background-color: var(--apple-secondary-foreground); }
+      .text-secondary-foreground { color: var(--apple-secondary-foreground); }
+      .border-secondary-foreground { border-color: var(--apple-secondary-foreground); }
+      .ring-secondary-foreground { --tw-ring-color: var(--apple-secondary-foreground); }
+      .bg-muted { background-color: var(--apple-muted); }
+      .text-muted { color: var(--apple-muted); }
+      .border-muted { border-color: var(--apple-muted); }
+      .ring-muted { --tw-ring-color: var(--apple-muted); }
+      .bg-muted-foreground { background-color: var(--apple-muted-foreground); }
+      .text-muted-foreground { color: var(--apple-muted-foreground); }
+      .border-muted-foreground { border-color: var(--apple-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--apple-muted-foreground); }
+      .bg-accent { background-color: var(--apple-accent); }
+      .text-accent { color: var(--apple-accent); }
+      .border-accent { border-color: var(--apple-accent); }
+      .ring-accent { --tw-ring-color: var(--apple-accent); }
+      .bg-accent-foreground { background-color: var(--apple-accent-foreground); }
+      .text-accent-foreground { color: var(--apple-accent-foreground); }
+      .border-accent-foreground { border-color: var(--apple-accent-foreground); }
+      .ring-accent-foreground { --tw-ring-color: var(--apple-accent-foreground); }
+      .bg-destructive { background-color: var(--apple-destructive); }
+      .text-destructive { color: var(--apple-destructive); }
+      .border-destructive { border-color: var(--apple-destructive); }
+      .ring-destructive { --tw-ring-color: var(--apple-destructive); }
+      .bg-destructive-foreground { background-color: var(--apple-destructive-foreground); }
+      .text-destructive-foreground { color: var(--apple-destructive-foreground); }
+      .border-destructive-foreground { border-color: var(--apple-destructive-foreground); }
+      .ring-destructive-foreground { --tw-ring-color: var(--apple-destructive-foreground); }
+      .bg-border { background-color: var(--apple-border); }
+      .text-border { color: var(--apple-border); }
+      .border-border { border-color: var(--apple-border); }
+      .ring-border { --tw-ring-color: var(--apple-border); }
+      .bg-input { background-color: var(--apple-input); }
+      .text-input { color: var(--apple-input); }
+      .border-input { border-color: var(--apple-input); }
+      .ring-input { --tw-ring-color: var(--apple-input); }
+      .bg-ring { background-color: var(--apple-ring); }
+      .text-ring { color: var(--apple-ring); }
+      .border-ring { border-color: var(--apple-ring); }
+      .ring-ring { --tw-ring-color: var(--apple-ring); }
+      .bg-chart-1 { background-color: var(--apple-chart-1); }
+      .text-chart-1 { color: var(--apple-chart-1); }
+      .border-chart-1 { border-color: var(--apple-chart-1); }
+      .ring-chart-1 { --tw-ring-color: var(--apple-chart-1); }
+      .bg-chart-2 { background-color: var(--apple-chart-2); }
+      .text-chart-2 { color: var(--apple-chart-2); }
+      .border-chart-2 { border-color: var(--apple-chart-2); }
+      .ring-chart-2 { --tw-ring-color: var(--apple-chart-2); }
+      .bg-chart-3 { background-color: var(--apple-chart-3); }
+      .text-chart-3 { color: var(--apple-chart-3); }
+      .border-chart-3 { border-color: var(--apple-chart-3); }
+      .ring-chart-3 { --tw-ring-color: var(--apple-chart-3); }
+      .bg-chart-4 { background-color: var(--apple-chart-4); }
+      .text-chart-4 { color: var(--apple-chart-4); }
+      .border-chart-4 { border-color: var(--apple-chart-4); }
+      .ring-chart-4 { --tw-ring-color: var(--apple-chart-4); }
+      .bg-chart-5 { background-color: var(--apple-chart-5); }
+      .text-chart-5 { color: var(--apple-chart-5); }
+      .border-chart-5 { border-color: var(--apple-chart-5); }
+      .ring-chart-5 { --tw-ring-color: var(--apple-chart-5); }
+      .bg-sidebar { background-color: var(--apple-sidebar); }
+      .text-sidebar { color: var(--apple-sidebar); }
+      .border-sidebar { border-color: var(--apple-sidebar); }
+      .ring-sidebar { --tw-ring-color: var(--apple-sidebar); }
+      .bg-sidebar-foreground { background-color: var(--apple-sidebar-foreground); }
+      .text-sidebar-foreground { color: var(--apple-sidebar-foreground); }
+      .border-sidebar-foreground { border-color: var(--apple-sidebar-foreground); }
+      .ring-sidebar-foreground { --tw-ring-color: var(--apple-sidebar-foreground); }
+      .bg-sidebar-primary { background-color: var(--apple-sidebar-primary); }
+      .text-sidebar-primary { color: var(--apple-sidebar-primary); }
+      .border-sidebar-primary { border-color: var(--apple-sidebar-primary); }
+      .ring-sidebar-primary { --tw-ring-color: var(--apple-sidebar-primary); }
+      .bg-sidebar-primary-foreground { background-color: var(--apple-sidebar-primary-foreground); }
+      .text-sidebar-primary-foreground { color: var(--apple-sidebar-primary-foreground); }
+      .border-sidebar-primary-foreground { border-color: var(--apple-sidebar-primary-foreground); }
+      .ring-sidebar-primary-foreground { --tw-ring-color: var(--apple-sidebar-primary-foreground); }
+      .bg-sidebar-accent { background-color: var(--apple-sidebar-accent); }
+      .text-sidebar-accent { color: var(--apple-sidebar-accent); }
+      .border-sidebar-accent { border-color: var(--apple-sidebar-accent); }
+      .ring-sidebar-accent { --tw-ring-color: var(--apple-sidebar-accent); }
+      .bg-sidebar-accent-foreground { background-color: var(--apple-sidebar-accent-foreground); }
+      .text-sidebar-accent-foreground { color: var(--apple-sidebar-accent-foreground); }
+      .border-sidebar-accent-foreground { border-color: var(--apple-sidebar-accent-foreground); }
+      .ring-sidebar-accent-foreground { --tw-ring-color: var(--apple-sidebar-accent-foreground); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main>
+    <style>
+      /* ===== Page-specific styles ===== */
+      .tour-page {
+        position: relative;
+        max-width: 480px;
+        margin: 0 auto;
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--apple-background);
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        -webkit-tap-highlight-color: transparent;
+        overflow: hidden;
+      }
+
+      /* ===== Phase 1: Tour ===== */
+      .tour-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        flex-shrink: 0;
+      }
+
+      .tour-label {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--apple-muted-foreground);
+        letter-spacing: 0.02em;
+      }
+
+      .skip-btn {
+        min-height: 48px;
+        padding: 0 20px;
+        border-radius: 999px;
+        background-color: var(--apple-secondary);
+        color: var(--apple-foreground);
+        font-size: 14px;
+        font-weight: 600;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        transition: transform 0.16s ease, opacity 0.16s ease;
+      }
+      .skip-btn:active { transform: scale(0.94); opacity: 0.7; }
+      .skip-btn svg { width: 14px; height: 14px; }
+
+      /* ===== Slide Stage ===== */
+      .slide-stage {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 24px 8px;
+        gap: 28px;
+      }
+
+      .slide-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: transform 0.32s ease, opacity 0.32s ease;
+        will-change: transform, opacity;
+      }
+      .slide-card.slide-enter {
+        transform: translateX(40px);
+        opacity: 0;
+      }
+      .slide-card.slide-exit {
+        transform: translateX(-40px);
+        opacity: 0;
+      }
+      .slide-card.slide-active {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      .slide-icon-wrap {
+        width: 120px;
+        height: 120px;
+        border-radius: 32px;
+        background-color: var(--apple-card);
+        border: 1px solid var(--apple-border);
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: background-color 0.32s ease, box-shadow 0.32s ease;
+      }
+      .slide-icon-wrap::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 32px;
+        opacity: 0.10;
+        background-color: var(--slide-color, var(--chart-1));
+        transition: background-color 0.32s ease;
+        pointer-events: none;
+      }
+      .slide-icon-wrap svg,
+      .slide-icon-wrap i[data-lucide] {
+        width: 48px;
+        height: 48px;
+        color: var(--slide-color, var(--chart-1));
+        stroke-width: 1.75;
+        position: relative;
+        z-index: 1;
+        transition: color 0.32s ease;
+      }
+
+      .slide-title {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.3;
+        color: var(--slide-color, var(--chart-1));
+        margin: 0;
+        transition: color 0.32s ease;
+      }
+
+      .slide-desc {
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--apple-muted-foreground);
+        max-width: 280px;
+        margin: 0;
+      }
+
+      /* ===== Dots Indicator ===== */
+      .dots-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        flex-shrink: 0;
+        padding: 4px 0 8px;
+      }
+
+      .dot {
+        height: 8px;
+        width: 8px;
+        border-radius: 999px;
+        background-color: var(--apple-border);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: width 0.28s ease, background-color 0.28s ease;
+      }
+      .dot.dot-active {
+        width: 24px;
+        background-color: var(--apple-primary);
+      }
+
+      /* ===== Footer ===== */
+      .tour-footer {
+        flex-shrink: 0;
+        padding: 16px 20px calc(20px + env(safe-area-inset-bottom));
+        display: flex;
+        gap: 12px;
+        box-shadow: 0 -1px 0 0 var(--apple-border);
+        background-color: var(--apple-background);
+      }
+
+      .nav-btn {
+        min-height: 48px;
+        border-radius: var(--apple-radius-lg);
+        font-size: 15px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        transition: transform 0.16s ease, opacity 0.16s ease, background-color 0.16s ease;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .nav-btn:active { transform: scale(0.97); opacity: 0.85; }
+
+      .nav-btn-primary {
+        flex: 1;
+        background-color: var(--apple-primary);
+        color: var(--apple-primary-foreground);
+        box-shadow: var(--shadow-sm);
+      }
+      .nav-btn-secondary {
+        flex: 0 0 33%;
+        background-color: var(--apple-secondary);
+        color: var(--apple-foreground);
+      }
+      .nav-btn svg { width: 16px; height: 16px; stroke-width: 2; }
+
+      /* ===== Phase 2: Welcome ===== */
+      .welcome-page {
+        display: none;
+        position: absolute;
+        inset: 0;
+        max-width: 480px;
+        margin: 0 auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+        padding-top: calc(24px + env(safe-area-inset-top));
+        padding-bottom: calc(24px + env(safe-area-inset-bottom));
+        overflow: hidden;
+        z-index: 10;
+      }
+      .welcome-page.is-visible { display: flex; }
+
+      .welcome-aurora {
+        position: absolute;
+        inset: -20%;
+        background: linear-gradient(135deg, var(--state-success-surface) 0%, var(--brand-50) 35%, var(--apple-accent) 70%, var(--state-success-surface) 100%);
+        background-size: 200% 200%;
+        animation: auroraShift 12s ease-in-out infinite;
+        z-index: -1;
+      }
+
+      .welcome-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .welcome-logo {
+        width: 112px;
+        height: 112px;
+        border-radius: 32px;
+        background: linear-gradient(135deg, var(--state-success) 0%, var(--state-success-dark) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-xl);
+        animation: welcomeLogo 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .welcome-logo svg,
+      .welcome-logo i[data-lucide] {
+        width: 88px;
+        height: 88px;
+        color: var(--apple-primary-foreground);
+        stroke-width: 1.5;
+        animation: logoGlow 2.4s ease-in-out infinite;
+      }
+
+      .welcome-title-wrap {
+        animation: fadeUp 0.6s ease 0.3s both;
+      }
+      .welcome-title {
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 1.25;
+        margin: 0;
+        color: var(--apple-foreground);
+      }
+      .welcome-title-brand {
+        background: linear-gradient(135deg, var(--state-success) 0%, var(--brand-500) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+      .welcome-subtitle {
+        font-size: 15px;
+        color: var(--apple-muted-foreground);
+        margin: 6px 0 0 0;
+        line-height: 1.6;
+      }
+
+      .welcome-btn {
+        min-height: 48px;
+        padding: 0 40px;
+        border-radius: 999px;
+        background-color: var(--chart-1);
+        color: var(--apple-primary-foreground);
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: var(--shadow-lg);
+        animation: fadeUp 0.6s ease 0.7s both;
+        transition: transform 0.16s ease, opacity 0.16s ease;
+      }
+      .welcome-btn:active { transform: scale(0.96); opacity: 0.9; }
+      .welcome-btn svg { width: 16px; height: 16px; stroke-width: 2; }
+
+      /* ===== Animations ===== */
+      @keyframes welcomeLogo {
+        0% { transform: scale(0.5) rotate(-12deg); opacity: 0; }
+        60% { opacity: 1; }
+        100% { transform: scale(1) rotate(0deg); opacity: 1; }
+      }
+
+      @keyframes logoGlow {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.06); opacity: 0.92; }
+      }
+
+      @keyframes fadeUp {
+        0% { transform: translateY(18px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+      }
+
+      @keyframes auroraShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      /* ===== Android small screen adaptation ===== */
+      @media (max-width: 360px) {
+        .slide-icon-wrap { width: 104px; height: 104px; border-radius: 28px; }
+        .slide-icon-wrap svg,
+        .slide-icon-wrap i[data-lucide] { width: 42px; height: 42px; }
+        .slide-title { font-size: 22px; }
+        .slide-desc { font-size: 13.5px; max-width: 260px; }
+        .welcome-logo { width: 96px; height: 96px; }
+        .welcome-logo svg,
+        .welcome-logo i[data-lucide] { width: 76px; height: 76px; }
+        .welcome-title { font-size: 26px; }
+      }
+    </style>
+
+    <div class="page-container">
+      <!-- ============ Phase 1: Feature Tour (visible) ============ -->
+      <section class="tour-page" id="tourPage">
+        <!-- Header -->
+        <header class="tour-header">
+          <span class="tour-label">功能速览</span>
+          <button class="skip-btn" id="skipBtn" type="button">
+            <span>跳过</span>
+            <i data-lucide="chevrons-right"></i>
+          </button>
+        </header>
+
+        <!-- Slide Stage -->
+        <div class="slide-stage">
+          <div class="slide-card slide-active" id="slideCard" style="--slide-color: var(--chart-1);">
+            <div class="slide-icon-wrap" id="slideIconWrap" style="--slide-color: var(--chart-1);">
+              <i data-lucide="house"></i>
+            </div>
+            <h2 class="slide-title" id="slideTitle">健康看板</h2>
+            <p class="slide-desc" id="slideDesc">首页一眼掌握今日营养、卡路里与饮水进度，快捷打卡，AI 每日送上专属寄语。</p>
+          </div>
+        </div>
+
+        <!-- Dots Indicator -->
+        <div class="dots-wrap" id="dotsWrap">
+          <button class="dot dot-active" data-index="0" type="button" aria-label="第 1 张"></button>
+          <button class="dot" data-index="1" type="button" aria-label="第 2 张"></button>
+          <button class="dot" data-index="2" type="button" aria-label="第 3 张"></button>
+          <button class="dot" data-index="3" type="button" aria-label="第 4 张"></button>
+          <button class="dot" data-index="4" type="button" aria-label="第 5 张"></button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="tour-footer" id="tourFooter">
+          <button class="nav-btn nav-btn-primary" id="nextBtn" type="button">
+            <span id="nextBtnLabel">下一步</span>
+            <i data-lucide="arrow-right"></i>
+          </button>
+        </footer>
+      </section>
+
+      <!-- ============ Phase 2: Welcome Animation (hidden) ============ -->
+      <section class="welcome-page" id="welcomePage">
+        <div class="welcome-aurora"></div>
+        <div class="welcome-content">
+          <div class="welcome-logo">
+            <i data-lucide="sprout"></i>
+          </div>
+          <div class="welcome-title-wrap">
+            <h1 class="welcome-title">
+              欢迎来到<br><span class="welcome-title-brand">微量生活</span>
+            </h1>
+            <p class="welcome-subtitle">你的私人 AI 健康管家</p>
+          </div>
+          <button class="welcome-btn" id="startBtn" type="button" data-dom-id="btn-start">
+            <span>开始使用</span>
+            <i data-lucide="arrow-right"></i>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        var slides = [
+          { icon: 'house',           title: '健康看板',     color: 'var(--chart-1)', desc: '首页一眼掌握今日营养、卡路里与饮水进度，快捷打卡，AI 每日送上专属寄语。' },
+          { icon: 'message-circle',  title: 'AI 健康顾问',  color: 'var(--chart-2)', desc: '基于你的身体档案流式对话，随时询问饮食、运动、作息问题，获得个性化建议。' },
+          { icon: 'heart',           title: '心理疏导',     color: 'var(--chart-5)', desc: '倾诉情绪，AI 温柔倾听并感知你的状态；遇到低谷时提供危机干预与求助途径。' },
+          { icon: 'moon',            title: '睡眠辅助',     color: 'var(--chart-4)', desc: '白噪音混音与呼吸引导助你入睡，记录睡眠后生成专属周报与改善建议。' },
+          { icon: 'utensils',        title: '健康记录',     color: 'var(--chart-3)', desc: '拍照或输入食物即可 AI 识别，自动计算热量与营养，每一餐轻松打卡。' }
+        ];
+
+        var currentIndex = 0;
+        var isAnimating = false;
+
+        var card        = document.getElementById('slideCard');
+        var iconWrap    = document.getElementById('slideIconWrap');
+        var titleEl     = document.getElementById('slideTitle');
+        var descEl      = document.getElementById('slideDesc');
+        var dotsWrap    = document.getElementById('dotsWrap');
+        var nextBtn     = document.getElementById('nextBtn');
+        var nextLabel   = document.getElementById('nextBtnLabel');
+        var footer      = document.getElementById('tourFooter');
+        var tourPage    = document.getElementById('tourPage');
+        var welcomePage = document.getElementById('welcomePage');
+        var skipBtn     = document.getElementById('skipBtn');
+        var startBtn    = document.getElementById('startBtn');
+        var iconContainer = iconWrap;
+
+        function renderSlide(index, direction) {
+          if (isAnimating) return;
+          if (index === currentIndex && direction === undefined) return;
+
+          isAnimating = true;
+          var slide = slides[index];
+
+          // Exit current
+          card.classList.remove('slide-active');
+          card.classList.add(direction === 'next' ? 'slide-exit' : 'slide-enter');
+
+          setTimeout(function () {
+            // Update content
+            iconContainer.style.setProperty('--slide-color', slide.color);
+            card.style.setProperty('--slide-color', slide.color);
+            titleEl.style.setProperty('--slide-color', slide.color);
+            titleEl.textContent = slide.title;
+            descEl.textContent = slide.desc;
+
+            // Replace icon
+            iconContainer.innerHTML = '';
+            var iconEl = document.createElement('i');
+            iconEl.setAttribute('data-lucide', slide.icon);
+            iconContainer.appendChild(iconEl);
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+              window.lucide.createIcons();
+            }
+
+            // Update dots
+            var dots = dotsWrap.querySelectorAll('.dot');
+            dots.forEach(function (dot, i) {
+              dot.classList.toggle('dot-active', i === index);
+            });
+
+            // Update footer buttons
+            updateFooter(index);
+
+            // Enter new slide
+            card.classList.remove('slide-exit', 'slide-enter');
+            card.classList.add(direction === 'next' ? 'slide-enter' : 'slide-exit');
+            // force reflow
+            void card.offsetWidth;
+            card.classList.remove('slide-enter', 'slide-exit');
+            card.classList.add('slide-active');
+
+            currentIndex = index;
+
+            setTimeout(function () {
+              isAnimating = false;
+            }, 320);
+          }, 280);
+        }
+
+        function updateFooter(index) {
+          // Reset
+          footer.innerHTML = '';
+
+          if (index > 0) {
+            var prevBtn = document.createElement('button');
+            prevBtn.className = 'nav-btn nav-btn-secondary';
+            prevBtn.type = 'button';
+            prevBtn.id = 'prevBtn';
+            prevBtn.innerHTML = '<i data-lucide="arrow-left"></i><span>上一步</span>';
+            footer.appendChild(prevBtn);
+            prevBtn.addEventListener('click', function () {
+              renderSlide(currentIndex - 1, 'prev');
+            });
+          }
+
+          var newNextBtn = document.createElement('button');
+          newNextBtn.className = 'nav-btn nav-btn-primary';
+          newNextBtn.type = 'button';
+          newNextBtn.id = 'nextBtn';
+          var isLast = index === slides.length - 1;
+          newNextBtn.innerHTML = '<span>' + (isLast ? '进入欢迎' : '下一步') + '</span><i data-lucide="arrow-right"></i>';
+          footer.appendChild(newNextBtn);
+          newNextBtn.addEventListener('click', function () {
+            if (isLast) {
+              showWelcome();
+            } else {
+              renderSlide(currentIndex + 1, 'next');
+            }
+          });
+
+          nextBtn = newNextBtn;
+          nextLabel = newNextBtn.querySelector('span');
+
+          if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+          }
+        }
+
+        function showWelcome() {
+          tourPage.style.display = 'none';
+          welcomePage.classList.add('is-visible');
+          // re-trigger animations by removing/re-adding nodes is unnecessary;
+          // CSS animations run on initial display.
+        }
+
+        function bindDots() {
+          var dots = dotsWrap.querySelectorAll('.dot');
+          dots.forEach(function (dot) {
+            dot.addEventListener('click', function () {
+              var idx = parseInt(dot.getAttribute('data-index'), 10);
+              if (idx === currentIndex) return;
+              renderSlide(idx, idx > currentIndex ? 'next' : 'prev');
+            });
+          });
+        }
+
+        // Initial bind
+        nextBtn.addEventListener('click', function () {
+          if (currentIndex === slides.length - 1) {
+            showWelcome();
+          } else {
+            renderSlide(currentIndex + 1, 'next');
+          }
+        });
+
+        skipBtn.addEventListener('click', showWelcome);
+
+        startBtn.addEventListener('click', function () {
+          // Placeholder: in the app this navigates to the home dashboard
+          startBtn.innerHTML = '<span>正在进入…</span>';
+        });
+
+        bindDots();
+      })();
+
+      // Initialize Lucide icons
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    </script>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
